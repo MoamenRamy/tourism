@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Currency;
+use App\Models\Nationality;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -27,15 +29,19 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
+            'name' => $this->faker->firstName(),
+            'last_name' => $this->faker->lastName(),
+            'email' => $this->faker->unique()->safeEmail(),
+            'username' => $this->faker->unique()->userName(),
+            'phone' => $this->faker->phoneNumber(),
+            'currency_id' => Currency::factory(), // Create related currency or choose existing
+            'language' => $this->faker->randomElement(['en', 'fr', 'es', 'ar']), // Random language code
+            'nationality_id' => Nationality::factory(), // Create related nationality or choose existing
+            'role' => $this->faker->randomElement(['user', 'employee', 'manager', 'admin']), // Random role
             'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
-            'two_factor_secret' => null,
-            'two_factor_recovery_codes' => null,
+            'password' => bcrypt('password'), // or Hash::make('password')
             'remember_token' => Str::random(10),
-            'profile_photo_path' => null,
-            'current_team_id' => null,
+            'profile_photo_path' => $this->faker->imageUrl(400, 400, 'people'), // Random profile photo URL
         ];
     }
 
