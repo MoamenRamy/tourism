@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Transportation_common_question;
+use App\Models\Transportation_common_question_translation;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -15,6 +16,8 @@ class Transportation_common_question_translationFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    protected $model = Transportation_common_question_translation::class;
+
     public function definition(): array
     {
         return [

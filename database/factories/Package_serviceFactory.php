@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Package;
+use App\Models\Package_service;
 use App\Models\Tour;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -16,6 +17,8 @@ class Package_serviceFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    protected $model = Package_service::class;
+
     public function definition(): array
     {
         return [

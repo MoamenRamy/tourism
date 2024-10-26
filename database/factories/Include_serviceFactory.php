@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Include_service;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -14,6 +15,8 @@ class Include_serviceFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    protected $model = Include_service::class;
+
     public function definition(): array
     {
         return [

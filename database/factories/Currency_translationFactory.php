@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Currency;
+use App\Models\Currency_translation;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -15,6 +16,8 @@ class Currency_translationFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    protected $model = Currency_translation::class;
+
     public function definition(): array
     {
         return [

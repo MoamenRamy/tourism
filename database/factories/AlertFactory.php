@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Alert;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -15,6 +16,9 @@ class AlertFactory extends Factory
      *
      * @return array<string, mixed>
      */
+
+    protected $model = Alert::class;
+
     public function definition(): array
     {
         return [

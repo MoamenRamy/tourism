@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Transportation_include;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -14,6 +15,8 @@ class Transportation_includeFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    protected $model = Transportation_include::class;
+
     public function definition(): array
     {
         return [

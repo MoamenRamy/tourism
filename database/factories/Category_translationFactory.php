@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Category;
+use App\Models\Category_translation;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -15,6 +16,8 @@ class Category_translationFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    protected $model = Category_translation::class;
+
     public function definition(): array
     {
         return [

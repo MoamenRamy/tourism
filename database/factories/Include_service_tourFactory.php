@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Include_service;
+use App\Models\Include_service_tour;
 use App\Models\Tour;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -16,6 +17,8 @@ class Include_service_tourFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    protected $model = Include_service_tour::class;
+
     public function definition(): array
     {
         return [

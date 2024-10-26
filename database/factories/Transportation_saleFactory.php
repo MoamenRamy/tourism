@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Destination;
+use App\Models\Transportation_sale;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -15,6 +16,8 @@ class Transportation_saleFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    protected $model = Transportation_sale::class;
+
     public function definition(): array
     {
         return [

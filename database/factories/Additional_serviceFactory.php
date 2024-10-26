@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Additional_service;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -14,6 +15,8 @@ class Additional_serviceFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    protected $model = Additional_service::class;
+
     public function definition(): array
     {
         return [

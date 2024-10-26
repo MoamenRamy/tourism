@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Rate;
 use App\Models\Tour;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -16,6 +17,8 @@ class RateFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    protected $model = Rate::class;
+
     public function definition(): array
     {
         return [

@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Safety;
+use App\Models\Safety_translation;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -15,6 +16,8 @@ class Safety_translationFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    protected $model = Safety_translation::class;
+
     public function definition(): array
     {
         return [

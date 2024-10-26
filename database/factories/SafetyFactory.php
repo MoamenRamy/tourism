@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Safety;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -14,6 +15,8 @@ class SafetyFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    protected $model = Safety::class;
+
     public function definition(): array
     {
         return [

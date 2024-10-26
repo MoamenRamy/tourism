@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Currency;
 use App\Models\Transportation;
+use App\Models\Transportation_reservation;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -17,6 +18,8 @@ class Transportation_reservationFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    protected $model = Transportation_reservation::class;
+
     public function definition(): array
     {
         return [

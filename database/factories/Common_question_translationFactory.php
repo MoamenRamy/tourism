@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Common_question;
+use App\Models\Common_question_translation;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -15,6 +16,9 @@ class Common_question_translationFactory extends Factory
      *
      * @return array<string, mixed>
      */
+
+    protected $model = Common_question_translation::class;
+
     public function definition(): array
     {
         return [

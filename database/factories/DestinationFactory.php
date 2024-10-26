@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Destination;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -14,6 +15,8 @@ class DestinationFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    protected $model = Destination::class;
+
     public function definition(): array
     {
         return [

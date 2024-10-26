@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Rate;
+use App\Models\Rate_translation;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -15,6 +16,8 @@ class Rate_translationFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    protected $model = Rate_translation::class;
+
     public function definition(): array
     {
         return [

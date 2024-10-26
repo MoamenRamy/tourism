@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Additional_service;
+use App\Models\Additional_service_reservation;
 use App\Models\Tour_reservation;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -16,6 +17,8 @@ class Additional_service_reservationFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    protected $model = Additional_service_reservation::class;
+
     public function definition(): array
     {
         return [

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Sale;
 use App\Models\Tour;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -15,6 +16,8 @@ class SaleFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    protected $model = Sale::class;
+
     public function definition(): array
     {
         return [

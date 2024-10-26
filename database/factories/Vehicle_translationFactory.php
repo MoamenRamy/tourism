@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Vehicle;
+use App\Models\Vehicle_translation;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -15,6 +16,8 @@ class Vehicle_translationFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    protected $model = Vehicle_translation::class;
+
     public function definition(): array
     {
         return [

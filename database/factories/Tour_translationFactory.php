@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Tour;
+use App\Models\Tour_translation;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -15,6 +16,8 @@ class Tour_translationFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    protected $model = Tour_translation::class;
+
     public function definition(): array
     {
         return [

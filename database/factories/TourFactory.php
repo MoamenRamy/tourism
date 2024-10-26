@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Category;
 use App\Models\Destination;
+use App\Models\Tour;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,12 +17,14 @@ class TourFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    protected $model = Tour::class;
+
     public function definition(): array
     {
         return [
             'destination_id' => Destination::factory(), // Create related destination or use existing one
             'category_id' => Category::factory(), // Create related category or use existing one
-            'price' => $this->faker->decimal(8, 2), // Random price
+            'price' => $this->faker->randomFloat(2, 10, 1000), // Generates a price with 2 decimal places between 10 and 1000
             'duration' => $this->faker->numberBetween(1, 10), // Random duration between 1 and 10
             'duration_type' => $this->faker->randomElement(['hours', 'days']), // Random duration type
             'rating' => $this->faker->randomFloat(2, 0, 5), // Random rating between 0 and 5

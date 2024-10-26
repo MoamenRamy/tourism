@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Transportation_reservation_translation;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -14,6 +15,8 @@ class Transportation_reservation_translationFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    protected $model = Transportation_reservation_translation::class;
+
     public function definition(): array
     {
         return [

@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Currency;
 use App\Models\Tour;
+use App\Models\Tour_reservation;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -17,6 +18,8 @@ class Tour_reservationFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    protected $model = Tour_reservation::class;
+
     public function definition(): array
     {
         return [
@@ -27,7 +30,7 @@ class Tour_reservationFactory extends Factory
             'address' => $this->faker->address(), // Random address
             'guest' => $this->faker->numberBetween(1, 10), // Random number of guests between 1 and 10
             'reservation_date' => $this->faker->date(), // Random reservation date
-            'price' => $this->faker->decimal(8, 2), // Random price
+            'price' => $this->faker->randomFloat(2, 10, 1000), // Generates a price with 2 decimal places between 10 and 1000
             'phone' => $this->faker->phoneNumber(), // Random phone number
             'whatsapp' => $this->faker->phoneNumber(), // Random WhatsApp number
             'currency_id' => Currency::factory(), // Create related currency or use existing one

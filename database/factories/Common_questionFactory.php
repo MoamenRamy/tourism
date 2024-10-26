@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Common_question;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -14,6 +15,9 @@ class Common_questionFactory extends Factory
      *
      * @return array<string, mixed>
      */
+
+    protected $model = Common_question::class;
+
     public function definition(): array
     {
         return [
