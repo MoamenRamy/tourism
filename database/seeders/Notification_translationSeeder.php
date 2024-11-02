@@ -2,7 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Notification_translation;
+use App\Models\Notification;
+use App\Models\NotificationTranslation;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,6 +14,16 @@ class Notification_translationSeeder extends Seeder
      */
     public function run(): void
     {
-        Notification_translation::factory()->count(100)->create(); // Adjust the count as needed
+        $locales = ['en', 'fr', 'es', 'de', 'ar'];
+
+        // Loop through each notification
+        foreach (Notification::all() as $notification) {
+            foreach ($locales as $locale) {
+                NotificationTranslation::factory()->create([
+                    'notification_id' => $notification->id,
+                    'locale' => $locale,
+                ]);
+            }
+        }
     }
 }

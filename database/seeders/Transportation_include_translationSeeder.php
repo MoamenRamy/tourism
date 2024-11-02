@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Transportation_include;
-use App\Models\Transportation_include_translation;
+use App\Models\Transportation_includeTranslation;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -14,21 +14,16 @@ class Transportation_include_translationSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create translations for each transportation include
-        $includes = Transportation_include::all();
+        $locales = ['en', 'fr', 'es', 'de', 'ar'];
 
-        foreach ($includes as $include) {
-            Transportation_include_translation::factory()->create([
-                'include_id' => $include->id,
-                'locale' => 'en', // Example locale
-                'name' => 'Include Service Name in English', // Example name
-            ]);
-
-            Transportation_include_translation::factory()->create([
-                'include_id' => $include->id,
-                'locale' => 'fr', // Another example locale
-                'name' => 'Nom du service inclus en français', // Example name in French
-            ]);
+        // Loop through each transportation include
+        foreach (Transportation_include::all() as $include) {
+            foreach ($locales as $locale) {
+                Transportation_includeTranslation::factory()->create([
+                    'include_id' => $include->id,
+                    'locale' => $locale,
+                ]);
+            }
         }
     }
 }

@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Transportation_sale extends Model
 {
     use HasFactory;
+
+    protected $guarded = ['id'];
 }

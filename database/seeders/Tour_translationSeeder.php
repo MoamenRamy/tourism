@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Tour;
-use App\Models\Tour_translation;
+use App\Models\TourTranslation;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -14,8 +14,16 @@ class Tour_translationSeeder extends Seeder
      */
     public function run(): void
     {
-        Tour::factory(10)
-        ->has(Tour_translation::factory()->count(3)) // Each tour has 3 translations
-        ->create();
+        $locales = ['en', 'fr', 'es', 'de', 'ar'];
+
+        // Loop through each tour record
+        foreach (Tour::all() as $tour) {
+            foreach ($locales as $locale) {
+                TourTranslation::factory()->create([
+                    'tour_id' => $tour->id,
+                    'locale' => $locale,
+                ]);
+            }
+        }
     }
 }

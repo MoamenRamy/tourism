@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Destination;
-use App\Models\Destination_translation;
+use App\Models\DestinationTranslation;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -14,8 +14,16 @@ class Destination_translationSeeder extends Seeder
      */
     public function run(): void
     {
-        Destination::factory(10)
-        ->has(Destination_translation::factory()->count(3)) // Each destination has 3 translations
-        ->create();
+        $locales = ['en', 'fr', 'es', 'de', 'ar'];
+
+        // Loop through each destination
+        foreach (Destination::all() as $destination) {
+            foreach ($locales as $locale) {
+                DestinationTranslation::factory()->create([
+                    'destination_id' => $destination->id,
+                    'locale' => $locale,
+                ]);
+            }
+        }
     }
 }

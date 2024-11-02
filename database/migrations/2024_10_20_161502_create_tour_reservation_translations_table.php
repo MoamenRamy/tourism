@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('tour_reservation_translations', function (Blueprint $table) {
             $table->id();
             // we will delete this table
-            $table->timestamps();
         });
     }
 

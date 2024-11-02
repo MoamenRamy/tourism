@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Common_question_tour extends Model
 {
     use HasFactory;
+
+    protected $guarded = ['id'];
 }

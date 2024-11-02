@@ -2,7 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Package_translation;
+use App\Models\Package;
+use App\Models\PackageTranslation;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,6 +14,16 @@ class Package_translationSeeder extends Seeder
      */
     public function run(): void
     {
-        Package_translation::factory(50)->create(); // Create 50 package translation records
+        $locales = ['en', 'fr', 'es', 'de', 'ar'];
+
+        // Loop through each package
+        foreach (Package::all() as $package) {
+            foreach ($locales as $locale) {
+                PackageTranslation::factory()->create([
+                    'package_id' => $package->id,
+                    'locale' => $locale,
+                ]);
+            }
+        }
     }
 }

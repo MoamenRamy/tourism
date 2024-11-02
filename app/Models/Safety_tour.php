@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Safety_tour extends Model
 {
     use HasFactory;
+
+    protected $guarded = ['id'];
 }

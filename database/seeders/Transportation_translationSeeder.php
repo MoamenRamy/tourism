@@ -2,7 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Transportation_translation;
+use App\Models\Transportation;
+use App\Models\TransportationTranslation;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,6 +14,16 @@ class Transportation_translationSeeder extends Seeder
      */
     public function run(): void
     {
-        Transportation_translation::factory(50)->create();
+        $locales = ['en', 'fr', 'es', 'de', 'ar'];
+
+        // Loop through each transportation record
+        foreach (Transportation::all() as $transportation) {
+            foreach ($locales as $locale) {
+                TransportationTranslation::factory()->create([
+                    'transportation_id' => $transportation->id,
+                    'locale' => $locale,
+                ]);
+            }
+        }
     }
 }

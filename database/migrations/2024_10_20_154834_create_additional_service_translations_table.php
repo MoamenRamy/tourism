@@ -21,7 +21,6 @@ return new class extends Migration
 
             $table->unique(['additional_id', 'locale']);
             $table->foreign('additional_id')->references('id')->on('additional_services')->onDelete('cascade');
-            $table->timestamps();
         });
     }
 

@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Transportation_additional_service;
-use App\Models\Transportation_additional_service_translation;
+use App\Models\Transportation_additional_serviceTranslation;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -14,13 +14,16 @@ class Transportation_additional_service_translationSeeder extends Seeder
      */
     public function run(): void
     {
-        // Assuming you want to create translations for existing additional services
-        $additionalServices = Transportation_additional_service::all();
+        $locales = ['en', 'fr', 'es', 'de', 'ar'];
 
-        foreach ($additionalServices as $additional) {
-            Transportation_additional_service_translation::factory()->count(3)->create([
-                'additional_id' => $additional->id,
-            ]);
+        // Loop through each additional service
+        foreach (Transportation_additional_service::all() as $additionalService) {
+            foreach ($locales as $locale) {
+                Transportation_additional_serviceTranslation::factory()->create([
+                    'additional_id' => $additionalService->id,
+                    'locale' => $locale,
+                ]);
+            }
         }
     }
 }

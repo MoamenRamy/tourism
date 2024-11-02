@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Additional_service_reservation extends Model
 {
     use HasFactory;
+    
+    protected $guarded = ['id'];
 }

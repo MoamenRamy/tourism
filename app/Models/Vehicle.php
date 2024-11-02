@@ -4,8 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
+use Astrotomic\Translatable\Translatable;
 
-class Vehicle extends Model
+class Vehicle extends Model implements TranslatableContract
 {
     use HasFactory;
+    use Translatable;
+
+    public $translatedAttributes = ['name', 'model'];
+    protected $guarded = ['id'];
 }

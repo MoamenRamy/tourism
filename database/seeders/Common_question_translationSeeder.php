@@ -2,7 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Common_question_translation;
+use App\Models\Common_question;
+use App\Models\Common_questionTranslation;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,6 +14,16 @@ class Common_question_translationSeeder extends Seeder
      */
     public function run(): void
     {
-        Common_question_translation::factory(50)->create(); // Create 50 common question translation records
+        $locales = ['en', 'fr', 'es', 'de', 'ar'];
+
+        // Loop through each common question
+        foreach (Common_question::all() as $commonQuestion) {
+            foreach ($locales as $locale) {
+                Common_questionTranslation::factory()->create([
+                    'question_id' => $commonQuestion->id,
+                    'locale' => $locale,
+                ]);
+            }
+        }
     }
 }

@@ -4,10 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
+use Astrotomic\Translatable\Translatable;
 
-class Package extends Model
+class Package extends Model implements TranslatableContract
 {
     use HasFactory;
+    use Translatable;
+
+    public $translatedAttributes = ['name', 'description'];
+    protected $guarded = ['id'];
 
     public function packagePhotos()
     {
