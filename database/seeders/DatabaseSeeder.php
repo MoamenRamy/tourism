@@ -65,5 +65,8 @@ class DatabaseSeeder extends Seeder
         $this->call(AlertSeeder::class);
         $this->call(Tour_detailSeeder::class);
         $this->call(Tour_detail_translationSeeder::class);
+        $this->call(TourSectionSeeder::class);
+        $this->call(TourSectionTranslationSeeder::class);
+        $this->call(PackageReservationSeeder::class);
     }
 }

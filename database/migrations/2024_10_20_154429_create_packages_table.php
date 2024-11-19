@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
 
             $table->decimal('price', 8, 2)->nullable();
-            $table->integer('duration')->nullable();
+            $table->float('duration')->nullable();
             $table->enum('duration_type', ['hours', 'days'])->default('days'); // Default value for duration_type
             $table->boolean('available')->default(0);
             $table->boolean('pin')->default(0);

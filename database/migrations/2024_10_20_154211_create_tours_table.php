@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('category_id')->nullable();
 
             $table->decimal('price', 8, 2);
-            $table->integer('duration')->nullable();
+            $table->float('duration')->nullable();
             $table->enum('duration_type', ['hours', 'days'])->nullable();
             $table->decimal('rating', 3, 2);
             $table->boolean('available')->default(0); // 1 => available
