@@ -12,4 +12,15 @@ class Transportation_reservation extends Model
 
     // public $translatedAttributes = ['title', 'content'];
     protected $guarded = ['id'];
+
+    // has many transportation additional services
+    public function transportation_additional_service_reservations()
+    {
+        return $this->hasMany(Transportation_additional_service_reservation::class);
+    }
+
+    public function transportation_additional_services()
+    {
+        return $this->belongsToMany(Transportation_additional_service::class, 'transportation_additional_service_reservation');
+    }
 }

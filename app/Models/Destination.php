@@ -14,4 +14,15 @@ class Destination extends Model implements TranslatableContract
 
     public $translatedAttributes = ['name', 'description'];
     protected $guarded = ['id'];
+
+    // has one transportations sales
+    public function transportationSale()
+    {
+        return $this->hasOne(Transportation_sale::class);
+    }
+
+    public function tours()
+    {
+        return $this->hasMany(Tour::class);
+    }
 }

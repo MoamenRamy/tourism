@@ -19,4 +19,16 @@ class Package extends Model implements TranslatableContract
     {
         return $this->hasMany(Package_photo::class, 'package_id');
     }
+
+    // packages has many tours
+    public function tours()
+    {
+        return $this->belongsToMany(Tour::class, 'package_services');
+    }
+
+    // has many package reservations
+    public function packageReservations()
+    {
+        return $this->hasMany(PackageReservation::class);
+    }
 }

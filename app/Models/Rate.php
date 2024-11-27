@@ -14,4 +14,9 @@ class Rate extends Model implements TranslatableContract
 
     public $translatedAttributes = ['comment'];
     protected $guarded = ['id'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -14,4 +14,9 @@ class Notification extends Model implements TranslatableContract
 
     public $translatedAttributes = ['message', 'status'];
     protected $guarded = ['id'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

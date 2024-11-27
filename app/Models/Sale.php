@@ -10,4 +10,9 @@ class Sale extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
+    public function tour()
+    {
+        return $this->belongsTo(Tour::class);
+    }
 }

@@ -10,4 +10,10 @@ class Transportation_sale extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
+    // belong to destination
+    public function destination()
+    {
+        return $this->belongsTo(Destination::class);
+    }
 }

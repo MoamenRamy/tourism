@@ -16,4 +16,10 @@ class Transportation_additional_service extends Model implements TranslatableCon
     protected $guarded = ['id'];
 
     protected $table = 'transportation_additionals'; // Explicitly define the table name
+
+    // has many transportation reservations
+    public function Transportation_reservations()
+    {
+        return $this->hasMany(Transportation_reservation::class, 'transportation_additional_service_reservaiton');
+    }
 }

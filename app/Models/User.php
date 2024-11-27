@@ -70,4 +70,64 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    // relation with tours reservation
+    public function tourReservations()
+    {
+        return $this->hasMany(Tour_reservation::class);
+    }
+
+    // relation with packages reservation
+    public function packageReservations()
+    {
+        return $this->hasMany(PackageReservation::class);
+    }
+
+    // relation with transportation reservation
+    public function transportationReservations()
+    {
+        return $this->hasMany(Transportation_reservation::class);
+    }
+
+    // relation with currency
+    public function currency()
+    {
+        return $this->belongsTo(Currency::class);
+    }
+
+    // relation with nationality
+    public function nationality()
+    {
+        return $this->belongsTo(Nationality::class);
+    }
+
+    // roles
+    public function manager()
+    {
+        return $this->role == 'manager';
+    }
+
+    public function admin()
+    {
+        return $this->role == 'admin';
+    }
+
+    // relation with alerts
+    public function alerts()
+    {
+        return $this->hasMany(Alert::class);
+    }
+
+    // relation with notifications
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class);
+    }
+
+    // relation with rate
+    public function rates()
+    {
+        return $this->hasMany(Rate::class);
+    }
+
 }

@@ -14,4 +14,9 @@ class Category extends Model implements TranslatableContract
 
     public $translatedAttributes = ['name', 'description'];
     protected $guarded = ['id'];
+
+    public function tours()
+    {
+        return $this->hasMany(Tour::class);
+    }
 }
