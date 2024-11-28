@@ -17,12 +17,12 @@ class NationalityFactory extends Factory
      */
     protected $model = Nationality::class;
 
-    public function definition(): array
+    public function definition()
     {
-        return [
-            'name' => $this->faker->country(), // Random country name
-            'phone_code' => $this->faker->randomElement(['+1', '+44', '+33', '+49', '+20']), // Random phone code
-            'flag' => $this->faker->imageUrl(100, 50, 'flags', true), // Random flag image URL
-        ];
+        // return [
+        //     'name' => $this->faker->country(), // Random country name
+        //     'phone_code' => $this->faker->randomElement(['+1', '+44', '+33', '+49', '+20']), // Random phone code
+        //     'flag' => $this->faker->imageUrl(100, 50, 'flags', true), // Random flag image URL
+        // ];
     }
 }

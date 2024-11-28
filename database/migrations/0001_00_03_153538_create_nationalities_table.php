@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('nationalities', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('country_code');
             $table->string('phone_code');
-            $table->string('flag');
             $table->timestamps();
         });
     }

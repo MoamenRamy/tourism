@@ -38,7 +38,7 @@ class UserFactory extends Factory
             'phone' => $this->faker->phoneNumber(),
             'currency_id' => Currency::factory(), // Create related currency or choose existing
             'language' => $this->faker->randomElement(['en', 'fr', 'es', 'ar']), // Random language code
-            'nationality_id' => Nationality::factory(), // Create related nationality or choose existing
+            'nationality_id' => $this->faker->numberBetween(1,200), // Create related nationality or choose existing
             'role' => $this->faker->randomElement(['user', 'employee', 'manager', 'admin']), // Random role
             'email_verified_at' => now(),
             'password' => bcrypt('password'), // or Hash::make('password')
