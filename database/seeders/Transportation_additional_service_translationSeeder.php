@@ -20,7 +20,7 @@ class Transportation_additional_service_translationSeeder extends Seeder
         foreach (Transportation_additional_service::all() as $additionalService) {
             foreach ($locales as $locale) {
                 Transportation_additional_serviceTranslation::factory()->create([
-                    'additional_id' => $additionalService->id,
+                    'transportation_additional_service_id' => $additionalService->id,
                     'locale' => $locale,
                 ]);
             }

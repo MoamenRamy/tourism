@@ -12,7 +12,7 @@ class Destination extends Model implements TranslatableContract
     use HasFactory;
     use Translatable;
 
-    public $translatedAttributes = ['name', 'description'];
+    public $translatedAttributes = ['description'];
     protected $guarded = ['id'];
 
     // has one transportations sales

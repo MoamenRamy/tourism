@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Illuminate\Support\Str;
 use App\Models\Category;
 use App\Models\Destination;
 use App\Models\Tour;
@@ -21,7 +22,10 @@ class TourFactory extends Factory
 
     public function definition(): array
     {
+        $title = $this->faker->unique()->sentence();
         return [
+            'title' => $title,
+            'slug' => Str::slug($title),
             'destination_id' => Destination::factory(), // Create related destination or use existing one
             'category_id' => Category::factory(), // Create related category or use existing one
             'price' => $this->faker->randomFloat(2, 10, 1000), // Generates a price with 2 decimal places between 10 and 1000

@@ -20,7 +20,7 @@ class Include_service_translationSeeder extends Seeder
         foreach (Include_service::all() as $includeService) {
             foreach ($locales as $locale) {
                 Include_serviceTranslation::factory()->create([
-                    'include_id' => $includeService->id,
+                    'include_service_id' => $includeService->id,
                     'locale' => $locale,
                 ]);
             }

@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 
 class CategoryController extends Controller
 {
@@ -13,7 +14,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::with('translations')->paginate(12);
+        return view('categories.index', compact('categories'));
     }
 
     /**
@@ -21,7 +23,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('categories.create');
     }
 
     /**
@@ -29,7 +31,30 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'title' => 'required|string|unique:categories,title',
+            'photo' => 'required|string',
+            'translations' => 'required|array',
+            'translations.*.locale' => 'required|string',
+            'translations.*.name' => 'required|string',
+            'translations.*.description' => 'nullable|string',
+        ]);
+
+        $slug = Str::slug($validated['title']);
+
+        $category = Category::create([
+            'slug' => $slug,
+            'title' => $validated['title'],
+            'photo' => $validated['photo'],
+        ]);
+
+        foreach ($validated['translations'] as $translation) {
+            $category->translateOrNew($translation['locale'])->name = $translation['name'];
+            $category->translateOrNew($translation['locale'])->description = $translation['description'] ?? null;
+        }
+        $category->save();
+
+        return redirect()->route('categories.index')->with('success', 'Category created successfully');
     }
 
     /**
@@ -37,7 +62,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        return view('categories.show', compact('category'));
     }
 
     /**
@@ -45,7 +70,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        return view('categories.edit', compact('category'));
     }
 
     /**
@@ -53,7 +78,35 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $validated = $request->validate([
+            'title' => 'sometimes|string|unique:categories,title,' . $category->id,
+            'photo' => 'sometimes|string',
+            'translations' => 'sometimes|array',
+            'translations.*.locale' => 'required_with:translations|string',
+            'translations.*.name' => 'required_with:translations|string',
+            'translations.*.description' => 'nullable|string',
+        ]);
+
+        if (isset($validated['title'])) {
+            $category->slug = Str::slug($validated['title']);
+            $category->title = $validated['title'];
+        }
+
+        if (isset($validated['photo'])) {
+            $category->photo = $validated['photo'];
+        }
+
+        $category->save();
+
+        if (isset($validated['translations'])) {
+            foreach ($validated['translations'] as $translation) {
+                $category->translateOrNew($translation['locale'])->name = $translation['name'];
+                $category->translateOrNew($translation['locale'])->description = $translation['description'] ?? null;
+            }
+            $category->save();
+        }
+
+        return redirect()->route('categories.index')->with('success', 'Category updated successfully');
     }
 
     /**
@@ -61,6 +114,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return redirect()->route('categories.index')->with('success', 'Category deleted successfully');
     }
 }

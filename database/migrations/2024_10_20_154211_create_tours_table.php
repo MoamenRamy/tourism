@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('tours', function (Blueprint $table) {
             $table->id();
+            $table->string('slug')->unique();
+            $table->string('title')->unique();
             $table->unsignedBigInteger('destination_id')->nullable();
             $table->unsignedBigInteger('category_id')->nullable();
 

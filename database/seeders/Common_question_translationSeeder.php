@@ -20,7 +20,7 @@ class Common_question_translationSeeder extends Seeder
         foreach (Common_question::all() as $commonQuestion) {
             foreach ($locales as $locale) {
                 Common_questionTranslation::factory()->create([
-                    'question_id' => $commonQuestion->id,
+                    'common_question_id' => $commonQuestion->id,
                     'locale' => $locale,
                 ]);
             }

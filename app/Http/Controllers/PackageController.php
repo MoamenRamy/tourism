@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class PackageController extends Controller
 {
+
+    // package will delete and we will use tours as tours, package and tour in city
+
+
+    
     /**
      * Display a listing of the resource.
      */

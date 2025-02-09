@@ -13,14 +13,17 @@ return new class extends Migration
     {
         Schema::create('transportation_additional_translations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('additional_id');
+            $table->unsignedBigInteger('transportation_additional_service_id');
             $table->string('locale')->index();
 
             $table->string('name');
             $table->text('description');
 
-            $table->unique(['additional_id', 'locale'], 'trans_additional_id_locale_unique');
-            $table->foreign('additional_id')->references('id')->on('transportation_additionals')->onDelete('cascade');
+            // Define unique constraint with a shorter name
+            $table->unique(['transportation_additional_service_id', 'locale'], 'transportation_additional_service_id_locale_unique');
+
+            // Define foreign key constraint with a shorter name
+            $table->foreign('transportation_additional_service_id', 'transportation_additional_service_id_fk')->references('id')->on('transportation_additionals')->onDelete('cascade')->name('transportation_additional_service_fk'); // Custom name for the foreign key constraint;
         });
     }
 

@@ -24,7 +24,6 @@ class DestinationTranslationFactory extends Factory
         return [
             'destination_id' => Destination::factory(), // Create related destination or use existing one
             'locale' => $this->faker->randomElement(['en', 'fr', 'es', 'de', 'ar']), // Random locale code
-            'name' => $this->faker->city(), // Random city name for destination
             'description' => $this->faker->paragraph(), // Random description for the destination
         ];
     }

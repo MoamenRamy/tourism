@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('include_service_translations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('include_id');
+            $table->unsignedBigInteger('include_service_id');
             $table->string('locale')->index();
 
             $table->string('name');
 
-            $table->unique(['include_id', 'locale']);
-            $table->foreign('include_id')->references('id')->on('include_services')->onDelete('cascade');
+            $table->unique(['include_service_id', 'locale'], 'include_service_locale_unique');
+            $table->foreign('include_service_id')->references('id')->on('include_services')->onDelete('cascade');
         });
     }
 

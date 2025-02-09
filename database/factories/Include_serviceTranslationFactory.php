@@ -21,7 +21,7 @@ class Include_serviceTranslationFactory extends Factory
     public function definition(): array
     {
         return [
-            'include_id' => Include_service::factory(), // Creates a related IncludeService
+            'include_service_id' => Include_service::factory(), // Creates a related IncludeService
             'locale' => $this->faker->randomElement(['en', 'fr', 'es', 'de', 'ar']), // Random locale code
             'name' => $this->faker->word, // Generates a random name for the service
         ];

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->enum('duration_type', ['hours', 'days'])->nullable();
 
             $table->timestamps();
+            $table->foreign('tour_id')->references('id')->on('tours')->onDelete('cascade');
         });
     }
 

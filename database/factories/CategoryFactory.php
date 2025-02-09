@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Illuminate\Support\Str;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -19,7 +20,10 @@ class CategoryFactory extends Factory
 
     public function definition(): array
     {
+        $title = $this->faker->unique()->sentence(); // Generate a unique title for each category
         return [
+            'title' => $title,
+            'slug' => Str::slug($title),
             'photo' => $this->faker->imageUrl(800, 600, 'categories', true, 'category'), // Random category photo URL
         ];
     }

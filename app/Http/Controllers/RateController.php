@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Rate;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RateController extends Controller
 {
@@ -13,15 +13,8 @@ class RateController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $rates = Rate::with(['user', 'tour'])->paginate(12);
+        return view('rates.index', compact('rates'));
     }
 
     /**
@@ -29,31 +22,20 @@ class RateController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $validated = $request->validate([
+            'tour_id' => 'required|exists:tours,id',
+            'rating' => 'required|integer|min:1|max:5',
+            'comment' => 'nullable|string',
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Rate $rate)
-    {
-        //
-    }
+        $rate = Rate::create([
+            'user_id' => Auth::id(),
+            'tour_id' => $validated['tour_id'],
+            'rating' => $validated['rating'],
+            'comment' => $validated['comment'] ?? null,
+        ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Rate $rate)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Rate $rate)
-    {
-        //
+        return redirect()->route('rates.index')->with('success', 'Rate added successfully');
     }
 
     /**
@@ -61,6 +43,11 @@ class RateController extends Controller
      */
     public function destroy(Rate $rate)
     {
-        //
+        if (Auth::id() !== $rate->user_id) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $rate->delete();
+        return redirect()->route('rates.index')->with('success', 'Rate deleted successfully');
     }
 }

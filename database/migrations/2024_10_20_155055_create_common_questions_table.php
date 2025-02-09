@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('common_questions', function (Blueprint $table) {
             $table->id();
+            // tour or tranportation
             
             $table->timestamps();
         });

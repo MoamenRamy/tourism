@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('additional_services', function (Blueprint $table) {
             $table->id();
-            
+
             $table->decimal('price', 8, 2);
+            // tour or tranportation
             $table->timestamps();
         });
     }

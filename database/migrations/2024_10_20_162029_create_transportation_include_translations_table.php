@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('transportation_include_translations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('include_id');
+            $table->unsignedBigInteger('transportation_include_id');
             $table->string('locale')->index();
 
             $table->string('name');
 
-            $table->unique(['include_id', 'locale']);
-            $table->foreign('include_id')->references('id')->on('transportation_includes')->onDelete('cascade');
+            $table->unique(['transportation_include_id', 'locale'], 'transportation_include_locale_unique');
+            $table->foreign('transportation_include_id')->references('id')->on('transportation_includes')->onDelete('cascade')->name('transportation_include_fk');
         });
     }
 

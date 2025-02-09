@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('common_question_translations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('question_id');
+            $table->unsignedBigInteger('common_question_id');
             $table->string('locale')->index();
 
             $table->text('question');
             $table->text('answer');
 
-            $table->unique(['question_id', 'locale']);
-            $table->foreign('question_id')->references('id')->on('common_questions')->onDelete('cascade');
+            $table->unique(['common_question_id', 'locale'], 'common_question_locale_unique');
+            $table->foreign('common_question_id')->references('id')->on('common_questions')->onDelete('cascade');
         });
     }
 

@@ -21,7 +21,7 @@ class Transportation_includeTranslationFactory extends Factory
     public function definition(): array
     {
         return [
-            'include_id' => Transportation_include::factory(), // Use factory for include_id
+            'transportation_include_id' => Transportation_include::factory(), // Use factory for include_id
             'locale' => $this->faker->randomElement(['en', 'fr', 'es', 'de', 'ar']), // Random locale code
             'name' => $this->faker->sentence, // Random name
         ];

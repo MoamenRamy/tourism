@@ -13,14 +13,16 @@ return new class extends Migration
     {
         Schema::create('additional_service_translations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('additional_id');
+            $table->unsignedBigInteger('additional_service_id');
             $table->string('locale')->index();
 
             $table->string('name');
             $table->text('description')->nullable();
 
-            $table->unique(['additional_id', 'locale']);
-            $table->foreign('additional_id')->references('id')->on('additional_services')->onDelete('cascade');
+            // Shorten the index name to avoid the 64 character limit
+            $table->unique(['additional_service_id', 'locale'], 'additional_service_locale_unique');
+            $table->foreign('additional_service_id')
+                ->references('id')->on('additional_services')->onDelete('cascade');
         });
     }
 

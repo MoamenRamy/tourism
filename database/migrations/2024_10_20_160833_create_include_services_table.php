@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('include_services', function (Blueprint $table) {
             $table->id();
             $table->boolean('include')->default(1);
+            // tour or tranportation
+
             $table->timestamps();
         });
     }

@@ -14,4 +14,11 @@ class Additional_service extends Model implements TranslatableContract
 
     public $translatedAttributes = ['name', 'description'];
     protected $guarded = ['id'];
+
+    // Define the relationship for translations (optional, depending on your setup)
+
+    // public function translations()
+    // {
+    //     return $this->hasMany(Additional_serviceTranslation::class);
+    // }
 }

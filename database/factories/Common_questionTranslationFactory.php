@@ -22,7 +22,7 @@ class Common_questionTranslationFactory extends Factory
     public function definition(): array
     {
         return [
-            'question_id' => Common_question::factory(), // Create related common question or use existing one
+            'common_question_id' => Common_question::factory(), // Create related common question or use existing one
             'locale' => $this->faker->randomElement(['en', 'fr', 'es', 'de', 'ar']), // Random locale code
             'question' => $this->faker->sentence, // Random question
             'answer' => $this->faker->paragraph, // Random answer

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Illuminate\Support\Str;
 use App\Models\Package;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -19,7 +20,10 @@ class PackageFactory extends Factory
 
     public function definition(): array
     {
+        $title = $this->faker->unique()->sentence();
         return [
+            'title' => $title,
+            'slug' => Str::slug($title),
             'price' => $this->faker->randomFloat(2, 10, 1000), // Generates a price with 2 decimal places between 10 and 1000
             'duration' => $this->faker->optional()->numberBetween(1, 30), // Optional duration between 1 and 30
             'duration_type' => $this->faker->randomElement(['hours', 'days']), // Randomly assign 'hours' or 'days'

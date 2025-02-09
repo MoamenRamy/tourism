@@ -20,7 +20,7 @@ class Transportation_include_translationSeeder extends Seeder
         foreach (Transportation_include::all() as $include) {
             foreach ($locales as $locale) {
                 Transportation_includeTranslation::factory()->create([
-                    'include_id' => $include->id,
+                    'transportation_include_id' => $include->id,
                     'locale' => $locale,
                 ]);
             }

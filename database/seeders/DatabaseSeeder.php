@@ -37,7 +37,7 @@ class DatabaseSeeder extends Seeder
         $this->call(Common_question_translationSeeder::class);
         $this->call(Common_question_tourSeeder::class);
         $this->call(RateSeeder::class);
-        $this->call(Rate_translationSeeder::class);
+        // $this->call(Rate_translationSeeder::class);
         $this->call(SaleSeeder::class);
         $this->call(Include_serviceSeeder::class);
         $this->call(Include_service_translationSeeder::class);
@@ -65,8 +65,8 @@ class DatabaseSeeder extends Seeder
         $this->call(AlertSeeder::class);
         $this->call(Tour_detailSeeder::class);
         $this->call(Tour_detail_translationSeeder::class);
-        $this->call(TourSectionSeeder::class);
-        $this->call(TourSectionTranslationSeeder::class);
+        // $this->call(TourSectionSeeder::class);
+        // $this->call(TourSectionTranslationSeeder::class);
         $this->call(PackageReservationSeeder::class);
     }
 }

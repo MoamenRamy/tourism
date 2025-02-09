@@ -13,7 +13,8 @@ class NationalityController extends Controller
      */
     public function index()
     {
-        //
+        $nationality = Nationality::all();
+        return view('nationality.index', compact('nationality'));
     }
 
     /**

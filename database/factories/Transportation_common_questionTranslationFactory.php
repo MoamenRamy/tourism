@@ -21,7 +21,7 @@ class Transportation_common_questionTranslationFactory extends Factory
     public function definition(): array
     {
         return [
-            'question_id' => Transportation_common_question::factory(), // Create a related TransportationCommon
+            'transportation_common_question_id' => Transportation_common_question::factory(), // Create a related TransportationCommon
             'locale' => $this->faker->randomElement(['en', 'fr', 'es', 'de', 'ar']), // Random locale code
             'question' => $this->faker->sentence, // Random question
             'answer' => $this->faker->paragraph, // Random answer

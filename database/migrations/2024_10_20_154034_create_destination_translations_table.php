@@ -17,7 +17,6 @@ return new class extends Migration
             $table->unsignedBigInteger('destination_id');
             $table->string('locale')->index();
 
-            $table->string('name');
             $table->text('description')->nullable();
 
             $table->unique(['destination_id', 'locale']);

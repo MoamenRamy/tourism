@@ -13,6 +13,6 @@ class Package_serviceSeeder extends Seeder
      */
     public function run(): void
     {
-        Package_service::factory(50)->create(); // Create 50 package service records
+        Package_service::factory(20)->create(); // Create 50 package service records
     }
 }

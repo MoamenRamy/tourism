@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Illuminate\Support\Str;
 use App\Models\Currency;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -19,10 +20,16 @@ class CurrencyFactory extends Factory
 
     public function definition(): array
     {
+        do {
+            $code = strtoupper(Str::random(3)); // Generate a random 3-letter code
+        } while (Currency::where('code', $code)->exists()); // Check if the code already exists
+        $slug = Str::slug($code);
+
         return [
-            'code' => $this->faker->currencyCode, // Generate random currency code like USD, EUR
-            'symbol' => $this->faker->randomElement(['$', '€', '£', '¥', '₹']), // Random symbols
-            'exchange_rate' => $this->faker->randomFloat(2, 0.5, 100), // Random exchange rate between 0.5 and 100
+            'code' => $code,
+            'slug' => $slug,
+            'symbol' => $this->faker->randomElement(['$', '€', '£', '¥', '₹']),
+            'exchange_rate' => $this->faker->randomFloat(2, 0.5, 100),
         ];
     }
 }

@@ -21,7 +21,7 @@ class Transportation_additional_serviceTranslationFactory extends Factory
     public function definition(): array
     {
         return [
-            'additional_id' => Transportation_additional_service::factory(), // Creates a new additional if none exists
+            'transportation_additional_service_id' => Transportation_additional_service::factory(), // Creates a new additional if none exists
             'locale' => $this->faker->randomElement(['en', 'fr', 'es', 'de', 'ar']), // Random locale code
             'name' => $this->faker->word,  // Random name for the service
             'description' => $this->faker->text,  // Random description

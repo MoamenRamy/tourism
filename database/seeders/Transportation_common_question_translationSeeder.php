@@ -20,7 +20,7 @@ class Transportation_common_question_translationSeeder extends Seeder
         foreach (Transportation_common_question::all() as $commonQuestion) {
             foreach ($locales as $locale) {
                 Transportation_common_questionTranslation::factory()->create([
-                    'question_id' => $commonQuestion->id,
+                    'transportation_common_question_id' => $commonQuestion->id,
                     'locale' => $locale,
                 ]);
             }

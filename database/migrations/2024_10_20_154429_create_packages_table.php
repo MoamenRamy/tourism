@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('packages', function (Blueprint $table) {
             $table->id();
+            $table->string('slug')->unique();
+            $table->string('title')->unique();
 
             $table->decimal('price', 8, 2)->nullable();
             $table->float('duration')->nullable();

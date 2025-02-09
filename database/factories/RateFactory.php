@@ -25,6 +25,7 @@ class RateFactory extends Factory
             'user_id' => User::factory(), // Create related user or use existing one
             'tour_id' => Tour::factory(), // Create related tour or use existing one
             'rating' => $this->faker->numberBetween(1, 5), // Random rating between 1 and 5
+            'comment' => $this->faker->optional()->text(200), // Random comment, nullable
         ];
     }
 }
