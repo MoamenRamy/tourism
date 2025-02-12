@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommonQuestionController;
 use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\DestinationController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\IncludeServiceController;
 use App\Http\Controllers\NationalityController;
 use App\Http\Controllers\RateController;
@@ -24,7 +25,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
+
+Route::get('about', [HomeController::class, 'about'])->name('about');
+Route::get('services', [HomeController::class, 'services'])->name('services');
+Route::get('contact', [HomeController::class, 'contact'])->name('contact');
 
 Route::middleware([
     'auth:sanctum',
