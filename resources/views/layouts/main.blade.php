@@ -102,7 +102,7 @@
                     <div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
                         <div class="navbar-nav ms-auto py-0">
                             <a href="{{route('home')}}" class="nav-item nav-link {{ Request::is('/') ? 'active' : '' }}">Home</a>
-                            <a href="" class="nav-item nav-link {{ Request::is('/destinations') ? 'active' : '' }}">Destination</a>
+                            <a href="{{route('destinations.index')}}" class="nav-item nav-link {{ Request::is('destinations') ? 'active' : '' }}">Destination</a>
                             <a href="{{route('about')}}" class="nav-item nav-link {{ Request::is('about') ? 'active' : '' }}">About</a>
                             <a href="{{route('services')}}" class="nav-item nav-link {{ Request::is('services') ? 'active' : '' }}">Services</a>
                             {{-- <a href="package.html" class="nav-item nav-link">Tour Packages</a>

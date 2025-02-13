@@ -159,7 +159,7 @@
 
   a:hover {
     color: #527a20;
-    text-decoration: underline;
+    text-decoration: none;
   }
 
   a:not([href]):not([class]) {
@@ -4575,6 +4575,17 @@
     padding-left: 0;
     list-style: none;
   }
+
+  .pagination-container .pagination {
+    flex-wrap: wrap; /* Allow pagination links to wrap */
+    justify-content: center; /* Center pagination links */
+}
+
+@media (max-width: 576px) {
+    .pagination-container .pagination li {
+        margin: 2px; /* Reduce spacing on small screens */
+    }
+}
 
   .page-link {
     position: relative;
@@ -9598,7 +9609,7 @@
     align-items: center;
     justify-content: center;
     background: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    border: 1px solid transparent;
     transition: .5s;
     z-index: 1;
   }
@@ -9608,7 +9619,7 @@
     right: 0px;
     bottom: 0px;
     left: 0px;
-    border-width: 30px;
+    /* border-width: 30px; */
   }
 
   .service-item {

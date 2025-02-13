@@ -67,7 +67,9 @@ Route::resource('safeties', SafetyController::class);
 
 Route::resource('sales', SaleController::class);
 
-Route::resource('tours', TourController::class);
+Route::resource('tours', TourController::class)->parameters([
+    'tours' => 'tour:slug'
+]);
 
 // Route::resource('tour-details', TourDetailsController::class);
 Route::get('/tour-details', [TourDetailsController::class, 'index']);
