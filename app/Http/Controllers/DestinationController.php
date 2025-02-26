@@ -111,6 +111,14 @@ class DestinationController extends Controller
     public function destroy(Destination $destination)
     {
         $destination->delete();
-        return redirect()->route('destinations.index')->with('success', 'Destination deleted successfully');
+        return redirect()->back()->with('flash_message', 'Destination deleted successfully');
+    }
+
+    // admin
+
+    public function adminIndex()
+    {
+        $destinations = Destination::with('translations')->get();
+        return view('admin.destinations.index', compact('destinations'));
     }
 }

@@ -84,7 +84,7 @@
                     <div class="destination-item position-relative overflow-hidden mb-2">
                         <img class="img-fluid" src="{{asset('img/destination-1.jpg')}}" alt="" loading="lazy">
                         {{-- <img class="img-fluid" src="{{asset('destination/'$destination->photo)}}" alt="" loading="lazy"> --}}
-                        <a class="destination-overlay text-white text-decoration-none" href="{{route('destinations.show', $destination->slug)}}">
+                        <a class="destination-overlay text-white text-decoration-none" href="{{route('tours.getByDestination', $destination->slug)}}">
                             <h5 class="text-white">{{$destination->name}}</h5>
                             <span>100 Cities</span>
                         </a>

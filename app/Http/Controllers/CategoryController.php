@@ -117,4 +117,12 @@ class CategoryController extends Controller
         $category->delete();
         return redirect()->route('categories.index')->with('success', 'Category deleted successfully');
     }
+
+    // admin
+
+    public function adminIndex()
+    {
+        $categories = Category::with('translations')->paginate(12);
+        return view('admin.categories.index', compact('categories'));
+    }
 }

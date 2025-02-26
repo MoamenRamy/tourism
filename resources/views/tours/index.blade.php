@@ -82,26 +82,29 @@
                 @foreach ($tours as $tour)
                 <div class="col-lg-4 col-md-6 mb-4">
                         <a href="{{route('tours.show', $tour->slug)}}">
-                        <div class="package-item bg-white mb-2">
-                            <img class="img-fluid" src="{{asset('img/package-1.jpg')}}" alt="" loading="lazy">
-                            {{-- add main photo to tour --}}
-                            {{-- <img class="img-fluid" src="{{asset('tours/'.$tour->photo)}}" alt="" loading="lazy"> --}}
-                            <div class="p-4">
-                                <div class="d-flex justify-content-between mb-3">
-                                    <small class="m-0"><i class="fa fa-map-marker-alt text-primary mr-2"></i>{{$tour->destination->name}}</small>
-                                    <small class="m-0"><i class="fa fa-calendar-alt text-primary mr-2"></i>{{$tour->duration}} {{$tour->duration_type}}</small>
-                                    {{-- <small class="m-0"><i class="fa fa-user text-primary mr-2"></i>2 Person</small> --}}
-                                </div>
-                                <a class="h5 text-decoration-none" href="">{{ Str::limit($tour->defination, 50) }}</a>
-                                <div class="border-top mt-4 pt-4">
-                                    <div class="d-flex justify-content-between">
-                                        {{-- add dynamic reviews --}}
-                                        <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small></h6>
-                                        <h5 class="m-0">${{$tour->price}}</h5>
+                            <div class="package-item bg-white mb-2">
+                                <img class="img-fluid" src="{{asset('img/package-1.jpg')}}" alt="" loading="lazy">
+                                {{-- add main photo to tour --}}
+                                {{-- <img class="img-fluid" src="{{asset('tours/'.$tour->photo)}}" alt="" loading="lazy"> --}}
+                                <div class="p-4">
+                                    <div class="d-flex justify-content-between mb-3">
+                                        <small class="m-0"><i class="fa fa-map-marker-alt text-primary mr-2"></i>{{$tour->destination->name}}</small>
+                                        <small class="m-0"><i class="fa fa-calendar-alt text-primary mr-2"></i>{{$tour->duration}} {{$tour->duration_type}}</small>
+                                        {{-- <small class="m-0"><i class="fa fa-user text-primary mr-2"></i>2 Person</small> --}}
+                                    </div>
+                                    <a class="h5 text-decoration-none" href="{{route('tours.show', $tour->slug)}}">{{ Str::limit($tour->defination, 50) }}</a>
+                                    <div class="border-top mt-4 pt-4">
+                                        <a href="{{route('tours.show', $tour->slug)}}">
+                                        <div class="d-flex justify-content-between">
+                                            {{-- add dynamic reviews --}}
+                                                <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small></h6>
+                                                <h5 class="m-0">${{$tour->price}}</h5>
+                                            </div>
+                                        </a>
                                     </div>
                                 </div>
+
                             </div>
-                        </div>
                     </a>
                     </div>
                 @endforeach

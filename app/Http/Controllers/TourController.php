@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Destination;
 use App\Models\Tour;
 use App\Models\TourTranslation;
 use Illuminate\Http\Request;
@@ -142,5 +143,12 @@ class TourController extends Controller
     {
         $tour->delete();
         return redirect()->route('tours.index')->with('success', 'تم حذف الرحلة بنجاح');
+    }
+
+    public function get_tours_by_destination($slug)
+    {
+        $destination = Destination::where('slug', $slug)->firstOrFail();
+        $tours = Tour::where('destination_id', $destination->id)->paginate(12);
+        return view('destinations.show', compact('tours', 'destination'));
     }
 }

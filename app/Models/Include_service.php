@@ -14,4 +14,9 @@ class Include_service extends Model implements TranslatableContract
 
     public $translatedAttributes = ['name'];
     protected $guarded = ['id'];
+
+    public function tours()
+    {
+        return $this->hasMany(Tour::class);
+    }
 }

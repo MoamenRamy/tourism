@@ -22,24 +22,29 @@ use App\Http\Controllers\TransportationIncludeController;
 use App\Http\Controllers\TransportationSaleController;
 use App\Http\Controllers\VehicleController;
 use Illuminate\Support\Facades\Route;
+use PHPUnit\Framework\MockObject\Rule\Parameters;
 
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
+Route::get('/dashboard', function(){
+    return view('admin.index');
+})->name('dashboard');
+
 Route::get('about', [HomeController::class, 'about'])->name('about');
 Route::get('services', [HomeController::class, 'services'])->name('services');
 Route::get('contact', [HomeController::class, 'contact'])->name('contact');
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-});
+// Route::middleware([
+//     'auth:sanctum',
+//     config('jetstream.auth_session'),
+//     'verified',
+// ])->group(function () {
+//     Route::get('/dashboard', function () {
+//         return view('dashboard');
+//     })->name('dashboard');
+// });
 
 Route::resource('additional-services', AdditionalServiceController::class);
 
@@ -56,6 +61,12 @@ Route::resource('currencies', CurrencyController::class)->parameters([
 Route::resource('destinations', DestinationController::class)->parameters([
     'destinations' => 'destination:slug'
 ]);
+
+Route::get('destination/{slug}/tours', [TourController::class, 'get_tours_by_destination'])
+    ->name('tours.getByDestination');
+
+Route::get('admin/destination', [DestinationController::class, 'adminIndex'])->name('admin.destination.index');
+
 
 Route::resource('include-services', IncludeServiceController::class);
 

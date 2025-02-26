@@ -86,4 +86,14 @@ class Tour extends Model implements TranslatableContract
     {
         return $this->belongsToMany(Package::class, 'package_services');
     }
+
+    public function include_services()
+    {
+        return $this->hasMany(Include_service::class)->where('include', 1);
+    }
+
+    public function not_include_services()
+    {
+        return $this->hasMany(Include_service::class)->where('include', 0);
+    }
 }
