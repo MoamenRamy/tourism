@@ -6,7 +6,7 @@
 @endsection
 
 @section('heading')
-Destinaitons
+Common Questions
 @endsection
 
 @section('content')
@@ -17,22 +17,20 @@ Destinaitons
                 <thead>
                     <tr>
                         <th>id</th>
-                        <th>name</th>
-                        <th>description</th>
-                        <th>photo</th>
+                        <th>question</th>
+                        <th>answer</th>
                         <th>options</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($destinations as $destination)
+                    @foreach ($questions as $question)
                         <tr>
-                            <td>{{$destination->id}}</td>
-                            <td>{{$destination->name}}</td>
-                            <td>{{$destination->description}}</td>
-                            <td>{{$destination->photo}}</td>
-                            {{-- show photos --}}
+                            <td>{{$question->id}}</td>
+                            <td>{{$question->question}}</td>
+                            <td>{{$question->answer}}</td>
+
                             <td>
-                                <form method="POST" action="{{route('destinations.destroy', $destination)}}" style="display: inline-block">
+                                <form method="POST" action="{{route('common-questions.destroy', $question)}}" style="display: inline-block">
                                     @method('delete')
                                     @csrf
                                     <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i>Delete</button>

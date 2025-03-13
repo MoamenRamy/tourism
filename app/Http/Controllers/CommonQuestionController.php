@@ -95,4 +95,12 @@ class CommonQuestionController extends Controller
         $commonQuestion->delete();
         return redirect()->route('common_questions.index')->with('success', 'Question deleted successfully');
     }
+
+        // admin
+
+        public function adminIndex()
+        {
+            $questions = Common_question::with('translations')->get();
+            return view('admin.common_questions.index', compact('questions'));
+        }
 }

@@ -6,7 +6,7 @@
 @endsection
 
 @section('heading')
-Destinaitons
+Categories
 @endsection
 
 @section('content')
@@ -18,21 +18,23 @@ Destinaitons
                     <tr>
                         <th>id</th>
                         <th>name</th>
+                        <th>title</th>
                         <th>description</th>
                         <th>photo</th>
                         <th>options</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($destinations as $destination)
+                    @foreach ($categories as $category)
                         <tr>
-                            <td>{{$destination->id}}</td>
-                            <td>{{$destination->name}}</td>
-                            <td>{{$destination->description}}</td>
-                            <td>{{$destination->photo}}</td>
+                            <td>{{$category->id}}</td>
+                            <td>{{$category->name}}</td>
+                            <td>{{$category->title}}</td>
+                            <td>{{$category->description}}</td>
+                            <td>{{$category->photo}}</td>
                             {{-- show photos --}}
                             <td>
-                                <form method="POST" action="{{route('destinations.destroy', $destination)}}" style="display: inline-block">
+                                <form method="POST" action="{{route('categories.destroy', $category)}}" style="display: inline-block">
                                     @method('delete')
                                     @csrf
                                     <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i>Delete</button>

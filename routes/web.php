@@ -47,12 +47,16 @@ Route::get('contact', [HomeController::class, 'contact'])->name('contact');
 // });
 
 Route::resource('additional-services', AdditionalServiceController::class);
+Route::get('admin/additional-services', [AdditionalServiceController::class, 'adminIndex'])->name('admin.additional-services.index');
 
 Route::resource('categories', CategoryController::class)->parameters([
     'categories' => 'category:slug'
 ]);
+Route::get('admin/categories', [CategoryController::class, 'adminIndex'])->name('admin.categories.index');
+
 
 Route::resource('common-questions', CommonQuestionController::class);
+Route::get('admin/common-questions', [CommonQuestionController::class, 'adminIndex'])->name('admin.common-questions.index');
 
 Route::resource('currencies', CurrencyController::class)->parameters([
     'currencies' => 'currency:slug'
@@ -61,12 +65,9 @@ Route::resource('currencies', CurrencyController::class)->parameters([
 Route::resource('destinations', DestinationController::class)->parameters([
     'destinations' => 'destination:slug'
 ]);
-
 Route::get('destination/{slug}/tours', [TourController::class, 'get_tours_by_destination'])
-    ->name('tours.getByDestination');
-
+->name('tours.getByDestination');
 Route::get('admin/destination', [DestinationController::class, 'adminIndex'])->name('admin.destination.index');
-
 
 Route::resource('include-services', IncludeServiceController::class);
 
@@ -81,6 +82,7 @@ Route::resource('sales', SaleController::class);
 Route::resource('tours', TourController::class)->parameters([
     'tours' => 'tour:slug'
 ]);
+Route::get('admin/tours', [TourController::class, 'adminIndex'])->name('admin.tours.index');
 
 // Route::resource('tour-details', TourDetailsController::class);
 Route::get('/tour-details', [TourDetailsController::class, 'index']);

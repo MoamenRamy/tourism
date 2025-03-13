@@ -103,4 +103,12 @@ class AdditionalServiceController extends Controller
         $additionalService->delete();
         return redirect()->route('additional-services.index')->with('success', 'Service deleted successfully');
     }
+
+    // admin
+
+    public function adminIndex()
+    {
+        $additionalServices = Additional_service::with('translations')->get();
+        return view('admin.additional_services.index', compact('additionalServices'));
+    }
 }

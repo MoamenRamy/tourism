@@ -6,7 +6,7 @@
 @endsection
 
 @section('heading')
-Destinaitons
+Additional Services
 @endsection
 
 @section('content')
@@ -19,20 +19,20 @@ Destinaitons
                         <th>id</th>
                         <th>name</th>
                         <th>description</th>
-                        <th>photo</th>
+                        <th>price</th>
                         <th>options</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($destinations as $destination)
+                    @foreach ($additionalServices as $additionalService)
                         <tr>
-                            <td>{{$destination->id}}</td>
-                            <td>{{$destination->name}}</td>
-                            <td>{{$destination->description}}</td>
-                            <td>{{$destination->photo}}</td>
-                            {{-- show photos --}}
+                            <td>{{$additionalService->id}}</td>
+                            <td>{{$additionalService->name}}</td>
+                            <td>{{$additionalService->description}}</td>
+                            <td>{{$additionalService->price}}</td>
+
                             <td>
-                                <form method="POST" action="{{route('destinations.destroy', $destination)}}" style="display: inline-block">
+                                <form method="POST" action="{{route('additional-services.destroy', $additionalService)}}" style="display: inline-block">
                                     @method('delete')
                                     @csrf
                                     <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i>Delete</button>

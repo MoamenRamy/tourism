@@ -6,33 +6,66 @@
 @endsection
 
 @section('heading')
-Destinaitons
+Tours
 @endsection
 
 @section('content')
 
-    <div class="row">
+    <div class="row table-responsive">
         <div class="col-md-12">
             <table id="books-table" class="table table-striped table-bordered" width="100%" cellspacing="0">
                 <thead>
                     <tr>
                         <th>id</th>
                         <th>name</th>
+                        <th>title</th>
+                        <th>defination</th>
                         <th>description</th>
-                        <th>photo</th>
+                        <th>destination</th>
+                        <th>category</th>
+                        <th>price</th>
+                        <th>duration</th>
+                        <th>duration_type</th>
+                        <th>rating</th>
+                        <th>available</th>
+                        <th>additional_info</th>
+                        <th>max_tickets_per_day</th>
+                        <th>count</th>
+                        <th>pin</th>
                         <th>options</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($destinations as $destination)
+                    @foreach ($tours as $tour)
                         <tr>
-                            <td>{{$destination->id}}</td>
-                            <td>{{$destination->name}}</td>
-                            <td>{{$destination->description}}</td>
-                            <td>{{$destination->photo}}</td>
-                            {{-- show photos --}}
+                            <td>{{$tour->id}}</td>
+                            <td>{{$tour->name}}</td>
+                            <td>{{$tour->title}}</td>
+                            <td>{{$tour->defination}}</td>
+                            <td>{{$tour->description}}</td>
+                            <td>{{$tour->destination->name}}</td>
+                            <td>{{$tour->category->title}}</td>
+                            <td>{{$tour->price}}</td>
+                            <td>{{$tour->duration}}</td>
+                            <td>{{$tour->duration_type}}</td>
+                            <td>{{$tour->rating}}</td>
+                            <td>{{$tour->available}}</td>
+                            <td>{{$tour->additional_info}}</td>
+                            <td>{{$tour->max_tickets_per_day}}</td>
+                            {{-- <td>{{$tour->longitude}}</td> --}}
+                            {{-- <td>{{$tour->latitude}}</td> --}}
+                            <td>{{$tour->count}}</td>
+                            <td>{{$tour->pin}}</td>
+
+
+                            {{-- Add --}}
+
+                            {{-- photos --}}
+                            {{-- details --}}
+                            {{-- include --}}
+
                             <td>
-                                <form method="POST" action="{{route('destinations.destroy', $destination)}}" style="display: inline-block">
+                                <form method="POST" action="{{route('tours.destroy', $tour)}}" style="display: inline-block">
                                     @method('delete')
                                     @csrf
                                     <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i>Delete</button>

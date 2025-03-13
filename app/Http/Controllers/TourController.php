@@ -151,4 +151,14 @@ class TourController extends Controller
         $tours = Tour::where('destination_id', $destination->id)->paginate(12);
         return view('destinations.show', compact('tours', 'destination'));
     }
+
+    //admin
+
+    public function adminIndex()
+    {
+        $tours = Tour::with('translations')->get();
+        // error when get obj without name
+        
+        return view('admin.tours.index', compact('tours'));
+    }
 }

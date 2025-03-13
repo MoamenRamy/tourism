@@ -122,7 +122,7 @@ class CategoryController extends Controller
 
     public function adminIndex()
     {
-        $categories = Category::with('translations')->paginate(12);
+        $categories = Category::with('translations')->get();
         return view('admin.categories.index', compact('categories'));
     }
 }

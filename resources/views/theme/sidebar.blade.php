@@ -39,6 +39,34 @@
                 </a>
             </li>
 
+            <li class="nav-item {{ request()->is('admin/categories*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{route('admin.categories.index')}}">
+                    <i class="fas fa-book-open"></i>
+                    <span>Category</span>
+                </a>
+            </li>
+
+            <li class="nav-item {{ request()->is('admin/tours*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{route('admin.tours.index')}}">
+                    <i class="fas fa-book-open"></i>
+                    <span>Tour</span>
+                </a>
+            </li>
+
+            <li class="nav-item {{ request()->is('admin/common-questions*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{route('admin.common-questions.index')}}">
+                    <i class="fas fa-book-open"></i>
+                    <span>Common Question</span>
+                </a>
+            </li>
+
+            <li class="nav-item {{ request()->is('admin/additional-services*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{route('admin.additional-services.index')}}">
+                    <i class="fas fa-book-open"></i>
+                    <span>Additional Services</span>
+                </a>
+            </li>
+
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
