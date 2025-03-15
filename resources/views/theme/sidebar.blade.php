@@ -67,6 +67,27 @@
                 </a>
             </li>
 
+            <li class="nav-item {{ request()->is('admin/safeties*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{route('admin.safeties.index')}}">
+                    <i class="fas fa-book-open"></i>
+                    <span>Safety</span>
+                </a>
+            </li>
+
+            <li class="nav-item {{ request()->is('admin/rates*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{route('admin.rates.index')}}">
+                    <i class="fas fa-book-open"></i>
+                    <span>Rates</span>
+                </a>
+            </li>
+
+            <li class="nav-item {{ request()->is('admin/tour-reservations*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{route('admin.tour-reservations.index')}}">
+                    <i class="fas fa-book-open"></i>
+                    <span>Tours Reservations</span>
+                </a>
+            </li>
+
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">

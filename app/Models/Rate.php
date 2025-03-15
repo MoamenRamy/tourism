@@ -16,4 +16,9 @@ class Rate extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function tour()
+    {
+        return $this->belongsTo(Tour::class);
+    }
 }

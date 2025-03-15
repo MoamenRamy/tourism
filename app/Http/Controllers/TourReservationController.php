@@ -63,4 +63,12 @@ class TourReservationController extends Controller
     {
         //
     }
+
+    // admin
+
+    public function adminIndex()
+    {
+        $tourReservations = Tour_reservation::all();
+        return view('admin.tour_reservations.index', compact('tourReservations'));
+    }
 }

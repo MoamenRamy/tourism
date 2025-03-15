@@ -50,4 +50,12 @@ class RateController extends Controller
         $rate->delete();
         return redirect()->route('rates.index')->with('success', 'Rate deleted successfully');
     }
+
+    // admin
+
+    public function adminIndex()
+    {
+        $rates = Rate::all();
+        return view('admin.rates.index', compact('rates'));
+    }
 }

@@ -15,6 +15,7 @@ use App\Http\Controllers\TestController;
 use App\Http\Controllers\TourController;
 use App\Http\Controllers\TourDetailsController;
 use App\Http\Controllers\TourPhotoController;
+use App\Http\Controllers\TourReservationController;
 use App\Http\Controllers\TransportationAdditionalController;
 use App\Http\Controllers\TransportationCommonController;
 use App\Http\Controllers\TransportationController;
@@ -74,8 +75,10 @@ Route::resource('include-services', IncludeServiceController::class);
 Route::get('nationalities', [NationalityController::class, 'index']);
 
 Route::resource('rates', RateController::class);
+Route::get('admin/rates', [RateController::class, 'adminIndex'])->name('admin.rates.index');
 
 Route::resource('safeties', SafetyController::class);
+Route::get('admin/safeties', [SafetyController::class, 'adminIndex'])->name('admin.safeties.index');
 
 Route::resource('sales', SaleController::class);
 
@@ -86,10 +89,12 @@ Route::get('admin/tours', [TourController::class, 'adminIndex'])->name('admin.to
 
 // Route::resource('tour-details', TourDetailsController::class);
 Route::get('/tour-details', [TourDetailsController::class, 'index']);
-Route::get('/test', [TestController::class, 'test']);
-
+// Route::get('/test', [TestController::class, 'test']);
 
 Route::resource('tour-photos', TourPhotoController::class);
+
+Route::resource('tour-reservations', TourReservationController::class);
+Route::get('admin/tour-reservations', [TourReservationController::class, 'adminIndex'])->name('admin.tour-reservations.index');
 
 Route::resource('transportation_additional', TransportationAdditionalController::class);
 

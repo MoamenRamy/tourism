@@ -94,4 +94,12 @@ class SafetyController extends Controller
         $safety->delete();
         return redirect()->route('safeties.index')->with('success', 'Safety deleted successfully');
     }
+
+    // admin
+
+    public function adminIndex()
+    {
+        $safeties = Safety::with('translations')->get();
+        return view('admin.safeties.index', compact('safeties'));
+    }
 }
