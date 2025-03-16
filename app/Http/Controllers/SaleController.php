@@ -89,4 +89,12 @@ class SaleController extends Controller
         $sale->delete();
         return redirect()->route('sales.index')->with('success', 'Sale deleted successfully');
     }
+
+    // admin
+
+    public function adminIndex()
+    {
+        $sales = Sale::all();
+        return view('admin.sales.index', compact('sales'));
+    }
 }

@@ -134,4 +134,12 @@ class VehicleController extends Controller
 
         return redirect()->route('vehicles.index')->with('success', 'تم حذف المركبة بنجاح');
     }
+
+    // admin
+
+    public function adminIndex()
+    {
+        $vehicles = Vehicle::with('translations')->get();
+        return view('admin.vehicles.index', compact('vehicles'));
+    }
 }

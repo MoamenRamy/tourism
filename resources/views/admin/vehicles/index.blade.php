@@ -6,41 +6,39 @@
 @endsection
 
 @section('heading')
-Rates
+Vehicles
 @endsection
 
 @section('content')
 
-    <div class="row">
+    <div class="row table-responsive">
         <div class="col-md-12">
             <table id="books-table" class="table table-striped table-bordered" width="100%" cellspacing="0">
                 <thead>
                     <tr>
                         <th>id</th>
-                        <th>user</th>
-                        <th>tour</th>
-                        <th>rate</th>
-                        <th>comment</th>
+                        <th>name</th>
+                        <th>model</th>
+                        <th>year</th>
+                        <th>car load</th>
+                        <th>photo</th>
+                        <th>created at</th>
                         <th>options</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($rates as $rate)
+                    @foreach ($vehicles as $vehicle)
                         <tr>
-                            <td>{{$rate->id}}</td>
-                            <td>{{$rate->user->name}}</td>
-
-                            @if ($rate->tour())
-                                <td>{{$rate->tour->title}}</td>
-                            @else
-                                <td>not found</td>
-                            @endif
-
-                            <td>{{$rate->rating}}</td>
-                            <td>{{$rate->comment}}</td>
+                            <td>{{$vehicle->id}}</td>
+                            <td>{{$vehicle->name}}</td>
+                            <td>{{$vehicle->model}}</td>
+                            <td>{{$vehicle->year}}</td>
+                            <td>{{$vehicle->car_load}}</td>
+                            <td>{{$vehicle->photo}}</td>
+                            <td>{{$vehicle->created_at}}</td>
 
                             <td>
-                                <form method="POST" action="{{route('rates.destroy', $rate)}}" style="display: inline-block">
+                                <form method="POST" action="{{route('vehicles.destroy', $vehicle)}}" style="display: inline-block">
                                     @method('delete')
                                     @csrf
                                     <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i>Delete</button>
@@ -71,7 +69,7 @@ Rates
                 "order": [[0, "asc"]],
                 "columnDefs": [
                     { "type": "num", "targets": 0 },
-                    { "orderable": false, "targets": 2 } // Corrected index
+                    // { "orderable": false, "targets": 0 } // Corrected index
                 ],
                 "paging": true,
                 "searching": true,

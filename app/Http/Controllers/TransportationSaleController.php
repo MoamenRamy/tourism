@@ -89,4 +89,12 @@ class TransportationSaleController extends Controller
         $transportationSale->delete();
         return redirect()->route('transportation_sales.index')->with('success', 'تم حذف العرض بنجاح');
     }
+
+    // admin
+
+    public function adminIndex()
+    {
+        $sales = Transportation_sale::all();
+        return view('admin.transportation_sales.index', compact('sales'));
+    }
 }

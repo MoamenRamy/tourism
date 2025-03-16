@@ -59,9 +59,9 @@ Categories
             }
 
             $('#books-table').DataTable({
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.13.4/i18n/ar.json"
-                },
+                // "language": {
+                //     "url": "//cdn.datatables.net/plug-ins/1.13.4/i18n/ar.json"
+                // },
                 "order": [[0, "asc"]],
                 "columnDefs": [
                     { "type": "num", "targets": 0 },

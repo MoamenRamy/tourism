@@ -81,6 +81,7 @@ Route::resource('safeties', SafetyController::class);
 Route::get('admin/safeties', [SafetyController::class, 'adminIndex'])->name('admin.safeties.index');
 
 Route::resource('sales', SaleController::class);
+Route::get('admin/sales', [SaleController::class, 'adminIndex'])->name('admin.sales.index');
 
 Route::resource('tours', TourController::class)->parameters([
     'tours' => 'tour:slug'
@@ -97,13 +98,18 @@ Route::resource('tour-reservations', TourReservationController::class);
 Route::get('admin/tour-reservations', [TourReservationController::class, 'adminIndex'])->name('admin.tour-reservations.index');
 
 Route::resource('transportation_additional', TransportationAdditionalController::class);
+Route::get('admin/transportation_additional', [TransportationAdditionalController::class, 'adminIndex'])->name('admin.transportation_additional.index');
 
 Route::resource('transportations', TransportationController::class);
+Route::get('admin/transportations', [TransportationController::class, 'adminIndex'])->name('admin.transportations.index');
 
 Route::resource('transportation_questions', TransportationCommonController::class);
+Route::get('admin/transportation_questions', [TransportationCommonController::class, 'adminIndex'])->name('admin.transportation_questions.index');
 
 Route::resource('transportation_include', TransportationIncludeController::class);
 
 Route::resource('transportation_sales', TransportationSaleController::class);
+Route::get('admin/transportation_sales', [TransportationSaleController::class, 'adminIndex'])->name('admin.transportation_sales.index');
 
 Route::resource('vehicles', VehicleController::class);
+Route::get('admin/vehicles', [VehicleController::class, 'adminIndex'])->name('admin.vehicles.index');

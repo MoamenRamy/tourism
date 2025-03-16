@@ -6,41 +6,43 @@
 @endsection
 
 @section('heading')
-Rates
+Sales
 @endsection
 
 @section('content')
 
-    <div class="row">
+    <div class="row table-responsive">
         <div class="col-md-12">
             <table id="books-table" class="table table-striped table-bordered" width="100%" cellspacing="0">
                 <thead>
                     <tr>
                         <th>id</th>
-                        <th>user</th>
-                        <th>tour</th>
-                        <th>rate</th>
-                        <th>comment</th>
+                        <th>tour ID</th>
+                        <th>tour name</th>
+                        <th>discount percentage</th>
+                        <th>discount amount</th>
+                        <th>discount start date</th>
+                        <th>discount end date</th>
+                        <th>active</th>
+                        <th>created at</th>
                         <th>options</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($rates as $rate)
+                    @foreach ($sales as $sale)
                         <tr>
-                            <td>{{$rate->id}}</td>
-                            <td>{{$rate->user->name}}</td>
-
-                            @if ($rate->tour())
-                                <td>{{$rate->tour->title}}</td>
-                            @else
-                                <td>not found</td>
-                            @endif
-
-                            <td>{{$rate->rating}}</td>
-                            <td>{{$rate->comment}}</td>
+                            <td>{{$sale->id}}</td>
+                            <td>{{$sale->tour_id}}</td>
+                            <td>{{$sale->tour->title}}</td>
+                            <td>{{$sale->discount_percentage}}</td>
+                            <td>{{$sale->discount_amount}}</td>
+                            <td>{{$sale->discount_start_date}}</td>
+                            <td>{{$sale->discount_end_date}}</td>
+                            <td>{{$sale->active}}</td>
+                            <td>{{$sale->created_at}}</td>
 
                             <td>
-                                <form method="POST" action="{{route('rates.destroy', $rate)}}" style="display: inline-block">
+                                <form method="POST" action="{{route('transportation_sales.destroy', $sale)}}" style="display: inline-block">
                                     @method('delete')
                                     @csrf
                                     <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i>Delete</button>
@@ -71,7 +73,7 @@ Rates
                 "order": [[0, "asc"]],
                 "columnDefs": [
                     { "type": "num", "targets": 0 },
-                    { "orderable": false, "targets": 2 } // Corrected index
+                    { "orderable": false, "targets": 0 } // Corrected index
                 ],
                 "paging": true,
                 "searching": true,

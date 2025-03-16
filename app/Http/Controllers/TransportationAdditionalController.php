@@ -110,4 +110,12 @@ class TransportationAdditionalController extends Controller
         $transportationAdditional->delete();
         return redirect()->route('transportation_additionals.index')->with('success', 'Transportation Additional deleted successfully.');
     }
+
+    // admin
+
+    public function adminIndex()
+    {
+        $transportationAdditionals = Transportation_additional_service::with('translations')->get();
+        return view('admin.transportation_additional.index', compact('transportationAdditionals'));
+    }
 }

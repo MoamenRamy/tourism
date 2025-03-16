@@ -88,6 +88,51 @@
                 </a>
             </li>
 
+            <li class="nav-item {{ request()->is('admin/sales*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{route('admin.sales.index')}}">
+                    <i class="fas fa-book-open"></i>
+                    <span>Sales</span>
+                </a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <li class="nav-item {{ request()->is('admin/transportations*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{route('admin.transportations.index')}}">
+                    <i class="fas fa-book-open"></i>
+                    <span>Transportation</span>
+                </a>
+            </li>
+
+            <li class="nav-item {{ request()->is('admin/transportation_additional*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{route('admin.transportation_additional.index')}}">
+                    <i class="fas fa-book-open"></i>
+                    <span>Additional Services</span>
+                </a>
+            </li>
+
+            <li class="nav-item {{ request()->is('admin/vehicles*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{route('admin.vehicles.index')}}">
+                    <i class="fas fa-book-open"></i>
+                    <span>Vehicle</span>
+                </a>
+            </li>
+
+            <li class="nav-item {{ request()->is('admin/transportation_sales*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{route('admin.transportation_sales.index')}}">
+                    <i class="fas fa-book-open"></i>
+                    <span>Sales</span>
+                </a>
+            </li>
+
+            <li class="nav-item {{ request()->is('admin/transportation_questions*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{route('admin.transportation_questions.index')}}">
+                    <i class="fas fa-book-open"></i>
+                    <span>Common Question</span>
+                </a>
+            </li>
+
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">

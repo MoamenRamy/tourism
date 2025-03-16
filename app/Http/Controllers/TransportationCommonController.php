@@ -95,10 +95,18 @@ class TransportationCommonController extends Controller
      * حذف السؤال.
      */
     public function destroy($id)
-{
+    {
         $transportationCommon = Transportation_common_question::findOrFail($id);
 
         $transportationCommon->delete();
-        return redirect()->route('transportation_commons.index')->with('success', 'تم حذف السؤال بنجاح');
+        return redirect()->route('admin.transportation_questions.index')->with('success', 'تم حذف السؤال بنجاح');
+    }
+
+    // admin
+
+    public function adminIndex()
+    {
+        $questions = Transportation_common_question::all();
+        return view('admin.transportation_commons.index', compact('questions'));
     }
 }

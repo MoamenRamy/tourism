@@ -6,41 +6,45 @@
 @endsection
 
 @section('heading')
-Rates
+Transportation
 @endsection
 
 @section('content')
 
-    <div class="row">
+    <div class="row table-responsive">
         <div class="col-md-12">
             <table id="books-table" class="table table-striped table-bordered" width="100%" cellspacing="0">
                 <thead>
                     <tr>
                         <th>id</th>
-                        <th>user</th>
-                        <th>tour</th>
-                        <th>rate</th>
-                        <th>comment</th>
+                        <th>destination</th>
+                        <th>from</th>
+                        <th>to</th>
+                        <th>price</th>
+                        <th>vehicle</th>
+                        <th>available</th>
+                        <th>created at</th>
                         <th>options</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($rates as $rate)
+                    @foreach ($transportations as $transportation)
                         <tr>
-                            <td>{{$rate->id}}</td>
-                            <td>{{$rate->user->name}}</td>
+                            <td>{{$transportation->id}}</td>
+                            <td>{{$transportation->destination->name}}</td>
+                            <td>{{$transportation->from}}</td>
+                            <td>{{$transportation->to}}</td>
+                            <td>{{$transportation->price}}</td>
+                            {{-- <td>{{$transportation->vehicle->translate(app()->getLocale())->name ?? 'N/A'}}</td> --}}
+                            <td>{{$transportation->vehicle->name ?? 'N/A'}}</td>
+                            {{-- {{ dd($transportation->vehicle) }} --}}
+                            <td>{{$transportation->available}}</td>
+                            <td>{{$transportation->created_at}}</td>
 
-                            @if ($rate->tour())
-                                <td>{{$rate->tour->title}}</td>
-                            @else
-                                <td>not found</td>
-                            @endif
-
-                            <td>{{$rate->rating}}</td>
-                            <td>{{$rate->comment}}</td>
+                            {{-- include --}}
 
                             <td>
-                                <form method="POST" action="{{route('rates.destroy', $rate)}}" style="display: inline-block">
+                                <form method="POST" action="{{route('transportations.destroy', $transportation)}}" style="display: inline-block">
                                     @method('delete')
                                     @csrf
                                     <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i>Delete</button>
@@ -71,7 +75,7 @@ Rates
                 "order": [[0, "asc"]],
                 "columnDefs": [
                     { "type": "num", "targets": 0 },
-                    { "orderable": false, "targets": 2 } // Corrected index
+                    { "orderable": false, "targets": 0 } // Corrected index
                 ],
                 "paging": true,
                 "searching": true,

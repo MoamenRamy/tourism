@@ -6,7 +6,7 @@
 @endsection
 
 @section('heading')
-Rates
+Transportation Common Questions
 @endsection
 
 @section('content')
@@ -17,30 +17,20 @@ Rates
                 <thead>
                     <tr>
                         <th>id</th>
-                        <th>user</th>
-                        <th>tour</th>
-                        <th>rate</th>
-                        <th>comment</th>
+                        <th>question</th>
+                        <th>answer</th>
                         <th>options</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($rates as $rate)
+                    @foreach ($questions as $question)
                         <tr>
-                            <td>{{$rate->id}}</td>
-                            <td>{{$rate->user->name}}</td>
-
-                            @if ($rate->tour())
-                                <td>{{$rate->tour->title}}</td>
-                            @else
-                                <td>not found</td>
-                            @endif
-
-                            <td>{{$rate->rating}}</td>
-                            <td>{{$rate->comment}}</td>
+                            <td>{{$question->id}}</td>
+                            <td>{{$question->question}}</td>
+                            <td>{{$question->answer}}</td>
 
                             <td>
-                                <form method="POST" action="{{route('rates.destroy', $rate)}}" style="display: inline-block">
+                                <form method="POST" action="{{route('transportation_questions.destroy', $question)}}" style="display: inline-block">
                                     @method('delete')
                                     @csrf
                                     <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i>Delete</button>
@@ -71,7 +61,7 @@ Rates
                 "order": [[0, "asc"]],
                 "columnDefs": [
                     { "type": "num", "targets": 0 },
-                    { "orderable": false, "targets": 2 } // Corrected index
+                    // { "orderable": false, "targets": 3 } // Corrected index
                 ],
                 "paging": true,
                 "searching": true,

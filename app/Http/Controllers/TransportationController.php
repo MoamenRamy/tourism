@@ -118,4 +118,12 @@ class TransportationController extends Controller
         $transportation->delete();
         return redirect()->route('transportations.index')->with('success', 'Transportation deleted successfully.');
     }
+
+    // admin
+
+    public function adminIndex()
+    {
+        $transportations = Transportation::all();
+        return view('admin.transportations.index', compact('transportations'));
+    }
 }

@@ -63,6 +63,8 @@ Tours Reservations
                             <td>{{$tourReservation->payment_status}}</td>
                             <td>{{$tourReservation->created_at}}</td>
 
+                            {{-- additional reservations --}}
+
                             <td>
                                 <form method="POST" action="{{route('tour-reservations.destroy', $tourReservation)}}" style="display: inline-block">
                                     @method('delete')
@@ -89,9 +91,9 @@ Tours Reservations
             }
 
             $('#books-table').DataTable({
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.13.4/i18n/ar.json"
-                },
+                // "language": {
+                //     "url": "//cdn.datatables.net/plug-ins/1.13.4/i18n/en.json"
+                // },
                 "order": [[0, "asc"]],
                 "columnDefs": [
                     { "type": "num", "targets": 0 },
