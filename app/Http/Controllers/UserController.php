@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Transportation_reservation;
-use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 
-class TransportationReservationController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -35,7 +34,7 @@ class TransportationReservationController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Transportation_reservation $transportation_reservation)
+    public function show(string $id)
     {
         //
     }
@@ -43,7 +42,7 @@ class TransportationReservationController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Transportation_reservation $transportation_reservation)
+    public function edit(string $id)
     {
         //
     }
@@ -51,7 +50,7 @@ class TransportationReservationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Transportation_reservation $transportation_reservation)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -59,17 +58,17 @@ class TransportationReservationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Transportation_reservation $transportation_reservation)
+    public function destroy(string $id)
     {
-        $transportation_reservation->delete();
-        return redirect()->route('admin.transportation_reservations.index');
+        User::findOrFail($id)->delete();
+        return redirect()->route('admin.users.index')->with('flash_message', 'deleted successfuly!');
     }
 
     // admin
 
     public function adminIndex()
     {
-        $reservations = Transportation_reservation::all();
-        return view('admin.transportation_reservations.index', compact('reservations'));
+        $users = User::all();
+        return view('admin.users.index', compact('users'));
     }
 }

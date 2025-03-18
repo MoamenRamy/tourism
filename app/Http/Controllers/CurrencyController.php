@@ -116,4 +116,12 @@ class CurrencyController extends Controller
         $currency->delete();
         return redirect()->route('currencies.index')->with('success', 'Currency deleted successfully');
     }
+
+    // admin
+
+    public function adminIndex()
+    {
+        $currencies = Currency::with('translations')->get();
+        return view('admin.currencies.index', compact('currencies'));
+    }
 }

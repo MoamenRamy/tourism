@@ -6,48 +6,35 @@
 @endsection
 
 @section('heading')
-Users
+currencies
 @endsection
 
 @section('content')
 
-    <div class="row table-responsive">
+    <div class="row">
         <div class="col-md-12">
             <table id="books-table" class="table table-striped table-bordered" width="100%" cellspacing="0">
                 <thead>
                     <tr>
                         <th>id</th>
                         <th>name</th>
-                        <th>email</th>
-                        <th>username</th>
-                        <th>nationality</th>
-                        <th>phone code</th>
-                        <th>phone</th>
-                        <th>currency</th>
-                        <th>language</th>
-                        <th>role</th>
-                        <th>created at</th>
+                        <th>code</th>
+                        <th>symbol</th>
+                        <th>exchange rate</th>
                         <th>options</th>
-
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($users as $user)
+                    @foreach ($currencies as $currency)
                         <tr>
-                            <td>{{$user->id}}</td>
-                            <td>{{$user->name}} {{$user->last_name}}</td>
-                            <td>{{$user->email}}</td>
-                            <td>{{$user->username}}</td>
-                            <td>{{$user->nationality->country_code}}</td>
-                            <td>{{$user->nationality->phone_code}}</td>
-                            <td>{{$user->phone}}</td>
-                            <td>{{$user->currency->code}}</td>
-                            <td>{{$user->language}}</td>
-                            <td>{{$user->role}}</td>
-                            <td>{{$user->created_at}}</td>
-
+                            <td>{{$currency->id}}</td>
+                            <td>{{$currency->name}}</td>
+                            <td>{{$currency->code}}</td>
+                            <td>{{$currency->symbol}}</td>
+                            <td>{{$currency->exchange_rate}}</td>
+                            {{-- show photos --}}
                             <td>
-                                <form method="POST" action="{{route('users.destroy', $user)}}" style="display: inline-block">
+                                <form method="POST" action="{{route('currencies.destroy', $currency)}}" style="display: inline-block">
                                     @method('delete')
                                     @csrf
                                     <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i>Delete</button>
@@ -78,7 +65,7 @@ Users
                 "order": [[0, "asc"]],
                 "columnDefs": [
                     { "type": "num", "targets": 0 },
-                    // { "orderable": false, "targets": 3 } // Corrected index
+                    { "orderable": false, "targets": 3 } // Corrected index
                 ],
                 "paging": true,
                 "searching": true,

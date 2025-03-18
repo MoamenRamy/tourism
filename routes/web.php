@@ -20,8 +20,11 @@ use App\Http\Controllers\TransportationAdditionalController;
 use App\Http\Controllers\TransportationCommonController;
 use App\Http\Controllers\TransportationController;
 use App\Http\Controllers\TransportationIncludeController;
+use App\Http\Controllers\TransportationReservationController;
 use App\Http\Controllers\TransportationSaleController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleController;
+use App\Models\Rate;
 use Illuminate\Support\Facades\Route;
 use PHPUnit\Framework\MockObject\Rule\Parameters;
 
@@ -62,6 +65,7 @@ Route::get('admin/common-questions', [CommonQuestionController::class, 'adminInd
 Route::resource('currencies', CurrencyController::class)->parameters([
     'currencies' => 'currency:slug'
 ]);
+Route::get('admin/currencies', [CurrencyController::class, 'adminIndex'])->name('admin.currencies.index');
 
 Route::resource('destinations', DestinationController::class)->parameters([
     'destinations' => 'destination:slug'
@@ -113,3 +117,9 @@ Route::get('admin/transportation_sales', [TransportationSaleController::class, '
 
 Route::resource('vehicles', VehicleController::class);
 Route::get('admin/vehicles', [VehicleController::class, 'adminIndex'])->name('admin.vehicles.index');
+
+Route::resource('transportation_reservations', TransportationReservationController::class);
+Route::get('admin/transportation_reservations', [TransportationReservationController::class, 'adminIndex'])->name('admin.transportation_reservations.index');
+
+Route::resource('users', UserController::class);
+Route::get('admin/users', [UserController::class, 'adminIndex'])->name('admin.users.index');

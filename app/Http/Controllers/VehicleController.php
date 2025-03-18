@@ -132,7 +132,7 @@ class VehicleController extends Controller
         // حذف المركبة مع الترجمات
         $vehicle->delete();
 
-        return redirect()->route('vehicles.index')->with('success', 'تم حذف المركبة بنجاح');
+        return redirect()->route('vehicles.index')->with('flash_message', 'deleted successfuly!');
     }
 
     // admin

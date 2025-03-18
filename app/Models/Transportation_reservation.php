@@ -23,4 +23,19 @@ class Transportation_reservation extends Model
     {
         return $this->belongsToMany(Transportation_additional_service::class, 'transportation_additional_service_reservation');
     }
+
+    public function transportation()
+    {
+        return $this->belongsTo(Transportation::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function currency()
+    {
+        return $this->belongsTo(Currency::class);
+    }
 }

@@ -133,6 +133,31 @@
                 </a>
             </li>
 
+            <li class="nav-item {{ request()->is('admin/transportation_reservations*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{route('admin.transportation_reservations.index')}}">
+                    <i class="fas fa-book-open"></i>
+                    <span>Reservations</span>
+                </a>
+            </li>
+
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+
+            <li class="nav-item {{ request()->is('admin/currencies*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{route('admin.currencies.index')}}">
+                    <i class="fas fa-book-open"></i>
+                    <span>Currency</span>
+                </a>
+            </li>
+
+            <li class="nav-item {{ request()->is('admin/users*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{route('admin.users.index')}}">
+                    <i class="fas fa-book-open"></i>
+                    <span>Users</span>
+                </a>
+            </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">

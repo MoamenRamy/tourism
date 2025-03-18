@@ -6,7 +6,7 @@
 @endsection
 
 @section('heading')
-Users
+Transportation Reservations
 @endsection
 
 @section('content')
@@ -17,37 +17,51 @@ Users
                 <thead>
                     <tr>
                         <th>id</th>
-                        <th>name</th>
-                        <th>email</th>
-                        <th>username</th>
-                        <th>nationality</th>
-                        <th>phone code</th>
-                        <th>phone</th>
+                        <th>from</th>
+                        <th>to</th>
+                        <th>price</th>
                         <th>currency</th>
-                        <th>language</th>
-                        <th>role</th>
+                        <th>guest</th>
+                        <th>vehicle</th>
+                        <th>user name</th>
+                        <th>name</th>
+                        <th>address</th>
+                        <th>hotel</th>
+                        <th>flight number</th>
+                        <th>reservation date</th>
+                        <th>phone</th>
+                        <th>what's app</th>
+                        <th>note</th>
+                        <th>payment status</th>
                         <th>created at</th>
                         <th>options</th>
 
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($users as $user)
+                    @foreach ($reservations as $reservation)
                         <tr>
-                            <td>{{$user->id}}</td>
-                            <td>{{$user->name}} {{$user->last_name}}</td>
-                            <td>{{$user->email}}</td>
-                            <td>{{$user->username}}</td>
-                            <td>{{$user->nationality->country_code}}</td>
-                            <td>{{$user->nationality->phone_code}}</td>
-                            <td>{{$user->phone}}</td>
-                            <td>{{$user->currency->code}}</td>
-                            <td>{{$user->language}}</td>
-                            <td>{{$user->role}}</td>
-                            <td>{{$user->created_at}}</td>
+                            <td>{{$reservation->id}}</td>
+                            <td>{{$reservation->transportation->from }}</td>
+                            <td>{{$reservation->transportation->to}}</td>
+                            <td>{{$reservation->price}}</td>
+                            <td>{{$reservation->currency->code}}</td>
+                            <td>{{$reservation->guest}}</td>
+                            <td>{{$reservation->transportation->vehicle->model}}</td>
+                            <td>{{$reservation->user->name ?? 'not found'}}</td>
+                            <td>{{$reservation->first_name}} {{$reservation->last_name}}</td>
+                            <td>{{$reservation->address}}</td>
+                            <td>{{$reservation->hotel}}</td>
+                            <td>{{$reservation->flight_number}}</td>
+                            <td>{{$reservation->reservation_dateTime}}</td>
+                            <td>{{$reservation->phone}}</td>
+                            <td>{{$reservation->whatsapp}}</td>
+                            <td>{{$reservation->note}}</td>
+                            <td>{{$reservation->payment_status}}</td>
+                            <td>{{$reservation->created_at}}</td>
 
                             <td>
-                                <form method="POST" action="{{route('users.destroy', $user)}}" style="display: inline-block">
+                                <form method="POST" action="{{route('transportation_reservations.destroy', $reservation)}}" style="display: inline-block">
                                     @method('delete')
                                     @csrf
                                     <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i>Delete</button>
