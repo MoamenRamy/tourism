@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
 class CategoryController extends Controller
@@ -23,7 +25,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('categories.create');
+        return view('admin.categories.create');
     }
 
     /**
@@ -33,28 +35,46 @@ class CategoryController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|unique:categories,title',
-            'photo' => 'required|string',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
             'translations' => 'required|array',
-            'translations.*.locale' => 'required|string',
             'translations.*.name' => 'required|string',
             'translations.*.description' => 'nullable|string',
         ]);
 
         $slug = Str::slug($validated['title']);
 
-        $category = Category::create([
-            'slug' => $slug,
-            'title' => $validated['title'],
-            'photo' => $validated['photo'],
-        ]);
+        // $category = Category::create([
+        //     'slug' => $slug,
+        //     'title' => $validated['title'],
+        // ]);
 
-        foreach ($validated['translations'] as $translation) {
-            $category->translateOrNew($translation['locale'])->name = $translation['name'];
-            $category->translateOrNew($translation['locale'])->description = $translation['description'] ?? null;
+        $category = new Category();
+
+        $category->slug = $slug;
+        $category->title = $validated['title'];
+        // $category->photo = $request->file('photo')->store('categories', 'public');
+
+        if ($request->hasFile('photo')) {
+
+            $fileName = time() . '.' . $request->photo->extension();
+            $path = $request->photo->storeAs('categories', $fileName, 'public');
+
+            $category->photo = $path;
+        }
+
+        $category->save();
+
+
+        if(isset($validated['translations'])) {
+
+            foreach ($validated['translations'] as $locale => $translation) {
+                $category->translateOrNew($locale)->name = $translation['name'];
+                $category->translateOrNew($locale)->description = $translation['description'] ?? null;
+            }
         }
         $category->save();
 
-        return redirect()->route('categories.index')->with('success', 'Category created successfully');
+        return redirect()->route('admin.categories.index')->with('flash_message', 'Category created successfully');
     }
 
     /**
@@ -70,7 +90,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return view('categories.edit', compact('category'));
+        return view('admin.categories.edit', compact('category'));
     }
 
     /**
@@ -79,43 +99,61 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         $validated = $request->validate([
-            'title' => 'sometimes|string|unique:categories,title,' . $category->id,
-            'photo' => 'sometimes|string',
+            'title' => 'sometimes|string|unique:categories,title,' . $category->slug,
+            // 'title' => [
+            //     'sometimes',
+            //     'string',
+            //     Rule::unique('categories', 'title')->ignore($category->id),
+            // ],
+            // 'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
             'translations' => 'sometimes|array',
-            'translations.*.locale' => 'required_with:translations|string',
             'translations.*.name' => 'required_with:translations|string',
             'translations.*.description' => 'nullable|string',
         ]);
 
         if (isset($validated['title'])) {
-            $category->slug = Str::slug($validated['title']);
             $category->title = $validated['title'];
+            $category->slug = Str::slug($validated['title']);
         }
 
-        if (isset($validated['photo'])) {
-            $category->photo = $validated['photo'];
+        if ($request->hasFile('photo')) {
+            if (!empty($category->photo)) {
+                $photoPath = storage_path('app/public/' . str_replace('storage/', '', $category->photo));
+
+                if (Storage::exists(str_replace('storage/', 'public/', $category->photo))) {
+                    Storage::delete(str_replace('storage/', 'public/', $category->photo));
+                }
+                elseif (file_exists($photoPath)) {
+                    unlink($photoPath);
+                }
+            }
+
+            $fileName = time() . '.' . $request->photo->extension();
+            $path = $request->photo->storeAs('categories', $fileName, 'public');
+
+            $category->photo = $path;
         }
 
         $category->save();
 
         if (isset($validated['translations'])) {
-            foreach ($validated['translations'] as $translation) {
-                $category->translateOrNew($translation['locale'])->name = $translation['name'];
-                $category->translateOrNew($translation['locale'])->description = $translation['description'] ?? null;
+            foreach ($validated['translations'] as $locale => $translation) {
+                $category->translateOrNew($locale)->name = $translation['name'];
+                $category->translateOrNew($locale)->description = $translation['description'] ?? null;
             }
             $category->save();
         }
 
-        return redirect()->route('categories.index')->with('success', 'Category updated successfully');
+        return redirect()->route('admin.categories.index')->with('flash_message', 'Category updated successfully');
     }
-
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Category $category)
     {
         $category->delete();
-        return redirect()->route('categories.index')->with('success', 'Category deleted successfully');
+        return back()->with('flash_message', 'Category deleted successfully');
     }
 
     // admin

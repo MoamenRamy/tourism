@@ -24,7 +24,7 @@ class AdditionalServiceController extends Controller
      */
     public function create()
     {
-        return view('additional_services.create');
+        return view('admin.additional_services.create');
     }
 
     /**
@@ -35,20 +35,21 @@ class AdditionalServiceController extends Controller
         $validated = $request->validate([
             'price' => 'required|numeric',
             'translations' => 'required|array',
-            'translations.*.locale' => 'required|string',
             'translations.*.name' => 'required|string',
             'translations.*.description' => 'nullable|string',
         ]);
 
-        $service = Additional_service::create(['price' => $validated['price']]);
+        $additionalService = Additional_service::create(['price' => $validated['price']]);
 
-        foreach ($validated['translations'] as $translation) {
-            $service->translateOrNew($translation['locale'])->name = $translation['name'];
-            $service->translateOrNew($translation['locale'])->description = $translation['description'] ?? null;
+        if (isset($validated['translations'])) {
+            foreach ($validated['translations'] as $locale => $translation) {
+                $additionalService->translateOrNew($locale)->name = $translation['name'];
+                $additionalService->translateOrNew($locale)->description = $translation['description'] ?? null;
+            }
+            $additionalService->save();
         }
-        $service->save();
 
-        return redirect()->route('additional-services.index')->with('success', 'Service created successfully');
+        return redirect()->route('admin.additional-services.index')->with('flash_message', 'Service created successfully');
     }
 
     /**
@@ -64,18 +65,42 @@ class AdditionalServiceController extends Controller
      */
     public function edit(Additional_service $additionalService)
     {
-        return view('additional_services.edit', compact('additionalService'));
+        return view('admin.additional_services.edit', compact('additionalService'));
     }
 
     /**
      * Update the specified resource in storage.
      */
+    // public function update(Request $request, Additional_service $additionalService)
+    // {
+    //     $validated = $request->validate([
+    //         'price' => 'sometimes|numeric',
+    //         'translations' => 'sometimes|array',
+    //         // 'translations.*.locale' => 'required_with:translations|string',
+    //         'translations.*.name' => 'required_with:translations|string',
+    //         'translations.*.description' => 'nullable|string',
+    //     ]);
+
+    //     if (isset($validated['price'])) {
+    //         $additionalService->update(['price' => $validated['price']]);
+    //     }
+
+    //     if (isset($validated['translations'])) {
+    //         foreach ($validated['translations'] as $translation) {
+    //             $additionalService->translateOrNew($translation['locale'])->name = $translation['name'];
+    //             $additionalService->translateOrNew($translation['locale'])->description = $translation['description'] ?? null;
+    //         }
+    //         $additionalService->save();
+    //     }
+
+    //     return redirect()->route('admin.additional-services.index')->with('flash_message', 'Service updated successfully');
+    // }
+
     public function update(Request $request, Additional_service $additionalService)
     {
         $validated = $request->validate([
             'price' => 'sometimes|numeric',
             'translations' => 'sometimes|array',
-            'translations.*.locale' => 'required_with:translations|string',
             'translations.*.name' => 'required_with:translations|string',
             'translations.*.description' => 'nullable|string',
         ]);
@@ -85,14 +110,15 @@ class AdditionalServiceController extends Controller
         }
 
         if (isset($validated['translations'])) {
-            foreach ($validated['translations'] as $translation) {
-                $additionalService->translateOrNew($translation['locale'])->name = $translation['name'];
-                $additionalService->translateOrNew($translation['locale'])->description = $translation['description'] ?? null;
+            foreach ($validated['translations'] as $locale => $translation) {
+                $additionalService->translateOrNew($locale)->name = $translation['name'];
+                $additionalService->translateOrNew($locale)->description = $translation['description'] ?? null;
             }
             $additionalService->save();
         }
 
-        return redirect()->route('additional-services.index')->with('success', 'Service updated successfully');
+        return redirect()->route('admin.additional-services.index')
+            ->with('flash_message', 'Service updated successfully');
     }
 
     /**
@@ -101,7 +127,7 @@ class AdditionalServiceController extends Controller
     public function destroy(Additional_service $additionalService)
     {
         $additionalService->delete();
-        return redirect()->route('additional-services.index')->with('success', 'Service deleted successfully');
+        return back()->with('flash_message', 'Service deleted successfully');
     }
 
     // admin
