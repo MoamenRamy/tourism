@@ -17,6 +17,11 @@ class RateController extends Controller
         return view('rates.index', compact('rates'));
     }
 
+    public function create()
+    {
+        return view('admin.rates.create');
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -38,17 +43,37 @@ class RateController extends Controller
         return redirect()->route('rates.index')->with('success', 'Rate added successfully');
     }
 
+    public function edit(Rate $rate)
+    {
+        return view('admin.rates.edit', compact('rate'));
+    }
+
+    public function update(Request $request, Rate $rate)
+    {
+        $validated = $request->validate([
+            'rating' => 'required|integer|min:1|max:5',
+            'comment' => 'nullable|string',
+        ]);
+
+        $rate->rating = $validated['rating'];
+        $rate->comment = $validated['comment']?? null;
+
+        $rate->save();
+
+        return redirect()->route('admin.rates.index')->with('flash_message', 'Rate update successfuly');
+    }
+
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Rate $rate)
     {
-        if (Auth::id() !== $rate->user_id) {
-            abort(403, 'Unauthorized action.');
-        }
+        // if (Auth::id() !== $rate->user_id) {
+        //     abort(403, 'Unauthorized action.');
+        // }
 
         $rate->delete();
-        return redirect()->route('rates.index')->with('success', 'Rate deleted successfully');
+        return back()->with('flash_message', 'Rate deleted successfully');
     }
 
     // admin

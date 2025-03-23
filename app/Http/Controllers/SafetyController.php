@@ -22,7 +22,7 @@ class SafetyController extends Controller
      */
     public function create()
     {
-        return view('safeties.create');
+        return view('admin.safeties.create');
     }
 
 /**
@@ -30,23 +30,20 @@ class SafetyController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'translations' => 'required|array',
-            'translations.*.locale' => 'required|string',
             'translations.*.name' => 'required|string',
+
         ]);
 
-        $safety = Safety::create([]);
+        $safety = new Safety();
 
-        foreach ($request->translations as $translation) {
-            SafetyTranslation::create([
-                'safety_id' => $safety->id,
-                'locale' => $translation['locale'],
-                'name' => $translation['name'],
-            ]);
+        foreach ($validated['translations'] as $locale => $translation) {
+            $safety->translateOrNew($locale)->name = $translation['name'] ?? null;
         }
+        $safety->save();
 
-        return redirect()->route('safeties.index')->with('success', 'Safety created successfully');
+        return redirect()->route('admin.safeties.index')->with('flash_message', 'Safety created successfully');
     }
 
     /**
@@ -62,7 +59,7 @@ class SafetyController extends Controller
      */
     public function edit(Safety $safety)
     {
-        return view('safeties.edit', compact('safety'));
+        return view('admin.safeties.edit', compact('safety'));
     }
 
     /**
@@ -70,20 +67,17 @@ class SafetyController extends Controller
      */
     public function update(Request $request, Safety $safety)
     {
-        $request->validate([
+        $validated = $request->validate([
             'translations' => 'required|array',
-            'translations.*.locale' => 'required|string',
             'translations.*.name' => 'required|string',
         ]);
 
-        foreach ($request->translations as $translation) {
-            SafetyTranslation::updateOrCreate(
-                ['safety_id' => $safety->id, 'locale' => $translation['locale']],
-                ['name' => $translation['name']]
-            );
+        foreach ($validated['translations'] as $locale => $translation) {
+            $safety->translateOrNew($locale)->name = $translation['name'] ?? null;
         }
+        $safety->save();
 
-        return redirect()->route('safeties.index')->with('success', 'Safety updated successfully');
+        return redirect()->route('admin.safeties.index')->with('flash_message', 'Safety updated successfully');
     }
 
     /**
@@ -92,7 +86,7 @@ class SafetyController extends Controller
     public function destroy(Safety $safety)
     {
         $safety->delete();
-        return redirect()->route('safeties.index')->with('success', 'Safety deleted successfully');
+        return back()->with('flash_message', 'Safety deleted successfully');
     }
 
     // admin

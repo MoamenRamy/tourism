@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Destination;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
@@ -23,7 +24,7 @@ class DestinationController extends Controller
      */
     public function create()
     {
-        return view('destinations.create');
+        return view('admin.destinations.create');
     }
 
     /**
@@ -33,26 +34,31 @@ class DestinationController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|unique:destinations,name',
-            'photo' => 'required|string',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
             'translations' => 'required|array',
-            'translations.*.locale' => 'required|string',
             'translations.*.description' => 'nullable|string',
         ]);
 
         $slug = Str::slug($validated['name']);
 
-        $destination = Destination::create([
-            'slug' => $slug,
-            'name' => $validated['name'],
-            'photo' => $validated['photo'],
-        ]);
+        $destination = new Destination();
+        $destination->name = $validated['name'];
+        $destination->slug = $slug;
 
-        foreach ($validated['translations'] as $translation) {
-            $destination->translateOrNew($translation['locale'])->description = $translation['description'] ?? null;
+        if ($request->hasFile('photo')) {
+
+            $fileName = time() . '.' . $request->photo->extension();
+            $path = $request->photo->storeAs('destinations', $fileName, 'public');
+
+            $destination->photo = $path;
+        }
+
+        foreach ($validated['translations'] as $locale => $translation) {
+            $destination->translateOrNew($locale)->description = $translation['description'] ?? null;
         }
         $destination->save();
 
-        return redirect()->route('destinations.index')->with('success', 'Destination created successfully');
+        return redirect()->route('admin.destination.index')->with('flash_message', 'Destination created successfully');
     }
 
     /**
@@ -68,7 +74,7 @@ class DestinationController extends Controller
      */
     public function edit(Destination $destination)
     {
-        return view('destinations.edit', compact('destination'));
+        return view('admin.destinations.edit', compact('destination'));
     }
 
     /**
@@ -78,31 +84,44 @@ class DestinationController extends Controller
     {
         $validated = $request->validate([
             'name' => 'sometimes|string|unique:destinations,name,' . $destination->id,
-            'photo' => 'sometimes|string',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
             'translations' => 'sometimes|array',
-            'translations.*.locale' => 'required_with:translations|string',
             'translations.*.description' => 'nullable|string',
         ]);
 
         if (isset($validated['name'])) {
-            $destination->slug = Str::slug($validated['name']);
             $destination->name = $validated['name'];
+            $destination->slug = Str::slug($validated['name']);
         }
 
-        if (isset($validated['photo'])) {
-            $destination->photo = $validated['photo'];
+        if ($request->hasFile('photo')) {
+            if (!empty($destination->photo)) {
+                $photoPath = storage_path('app/public/' . str_replace('storage/', '', $destination->photo));
+
+                if (Storage::exists(str_replace('storage/', 'public/', $destination->photo))) {
+                    Storage::delete(str_replace('storage/', 'public/', $destination->photo));
+                }
+                elseif (file_exists($photoPath)) {
+                    unlink($photoPath);
+                }
+            }
+
+            $fileName = time() . '.' . $request->photo->extension();
+            $path = $request->photo->storeAs('destinations', $fileName, 'public');
+
+            $destination->photo = $path;
         }
 
         $destination->save();
 
         if (isset($validated['translations'])) {
-            foreach ($validated['translations'] as $translation) {
-                $destination->translateOrNew($translation['locale'])->description = $translation['description'] ?? null;
+            foreach ($validated['translations'] as $locale => $translation) {
+                $destination->translateOrNew($locale)->description = $translation['description'] ?? null;
             }
             $destination->save();
         }
 
-        return redirect()->route('destinations.index')->with('success', 'Destination updated successfully');
+        return redirect()->route('admin.destination.index')->with('flash_message', 'Destination updated successfully');
     }
 
     /**
@@ -111,7 +130,7 @@ class DestinationController extends Controller
     public function destroy(Destination $destination)
     {
         $destination->delete();
-        return redirect()->back()->with('flash_message', 'Destination deleted successfully');
+        return back()->with('flash_message', 'Destination deleted successfully');
     }
 
     // admin
