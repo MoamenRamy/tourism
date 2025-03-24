@@ -11,6 +11,8 @@ Tours Reservations
 
 @section('content')
 
+    <a href="{{ route('tour-reservations.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Add New</a>
+    <hr>
     <div class="row table-responsive">
         <div class="col-md-12">
             <table id="books-table" class="table table-striped table-bordered" width="100%" cellspacing="0">
@@ -38,7 +40,7 @@ Tours Reservations
                         <tr>
                             <td>{{$tourReservation->id}}</td>
                             @if ($tourReservation->tour())
-                                <td>{{$tourReservation->tour->title}}</td>
+                                <td>{{$tourReservation->tour->name}}</td>
                             @else
                                 <td>not found</td>
                             @endif
@@ -66,6 +68,8 @@ Tours Reservations
                             {{-- additional reservations --}}
 
                             <td>
+                                <a class="btn btn-info btn-sm m-1" href="{{route('tour-reservations.edit', $tourReservation)}}"><i class="fa fa-edit"></i> Edit</a>
+
                                 <form method="POST" action="{{route('tour-reservations.destroy', $tourReservation)}}" style="display: inline-block">
                                     @method('delete')
                                     @csrf

@@ -16,7 +16,7 @@ Edit Category
                 @csrf
 
                 <div class="form-group row">
-                    <label for="title" class="col-md-4 col-form-label text-md-right">title</label>
+                    <label for="title" class="col-md-4 col-form-label ">title</label>
 
                     <div class="col-md-6">
                         <input id="title" type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ $category->title }}" autocomplete="title">
@@ -31,7 +31,7 @@ Edit Category
 
                 @foreach(config('app.available_locales') as $locale)
                     <div class="form-group row">
-                        <label for="name_{{ $locale }}" class="col-md-4 col-form-label text-md-right">Name ({{ strtoupper($locale) }})</label>
+                        <label for="name_{{ $locale }}" class="col-md-4 col-form-label ">Name ({{ strtoupper($locale) }})</label>
                         <div class="col-md-6">
                             <input id="name_{{ $locale }}" type="text"
                                 class="form-control @error('translations.{{ $locale }}.name') is-invalid @enderror"
@@ -48,7 +48,7 @@ Edit Category
                     </div>
 
                     <div class="form-group row">
-                        <label for="description_{{ $locale }}" class="col-md-4 col-form-label text-md-right">Description ({{ strtoupper($locale) }})</label>
+                        <label for="description_{{ $locale }}" class="col-md-4 col-form-label ">Description ({{ strtoupper($locale) }})</label>
                         <div class="col-md-6">
                             <textarea id="description_{{ $locale }}"
                                 class="form-control @error('translations.{{ $locale }}.description') is-invalid @enderror"
@@ -65,7 +65,7 @@ Edit Category
 
 
                 <div class="form-group row">
-                    <label for="photo" class="col-md-4 col-form-label text-md-right">Category image</label>
+                    <label for="photo" class="col-md-4 col-form-label ">Category image</label>
 
                     <div class="col-md-6">
                         <input id="photo" accept="image/*" type="file" onchange="readCoverImage(this);" class="form-control @error('photo') is-invalid @enderror" name="photo" value="{{ old('photo') }}" autocomplete="photo">

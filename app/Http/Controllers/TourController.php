@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Destination;
+use Illuminate\Support\Str;
 use App\Models\Tour;
 use App\Models\TourTranslation;
 use Illuminate\Http\Request;
@@ -23,7 +25,9 @@ class TourController extends Controller
      */
     public function create()
     {
-        return view('tours.create');
+        $categories = Category::all();
+        $destinations = Destination::all();
+        return view('admin.tours.create', compact('categories', 'destinations'));
     }
 
     /**
@@ -31,8 +35,8 @@ class TourController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'slug' => 'required|string|unique:tours,slug',
+        $validated = $request->validate([
+            // 'slug' => 'required|string|unique:tours,slug',
             'title' => 'required|string|unique:tours,title',
             'destination_id' => 'nullable|exists:destinations,id',
             'category_id' => 'nullable|exists:categories,id',
@@ -48,29 +52,39 @@ class TourController extends Controller
             'count' => 'integer',
             'pin' => 'boolean',
             'translations' => 'required|array',
-            'translations.*.locale' => 'required|string|max:10',
             'translations.*.name' => 'required|string',
             'translations.*.defination' => 'nullable|string',
             'translations.*.description' => 'required|string',
         ]);
 
-        $tour = Tour::create($request->only([
-            'slug', 'title', 'destination_id', 'category_id', 'price',
-            'duration', 'duration_type', 'rating', 'available',
-            'additional_info', 'max_tickets_per_day', 'longitude',
-            'latitude', 'count', 'pin'
-        ]));
+        $tour = new Tour();
+        $tour->title = $validated['title'];
+        $tour->slug = Str::slug($validated['title']);
+        $tour->destination_id = $validated['destination_id'];
+        $tour->category_id = $validated['category_id'];
+        $tour->price = $validated['price'];
+        $tour->duration = $validated['duration'];
+        $tour->duration_type = $validated['duration_type'];
+        $tour->rating = $validated['rating'];
+        $tour->available = $validated['available'];
+        $tour->additional_info = $validated['additional_info'];
+        $tour->max_tickets_per_day = $validated['max_tickets_per_day'];
+        $tour->longitude = $validated['longitude'];
+        $tour->latitude = $validated['latitude'];
+        $tour->count = $validated['count'];
+        $tour->pin = $validated['pin'];
+        $tour->save();
 
-        foreach ($request->translations as $translation) {
-            $tour->translations()->create([
-                'locale' => $translation['locale'],
-                'name' => $translation['name'],
-                'defination' => $translation['defination'] ?? null,
-                'description' => $translation['description'],
-            ]);
+        if (isset($validated['translations'])) {
+            foreach ($validated['translations'] as $locale => $translation) {
+                $tour->translateOrNew($locale)->name = $translation['name'];
+                $tour->translateOrNew($locale)->defination = $translation['defination'] ?? null;
+                $tour->translateOrNew($locale)->description = $translation['description'] ?? null;
+            }
+            $tour->save();
         }
 
-        return redirect()->route('tours.index')->with('success', 'تمت إضافة الرحلة بنجاح');
+        return redirect()->route('admin.tours.index')->with('flash_message', 'tour added successfuly!');
     }
 
     /**
@@ -86,7 +100,9 @@ class TourController extends Controller
      */
     public function edit(Tour $tour)
     {
-        return view('tours.edit', compact('tour'));
+        $categories = Category::all();
+        $destinations = Destination::all();
+        return view('admin.tours.edit', compact('tour', 'categories', 'destinations'));
     }
 
     /**
@@ -94,8 +110,9 @@ class TourController extends Controller
      */
     public function update(Request $request, Tour $tour)
     {
-        $request->validate([
-            'slug' => 'required|string|unique:tours,slug,' . $tour->id,
+
+        $validated = $request->validate([
+            // 'slug' => 'required|string|unique:tours,slug,' . $tour->id,
             'title' => 'required|string|unique:tours,title,' . $tour->id,
             'destination_id' => 'nullable|exists:destinations,id',
             'category_id' => 'nullable|exists:categories,id',
@@ -111,29 +128,44 @@ class TourController extends Controller
             'count' => 'integer',
             'pin' => 'boolean',
             'translations' => 'nullable|array',
-            'translations.*.locale' => 'required|string|max:10',
             'translations.*.name' => 'required|string',
             'translations.*.defination' => 'nullable|string',
             'translations.*.description' => 'required|string',
         ]);
+        // $tour->update($request->only([
+        //     'slug', 'title', 'destination_id', 'category_id', 'price',
+        //     'duration', 'duration_type', 'rating', 'available',
+        //     'additional_info', 'max_tickets_per_day', 'longitude',
+        //     'latitude', 'count', 'pin'
+        // ]));
+        $tour->title = $validated['title'];
+        $tour->slug = Str::slug($validated['title']);
+        $tour->destination_id = $validated['destination_id'];
+        $tour->category_id = $validated['category_id'];
+        $tour->price = $validated['price'];
+        $tour->duration = $validated['duration'];
+        $tour->duration_type = $validated['duration_type'];
+        $tour->rating = $validated['rating'];
+        $tour->available = $validated['available'];
+        $tour->additional_info = $validated['additional_info'];
+        $tour->max_tickets_per_day = $validated['max_tickets_per_day'];
+        $tour->longitude = $validated['longitude'];
+        $tour->latitude = $validated['latitude'];
+        $tour->count = $validated['count'];
+        $tour->pin = $validated['pin'];
+        $tour->save();
 
-        $tour->update($request->only([
-            'slug', 'title', 'destination_id', 'category_id', 'price',
-            'duration', 'duration_type', 'rating', 'available',
-            'additional_info', 'max_tickets_per_day', 'longitude',
-            'latitude', 'count', 'pin'
-        ]));
 
-        if ($request->has('translations')) {
-            foreach ($request->translations as $translation) {
-                TourTranslation::updateOrCreate(
-                    ['tour_id' => $tour->id, 'locale' => $translation['locale']],
-                    ['name' => $translation['name'], 'defination' => $translation['defination'] ?? null, 'description' => $translation['description']]
-                );
+        if (isset($validated['translations'])) {
+            foreach ($validated['translations'] as $locale => $translation) {
+                $tour->translateOrNew($locale)->name = $translation['name'];
+                $tour->translateOrNew($locale)->defination = $translation['defination'] ?? null;
+                $tour->translateOrNew($locale)->description = $translation['description'] ?? null;
             }
+            $tour->save();
         }
 
-        return redirect()->route('tours.index')->with('success', 'تم تحديث الرحلة بنجاح');
+        return redirect()->route('admin.tours.index')->with('flash_message', 'tour updated successfuly!');
     }
 
     /**
@@ -142,7 +174,7 @@ class TourController extends Controller
     public function destroy(Tour $tour)
     {
         $tour->delete();
-        return redirect()->route('tours.index')->with('success', 'تم حذف الرحلة بنجاح');
+        return back()->with('flash_message', 'tour deleted successfuly!');
     }
 
     public function get_tours_by_destination($slug)
@@ -157,8 +189,9 @@ class TourController extends Controller
     public function adminIndex()
     {
         $tours = Tour::with('translations')->get();
+        // $tours = Tour::with('translations')->paginate(20);
         // error when get obj without name
-        
+
         return view('admin.tours.index', compact('tours'));
     }
 }
