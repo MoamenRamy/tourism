@@ -26,7 +26,7 @@ class TransportationController extends Controller
     {
         $destinations = Destination::all();
         $vehicles = Vehicle::all();
-        return view('transportations.create', compact('destinations', 'vehicles'));
+        return view('admin.transportations.create', compact('destinations', 'vehicles'));
     }
 
     /**
@@ -40,7 +40,6 @@ class TransportationController extends Controller
             'vehicle_id' => 'required|exists:vehicles,id',
             'available' => 'required|boolean',
             'translations' => 'required|array',
-            'translations.*.locale' => 'required|string|max:10',
             'translations.*.from' => 'required|string',
             'translations.*.to' => 'required|string',
         ]);
@@ -49,15 +48,15 @@ class TransportationController extends Controller
         $transportation = Transportation::create($request->only(['destination_id', 'price', 'vehicle_id', 'available']));
 
         // Store translations
-        foreach ($request->translations as $translation) {
-            $transportation->translations()->create([
-                'locale' => $translation['locale'],
-                'from' => $translation['from'],
-                'to' => $translation['to'],
-            ]);
+        if (isset($request->translations)) {
+            foreach ($request->translations as $locale => $translation) {
+                $transportation->translateOrNew($locale)->from = $translation['from'];
+                $transportation->translateOrNew($locale)->to = $translation['to'] ?? null;
+            }
+            $transportation->save();
         }
 
-        return redirect()->route('transportations.index')->with('success', 'Transportation added successfully.');
+        return redirect()->route('admin.transportations.index')->with('flash_message', 'Transportation added successfully.');
     }
 
     /**
@@ -75,7 +74,7 @@ class TransportationController extends Controller
     {
         $destinations = Destination::all();
         $vehicles = Vehicle::all();
-        return view('transportations.edit', compact('transportation', 'destinations', 'vehicles'));
+        return view('admin.transportations.edit', compact('transportation', 'destinations', 'vehicles'));
     }
 
     /**
@@ -89,7 +88,6 @@ class TransportationController extends Controller
             'vehicle_id' => 'required|exists:vehicles,id',
             'available' => 'required|boolean',
             'translations' => 'nullable|array',
-            'translations.*.locale' => 'required|string|max:10',
             'translations.*.from' => 'required|string',
             'translations.*.to' => 'required|string',
         ]);
@@ -98,16 +96,15 @@ class TransportationController extends Controller
         $transportation->update($request->only(['destination_id', 'price', 'vehicle_id', 'available']));
 
         // Update translations
-        if ($request->has('translations')) {
-            foreach ($request->translations as $translation) {
-                TransportationTranslation::updateOrCreate(
-                    ['transportation_id' => $transportation->id, 'locale' => $translation['locale']],
-                    ['from' => $translation['from'], 'to' => $translation['to']]
-                );
+        if (isset($request->translations)) {
+            foreach ($request->translations as $locale => $translation) {
+                $transportation->translateOrNew($locale)->from = $translation['from'];
+                $transportation->translateOrNew($locale)->to = $translation['to'] ?? null;
             }
+            $transportation->save();
         }
 
-        return redirect()->route('transportations.index')->with('success', 'Transportation updated successfully.');
+        return redirect()->route('admin.transportations.index')->with('flash_message', 'Transportation updated successfully.');
     }
 
     /**
@@ -116,7 +113,7 @@ class TransportationController extends Controller
     public function destroy(Transportation $transportation)
     {
         $transportation->delete();
-        return redirect()->route('transportations.index')->with('success', 'Transportation deleted successfully.');
+        return back()->with('flash_message', 'Transportation deleted successfully.');
     }
 
     // admin

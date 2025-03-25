@@ -23,7 +23,7 @@ class TransportationSaleController extends Controller
     public function create()
     {
         $destinations = Destination::all();
-        return view('transportation_sales.create', compact('destinations'));
+        return view('admin.transportation_sales.create', compact('destinations'));
     }
 
     /**
@@ -42,7 +42,7 @@ class TransportationSaleController extends Controller
 
         Transportation_sale::create($validated);
 
-        return redirect()->route('transportation_sales.index')->with('success', 'تمت إضافة العرض بنجاح');
+        return redirect()->route('admin.transportation_sales.index')->with('flash_message', 'transportation sale added successfuly');
     }
 
     /**
@@ -59,7 +59,7 @@ class TransportationSaleController extends Controller
     public function edit(Transportation_sale $transportationSale)
     {
         $destinations = Destination::all();
-        return view('transportation_sales.edit', compact('transportationSale', 'destinations'));
+        return view('admin.transportation_sales.edit', compact('transportationSale', 'destinations'));
     }
 
     /**
@@ -78,7 +78,7 @@ class TransportationSaleController extends Controller
 
         $transportationSale->update($validated);
 
-        return redirect()->route('transportation_sales.index')->with('success', 'تم تحديث العرض بنجاح');
+        return redirect()->route('admin.transportation_sales.index')->with('flash_message', 'transportation sale updated successfuly');
     }
 
     /**
@@ -87,7 +87,7 @@ class TransportationSaleController extends Controller
     public function destroy(Transportation_sale $transportationSale)
     {
         $transportationSale->delete();
-        return redirect()->route('transportation_sales.index')->with('success', 'تم حذف العرض بنجاح');
+        return back()->with('flash_message', 'transportation sale deleted successfuly');
     }
 
     // admin

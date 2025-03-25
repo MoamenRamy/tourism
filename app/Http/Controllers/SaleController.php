@@ -23,7 +23,7 @@ class SaleController extends Controller
     public function create()
     {
         $tours = Tour::all();
-        return view('sales.create', compact('tours'));
+        return view('admin.sales.create', compact('tours'));
     }
 
     /**
@@ -42,7 +42,7 @@ class SaleController extends Controller
 
         Sale::create($request->all());
 
-        return redirect()->route('sales.index')->with('success', 'Sale added successfully');
+        return redirect()->route('admin.sales.index')->with('flash_message', 'Sale added successfully');
     }
 
     /**
@@ -59,7 +59,7 @@ class SaleController extends Controller
     public function edit(Sale $sale)
     {
         $tours = Tour::all();
-        return view('sales.edit', compact('sale', 'tours'));
+        return view('admin.sales.edit', compact('sale', 'tours'));
     }
 
     /**
@@ -78,7 +78,7 @@ class SaleController extends Controller
 
         $sale->update($request->all());
 
-        return redirect()->route('sales.index')->with('success', 'Sale updated successfully');
+        return redirect()->route('admin.sales.index')->with('flash_message', 'Sale updated successfully');
     }
 
     /**
@@ -87,7 +87,7 @@ class SaleController extends Controller
     public function destroy(Sale $sale)
     {
         $sale->delete();
-        return redirect()->route('sales.index')->with('success', 'Sale deleted successfully');
+        return back()->with('flash_message', 'Sale deleted successfully');
     }
 
     // admin

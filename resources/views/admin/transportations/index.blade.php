@@ -10,7 +10,8 @@ Transportation
 @endsection
 
 @section('content')
-
+    <a href="{{ route('transportations.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Add New</a>
+    <hr>
     <div class="row table-responsive">
         <div class="col-md-12">
             <table id="books-table" class="table table-striped table-bordered" width="100%" cellspacing="0">
@@ -44,6 +45,8 @@ Transportation
                             {{-- include --}}
 
                             <td>
+                                <a class="btn btn-info btn-sm m-1" href="{{route('transportations.edit', $transportation)}}"><i class="fa fa-edit"></i> Edit</a>
+
                                 <form method="POST" action="{{route('transportations.destroy', $transportation)}}" style="display: inline-block">
                                     @method('delete')
                                     @csrf
@@ -75,7 +78,7 @@ Transportation
                 "order": [[0, "asc"]],
                 "columnDefs": [
                     { "type": "num", "targets": 0 },
-                    { "orderable": false, "targets": 0 } // Corrected index
+                    // { "orderable": false, "targets": 0 } // Corrected index
                 ],
                 "paging": true,
                 "searching": true,

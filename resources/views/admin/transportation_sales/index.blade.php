@@ -11,6 +11,8 @@ Transportation Sales
 
 @section('content')
 
+    <a href="{{ route('transportation_sales.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Add New</a>
+    <hr>
     <div class="row table-responsive">
         <div class="col-md-12">
             <table id="books-table" class="table table-striped table-bordered" width="100%" cellspacing="0">
@@ -42,7 +44,9 @@ Transportation Sales
                             <td>{{$sale->created_at}}</td>
 
                             <td>
-                                <form method="POST" action="{{route('sales.destroy', $sale)}}" style="display: inline-block">
+                                <a class="btn btn-info btn-sm m-1" href="{{route('transportation_sales.edit', $sale)}}"><i class="fa fa-edit"></i> Edit</a>
+
+                                <form method="POST" action="{{route('transportation_sales.destroy', $sale)}}" style="display: inline-block">
                                     @method('delete')
                                     @csrf
                                     <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i>Delete</button>
@@ -73,7 +77,7 @@ Transportation Sales
                 "order": [[0, "asc"]],
                 "columnDefs": [
                     { "type": "num", "targets": 0 },
-                    { "orderable": false, "targets": 0 } // Corrected index
+                    // { "orderable": false, "targets": 0 } // Corrected index
                 ],
                 "paging": true,
                 "searching": true,

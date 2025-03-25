@@ -23,7 +23,7 @@ class VehicleController extends Controller
      */
     public function create()
     {
-        return view('vehicles.create');
+        return view('admin.vehicles.create');
     }
 
     /**
@@ -33,34 +33,45 @@ class VehicleController extends Controller
     {
         $validated = $request->validate([
             'year' => 'required|string|max:4',
-            'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif',
             'car_load' => 'required|integer|min:1',
             'translations' => 'required|array',
-            'translations.*.locale' => 'required|string',
             'translations.*.name' => 'required|string',
             'translations.*.model' => 'required|string',
         ]);
+        $vehicle = new Vehicle();
+        $vehicle->year = $validated['year'];
+        $vehicle->car_load = $validated['car_load'];
 
-        // حفظ الصورة
-        $path = $request->file('photo')->store('vehicles', 'public');
+        if ($request->hasFile('photo')) {
+            if (!empty($vehicle->photo)) {
+                $photoPath = storage_path('app/public/' . str_replace('storage/', '', $vehicle->photo));
 
-        // إنشاء المركبة
-        $vehicle = Vehicle::create([
-            'year' => $validated['year'],
-            'photo' => $path,
-            'car_load' => $validated['car_load'],
-        ]);
+                if (Storage::exists(str_replace('storage/', 'public/', $vehicle->photo))) {
+                    Storage::delete(str_replace('storage/', 'public/', $vehicle->photo));
+                }
+                elseif (file_exists($photoPath)) {
+                    unlink($photoPath);
+                }
+            }
 
-        // حفظ الترجمات
-        foreach ($validated['translations'] as $translation) {
-            $vehicle->translations()->create([
-                'locale' => $translation['locale'],
-                'name' => $translation['name'],
-                'model' => $translation['model'],
-            ]);
+            $fileName = time() . '.' . $request->photo->extension();
+            $path = $request->photo->storeAs('vehicles', $fileName, 'public');
+
+            $vehicle->photo = $path;
         }
 
-        return redirect()->route('vehicles.index')->with('success', 'تمت إضافة المركبة بنجاح');
+        $vehicle->save();
+
+        if (isset($validated['translations'])) {
+            foreach ($validated['translations'] as $locale => $translation) {
+                $vehicle->translateOrNew($locale)->name = $translation['name'];
+                $vehicle->translateOrNew($locale)->model = $translation['model'] ?? null;
+            }
+            $vehicle->save();
+        }
+
+        return redirect()->route('admin.vehicles.index')->with('flash_message', 'Vehicle added successfuly');
     }
 
     /**
@@ -76,7 +87,7 @@ class VehicleController extends Controller
      */
     public function edit(Vehicle $vehicle)
     {
-        return view('vehicles.edit', compact('vehicle'));
+        return view('admin.vehicles.edit', compact('vehicle'));
     }
 
     /**
@@ -86,39 +97,46 @@ class VehicleController extends Controller
     {
         $validated = $request->validate([
             'year' => 'required|string|max:4',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif',
             'car_load' => 'required|integer|min:1',
             'translations' => 'sometimes|array',
-            'translations.*.locale' => 'required_with:translations|string',
             'translations.*.name' => 'required_with:translations|string',
             'translations.*.model' => 'required_with:translations|string',
         ]);
 
-        // تحديث بيانات المركبة
-        $vehicle->update([
-            'year' => $validated['year'],
-            'car_load' => $validated['car_load'],
-        ]);
 
-        // تحديث الصورة في حال تم رفع صورة جديدة
+        $vehicle->year = $validated['year'];
+        $vehicle->car_load = $validated['car_load'];
+
         if ($request->hasFile('photo')) {
-            // حذف الصورة القديمة
-            Storage::disk('public')->delete($vehicle->photo);
-            $path = $request->file('photo')->store('vehicles', 'public');
-            $vehicle->update(['photo' => $path]);
-        }
+            if (!empty($vehicle->photo)) {
+                $photoPath = storage_path('app/public/' . str_replace('storage/', '', $vehicle->photo));
 
-        // تحديث الترجمات
-        if (isset($validated['translations'])) {
-            foreach ($validated['translations'] as $translation) {
-                $vehicle->translations()->updateOrCreate(
-                    ['locale' => $translation['locale']],
-                    ['name' => $translation['name'], 'model' => $translation['model']]
-                );
+                if (Storage::exists(str_replace('storage/', 'public/', $vehicle->photo))) {
+                    Storage::delete(str_replace('storage/', 'public/', $vehicle->photo));
+                }
+                elseif (file_exists($photoPath)) {
+                    unlink($photoPath);
+                }
             }
+
+            $fileName = time() . '.' . $request->photo->extension();
+            $path = $request->photo->storeAs('vehicles', $fileName, 'public');
+
+            $vehicle->photo = $path;
         }
 
-        return redirect()->route('vehicles.index')->with('success', 'تم تحديث المركبة بنجاح');
+        $vehicle->save();
+
+        if (isset($validated['translations'])) {
+            foreach ($validated['translations'] as $locale => $translation) {
+                $vehicle->translateOrNew($locale)->name = $translation['name'];
+                $vehicle->translateOrNew($locale)->model = $translation['model'] ?? null;
+            }
+            $vehicle->save();
+        }
+
+        return redirect()->route('admin.vehicles.index')->with('flash_message', 'Vehicle updated successfuly');
     }
 
     /**
@@ -126,13 +144,23 @@ class VehicleController extends Controller
      */
     public function destroy(Vehicle $vehicle)
     {
-        // حذف الصورة
-        Storage::disk('public')->delete($vehicle->photo);
+        // // حذف الصورة
+        // Storage::disk('public')->delete($vehicle->photo);
+        if (!empty($vehicle->photo)) {
+            $photoPath = storage_path('app/public/' . str_replace('storage/', '', $vehicle->photo));
+
+            if (Storage::exists(str_replace('storage/', 'public/', $vehicle->photo))) {
+                Storage::delete(str_replace('storage/', 'public/', $vehicle->photo));
+            }
+            elseif (file_exists($photoPath)) {
+                unlink($photoPath);
+            }
+        }
 
         // حذف المركبة مع الترجمات
         $vehicle->delete();
 
-        return redirect()->route('vehicles.index')->with('flash_message', 'deleted successfuly!');
+        return back()->with('flash_message', 'Vehicle deleted successfuly!');
     }
 
     // admin

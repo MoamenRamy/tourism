@@ -22,7 +22,7 @@ class TransportationAdditionalController extends Controller
      */
     public function create()
     {
-        return view('transportation_additionals.create');
+        return view('admin.transportation_additional.create');
     }
 
     /**
@@ -30,29 +30,28 @@ class TransportationAdditionalController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'price' => 'required|numeric',
             'translations' => 'required|array',
-            'translations.*.locale' => 'required|string|max:10',
             'translations.*.name' => 'required|string',
             'translations.*.description' => 'required|string',
         ]);
 
-        // Create the transportation additional
-        $transportationAdditional = Transportation_additional_service::create([
-            'price' => $request->price,
-        ]);
-
-        // Store translations
-        foreach ($request->translations as $translation) {
-            $transportationAdditional->translations()->create([
-                'locale' => $translation['locale'],
-                'name' => $translation['name'],
-                'description' => $translation['description'],
-            ]);
+        $transportationAdditional = new Transportation_additional_service();
+        // Update the transportation additional
+        $transportationAdditional->price = $validated['price'];
+        $transportationAdditional->save();
+        // Update or create translations
+        if (isset($validated['translations'])) {
+            foreach ($validated['translations'] as $locale => $translation) {
+                $transportationAdditional->translateOrNew($locale)->name = $translation['name'];
+                $transportationAdditional->translateOrNew($locale)->description = $translation['description'] ?? null;
+            }
+            $transportationAdditional->save();
         }
 
-        return redirect()->route('transportation_additionals.index')->with('success', 'Transportation Additional created successfully.');
+
+        return redirect()->route('admin.transportation_additional.index')->with('flash_message', 'Transportation Additional added successfully.');
     }
 
     /**
@@ -68,7 +67,7 @@ class TransportationAdditionalController extends Controller
      */
     public function edit(Transportation_additional_service $transportationAdditional)
     {
-        return view('transportation_additionals.edit', compact('transportationAdditional'));
+        return view('admin.transportation_additional.edit', compact('transportationAdditional'));
     }
 
     /**
@@ -76,30 +75,27 @@ class TransportationAdditionalController extends Controller
      */
     public function update(Request $request, Transportation_additional_service $transportationAdditional)
     {
-        $request->validate([
+        $validated = $request->validate([
             'price' => 'required|numeric',
             'translations' => 'nullable|array',
-            'translations.*.locale' => 'required|string|max:10',
             'translations.*.name' => 'required|string',
             'translations.*.description' => 'required|string',
         ]);
 
         // Update the transportation additional
-        $transportationAdditional->update([
-            'price' => $request->price,
-        ]);
-
+        $transportationAdditional->price = $validated['price'];
+        $transportationAdditional->save();
         // Update or create translations
-        if ($request->has('translations')) {
-            foreach ($request->translations as $translation) {
-                Transportation_additional_serviceTranslation::updateOrCreate(
-                    ['additional_id' => $transportationAdditional->id, 'locale' => $translation['locale']],
-                    ['name' => $translation['name'], 'description' => $translation['description']]
-                );
+        if (isset($validated['translations'])) {
+            foreach ($validated['translations'] as $locale => $translation) {
+                $transportationAdditional->translateOrNew($locale)->name = $translation['name'];
+                $transportationAdditional->translateOrNew($locale)->description = $translation['description'] ?? null;
             }
+            $transportationAdditional->save();
         }
 
-        return redirect()->route('transportation_additionals.index')->with('success', 'Transportation Additional updated successfully.');
+
+        return redirect()->route('admin.transportation_additional.index')->with('flash_message', 'Transportation Additional updated successfully.');
     }
 
     /**
@@ -108,7 +104,7 @@ class TransportationAdditionalController extends Controller
     public function destroy(Transportation_additional_service $transportationAdditional)
     {
         $transportationAdditional->delete();
-        return redirect()->route('transportation_additionals.index')->with('success', 'Transportation Additional deleted successfully.');
+        return back()->with('flash_message', 'Transportation Additional deleted successfully.');
     }
 
     // admin

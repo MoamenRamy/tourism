@@ -11,6 +11,8 @@ Vehicles
 
 @section('content')
 
+    <a href="{{ route('vehicles.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Add New</a>
+    <hr>
     <div class="row table-responsive">
         <div class="col-md-12">
             <table id="books-table" class="table table-striped table-bordered" width="100%" cellspacing="0">
@@ -38,6 +40,8 @@ Vehicles
                             <td>{{$vehicle->created_at}}</td>
 
                             <td>
+                                <a class="btn btn-info btn-sm m-1" href="{{route('vehicles.edit', $vehicle)}}"><i class="fa fa-edit"></i> Edit</a>
+
                                 <form method="POST" action="{{route('vehicles.destroy', $vehicle)}}" style="display: inline-block">
                                     @method('delete')
                                     @csrf
