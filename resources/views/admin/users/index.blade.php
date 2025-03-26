@@ -47,6 +47,8 @@ Users
                             <td>{{$user->created_at}}</td>
 
                             <td>
+                                <a class="btn btn-info btn-sm m-1" href="{{route('users.edit', $user)}}"><i class="fa fa-edit"></i> Edit</a>
+
                                 <form method="POST" action="{{route('users.destroy', $user)}}" style="display: inline-block">
                                     @method('delete')
                                     @csrf

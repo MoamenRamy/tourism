@@ -11,6 +11,8 @@ Transportation Reservations
 
 @section('content')
 
+    <a href="{{ route('transportation_reservations.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Add New</a>
+    <hr>
     <div class="row table-responsive">
         <div class="col-md-12">
             <table id="books-table" class="table table-striped table-bordered" width="100%" cellspacing="0">
@@ -42,12 +44,12 @@ Transportation Reservations
                     @foreach ($reservations as $reservation)
                         <tr>
                             <td>{{$reservation->id}}</td>
-                            <td>{{$reservation->transportation->from }}</td>
-                            <td>{{$reservation->transportation->to}}</td>
+                            <td>{{$reservation->transportation->from ?? 'N/A'}}</td>
+                            <td>{{$reservation->transportation->to ?? 'N/A'}}</td>
                             <td>{{$reservation->price}}</td>
-                            <td>{{$reservation->currency->code}}</td>
+                            <td>{{$reservation->currency->code ?? 'N/A'}}</td>
                             <td>{{$reservation->guest}}</td>
-                            <td>{{$reservation->transportation->vehicle->model}}</td>
+                            <td>{{$reservation->transportation->vehicle->model ?? 'N/A'}}</td>
                             <td>{{$reservation->user->name ?? 'not found'}}</td>
                             <td>{{$reservation->first_name}} {{$reservation->last_name}}</td>
                             <td>{{$reservation->address}}</td>
@@ -61,6 +63,8 @@ Transportation Reservations
                             <td>{{$reservation->created_at}}</td>
 
                             <td>
+                                <a class="btn btn-info btn-sm" href="{{route('transportation_reservations.edit', $reservation)}}"><i class="fa fa-edit"></i> Edit</a>
+
                                 <form method="POST" action="{{route('transportation_reservations.destroy', $reservation)}}" style="display: inline-block">
                                     @method('delete')
                                     @csrf

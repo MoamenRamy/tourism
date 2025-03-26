@@ -22,7 +22,7 @@ class CurrencyController extends Controller
      */
     public function create()
     {
-        return view('currencies.create');
+        return view('admin.currencies.create');
     }
 
     /**
@@ -35,7 +35,6 @@ class CurrencyController extends Controller
             'symbol' => 'required|string',
             'exchange_rate' => 'required|numeric',
             'translations' => 'required|array',
-            'translations.*.locale' => 'required|string',
             'translations.*.name' => 'required|string',
         ]);
 
@@ -48,12 +47,12 @@ class CurrencyController extends Controller
             'exchange_rate' => $validated['exchange_rate'],
         ]);
 
-        foreach ($validated['translations'] as $translation) {
-            $currency->translateOrNew($translation['locale'])->name = $translation['name'];
+        foreach ($validated['translations'] as $locale => $translation) {
+            $currency->translateOrNew($locale)->name = $translation['name'];
         }
         $currency->save();
 
-        return redirect()->route('currencies.index')->with('success', 'Currency created successfully');
+        return redirect()->route('admin.currencies.index')->with('flash_message', 'Currency created successfully');
     }
 
     /**
@@ -69,7 +68,7 @@ class CurrencyController extends Controller
      */
     public function edit(Currency $currency)
     {
-        return view('currencies.edit', compact('currency'));
+        return view('admin.currencies.edit', compact('currency'));
     }
 
     /**
@@ -82,7 +81,6 @@ class CurrencyController extends Controller
             'symbol' => 'sometimes|string',
             'exchange_rate' => 'sometimes|numeric',
             'translations' => 'sometimes|array',
-            'translations.*.locale' => 'required_with:translations|string',
             'translations.*.name' => 'required_with:translations|string',
         ]);
 
@@ -99,13 +97,13 @@ class CurrencyController extends Controller
         $currency->save();
 
         if (isset($validated['translations'])) {
-            foreach ($validated['translations'] as $translation) {
-                $currency->translateOrNew($translation['locale'])->name = $translation['name'];
+            foreach ($validated['translations'] as $locale => $translation) {
+                $currency->translateOrNew($locale)->name = $translation['name'];
             }
             $currency->save();
         }
 
-        return redirect()->route('currencies.index')->with('success', 'Currency updated successfully');
+        return redirect()->route('admin.currencies.index')->with('flash_message', 'Currency updated successfully');
     }
 
     /**
@@ -114,7 +112,7 @@ class CurrencyController extends Controller
     public function destroy(Currency $currency)
     {
         $currency->delete();
-        return redirect()->route('currencies.index')->with('success', 'Currency deleted successfully');
+        return back()->with('flash_message', 'Currency deleted successfully');
     }
 
     // admin

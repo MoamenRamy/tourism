@@ -11,6 +11,8 @@ Transportation Common Questions
 
 @section('content')
 
+    <a href="{{ route('transportation_questions.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Add New</a>
+    <hr>
     <div class="row">
         <div class="col-md-12">
             <table id="books-table" class="table table-striped table-bordered" width="100%" cellspacing="0">
@@ -30,6 +32,8 @@ Transportation Common Questions
                             <td>{{$question->answer}}</td>
 
                             <td>
+                                <a class="btn btn-info btn-sm" href="{{route('transportation_questions.edit', $question)}}"><i class="fa fa-edit"></i> Edit</a>
+
                                 <form method="POST" action="{{route('transportation_questions.destroy', $question)}}" style="display: inline-block">
                                     @method('delete')
                                     @csrf

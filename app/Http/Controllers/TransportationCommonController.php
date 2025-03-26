@@ -21,7 +21,7 @@ class TransportationCommonController extends Controller
      */
     public function create()
     {
-        return view('transportation_commons.create');
+        return view('admin.transportation_commons.create');
     }
 
     /**
@@ -31,21 +31,21 @@ class TransportationCommonController extends Controller
     {
         $validated = $request->validate([
             'translations' => 'required|array',
-            'translations.*.locale' => 'required|string',
             'translations.*.question' => 'required|string',
             'translations.*.answer' => 'required|string',
         ]);
 
         $question = Transportation_common_question::create();
 
-        foreach ($validated['translations'] as $translation) {
-            $question->translateOrNew($translation['locale'])->question = $translation['question'];
-            $question->translateOrNew($translation['locale'])->answer = $translation['answer'];
+        if (isset($validated['translations'])) {
+            foreach ($validated['translations'] as $locale => $translation) {
+                $question->translateOrNew($locale)->question = $translation['question'];
+                $question->translateOrNew($locale)->answer = $translation['answer'] ?? null;
+            }
+            $question->save();
         }
 
-        $question->save();
-
-        return redirect()->route('transportation_commons.index')->with('success', 'تمت إضافة السؤال بنجاح');
+        return redirect()->route('admin.transportation_questions.index')->with('flash_message', 'Transportation common question added successfuly');
     }
 
     /**
@@ -63,7 +63,7 @@ class TransportationCommonController extends Controller
     public function edit($id)
     {
         $transportationCommon = Transportation_common_question::findOrFail($id);
-        return view('transportation_commons.edit', compact('transportationCommon'));
+        return view('admin.transportation_commons.edit', compact('transportationCommon'));
     }
 
     /**
@@ -72,23 +72,22 @@ class TransportationCommonController extends Controller
     public function update(Request $request, $id)
     {
         $transportationCommon = Transportation_common_question::findOrFail($id);
-
+        
         $validated = $request->validate([
             'translations' => 'sometimes|array',
-            'translations.*.locale' => 'required_with:translations|string',
             'translations.*.question' => 'required_with:translations|string',
             'translations.*.answer' => 'required_with:translations|string',
         ]);
 
         if (isset($validated['translations'])) {
-            foreach ($validated['translations'] as $translation) {
-                $transportationCommon->translateOrNew($translation['locale'])->question = $translation['question'];
-                $transportationCommon->translateOrNew($translation['locale'])->answer = $translation['answer'];
+            foreach ($validated['translations'] as $locale => $translation) {
+                $transportationCommon->translateOrNew($locale)->question = $translation['question'];
+                $transportationCommon->translateOrNew($locale)->answer = $translation['answer'] ?? null;
             }
             $transportationCommon->save();
         }
 
-        return redirect()->route('transportation_commons.index')->with('success', 'تم تحديث السؤال بنجاح');
+        return redirect()->route('admin.transportation_questions.index')->with('flash_message', 'Transportation common question updated successfuly');
     }
 
     /**
@@ -99,7 +98,7 @@ class TransportationCommonController extends Controller
         $transportationCommon = Transportation_common_question::findOrFail($id);
 
         $transportationCommon->delete();
-        return redirect()->route('admin.transportation_questions.index')->with('success', 'تم حذف السؤال بنجاح');
+        return back()->with('flash_message', 'Transportation common question deleted successfuly');
     }
 
     // admin

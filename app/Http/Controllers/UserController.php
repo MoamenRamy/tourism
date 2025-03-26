@@ -44,7 +44,9 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        return view('admin.users.edit', compact('user'));
     }
 
     /**
@@ -52,7 +54,15 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        $validated = $request->validate([
+            'role' => 'required',
+        ]);
+
+        $user->role = $validated['role'];
+        $user->save();
+        return redirect()->route('admin.users.index')->with('flash_message', 'User updated successfuly!');
     }
 
     /**
