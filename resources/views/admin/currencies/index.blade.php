@@ -69,7 +69,7 @@ currencies
                 "order": [[0, "asc"]],
                 "columnDefs": [
                     { "type": "num", "targets": 0 },
-                    { "orderable": false, "targets": 3 } // Corrected index
+                    // { "orderable": false, "targets": 3 } // Corrected index
                 ],
                 "paging": true,
                 "searching": true,

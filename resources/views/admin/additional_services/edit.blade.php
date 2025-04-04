@@ -7,7 +7,7 @@ Edit Additional Services
 @section('content')
 <div class="row justify-content-center">
     <div class="card mb-4 col-md-8">
-        <div class="card-header text-">
+        <div class="card-header">
             Edit Additional Services
         </div>
         <div class="card-body">
@@ -16,7 +16,7 @@ Edit Additional Services
                 @method('patch')
                 @csrf
                 {{-- <div class="form-group row">
-                    <label for="name" class="col-md-4 col-form-label text-md-right">Name</label>
+                    <label for="name" class="col-md-4 col-form-label">Name</label>
 
                     <div class="col-md-6">
                         <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $additionalService->name }}" autocomplete="name">
@@ -30,7 +30,7 @@ Edit Additional Services
                 </div>
 
                 <div class="form-group row">
-                    <label for="description" class="col-md-4 col-form-label text-md-right">Description</label>
+                    <label for="description" class="col-md-4 col-form-label">Description</label>
 
                     <div class="col-md-6">
                         <input id="description" type="text" class="form-control @error('description') is-invalid @enderror" name="description" value="{{ $additionalService->description }}" autocomplete="description">
@@ -44,7 +44,7 @@ Edit Additional Services
                 </div> --}}
                 @foreach(config('app.available_locales') as $locale)
                     <div class="form-group row">
-                        <label for="name_{{ $locale }}" class="col-md-4 col-form-label text-md-right">Name ({{ strtoupper($locale) }})</label>
+                        <label for="name_{{ $locale }}" class="col-md-4 col-form-label">Name ({{ strtoupper($locale) }})</label>
                         <div class="col-md-6">
                             <input id="name_{{ $locale }}" type="text"
                                 class="form-control @error('translations.{{ $locale }}.name') is-invalid @enderror"
@@ -61,7 +61,7 @@ Edit Additional Services
                     </div>
 
                     <div class="form-group row">
-                        <label for="description_{{ $locale }}" class="col-md-4 col-form-label text-md-right">Description ({{ strtoupper($locale) }})</label>
+                        <label for="description_{{ $locale }}" class="col-md-4 col-form-label">Description ({{ strtoupper($locale) }})</label>
                         <div class="col-md-6">
                             <textarea id="description_{{ $locale }}"
                                 class="form-control @error('translations.{{ $locale }}.description') is-invalid @enderror"
@@ -78,7 +78,7 @@ Edit Additional Services
 
 
                 <div class="form-group row">
-                    <label for="price" class="col-md-4 col-form-label text-md-right">price</label>
+                    <label for="price" class="col-md-4 col-form-label">price</label>
 
                     <div class="col-md-6">
                         <input id="price" type="text" class="form-control @error('price') is-invalid @enderror" name="price" value="{{ $additionalService->price }}" autocomplete="price">
@@ -92,7 +92,7 @@ Edit Additional Services
                 </div>
 
                 {{-- <div class="form-group row">
-                    <label for="cover_image" class="col-md-4 col-form-label text-md-right">صورة الكتاب</label>
+                    <label for="cover_image" class="col-md-4 col-form-label">صورة الكتاب</label>
 
                     <div class="col-md-6">
                         <input id="cover_image" accept="image/*" type="file" onchange="readCoverImage(this);" class="form-control @error('cover_image') is-invalid @enderror" name="cover_image" value="{{ old('cover_image') }}" autocomplete="cover_image">
@@ -108,7 +108,7 @@ Edit Additional Services
                 </div> --}}
 
                 {{-- <div class="form-group row">
-                    <label for="category" class="col-md-4 col-form-label text-md-right">التصنيف</label>
+                    <label for="category" class="col-md-4 col-form-label">التصنيف</label>
 
                     <div class="col-md-6">
                         <select id="category" class="form-control" name="category">
@@ -126,7 +126,7 @@ Edit Additional Services
                 </div>
 
                 <div class="form-group row">
-                    <label for="description" class="col-md-4 col-form-label text-md-right">الوصف</label>
+                    <label for="description" class="col-md-4 col-form-label">الوصف</label>
 
                     <div class="col-md-6">
                         <textarea id="description" type="text" class="form-control @error('description') is-invalid @enderror" name="description" value="{{ old('description') }}" autocomplete="description"> {{$additionalService->description}} </textarea>
@@ -140,7 +140,7 @@ Edit Additional Services
                 </div>
 
                 <div class="form-group row">
-                    <label for="publish_year" class="col-md-4 col-form-label text-md-right">سنة النشر</label>
+                    <label for="publish_year" class="col-md-4 col-form-label">سنة النشر</label>
 
                     <div class="col-md-6">
                         <input id="publish_year" type="number" class="form-control @error('publish_year') is-invalid @enderror" name="publish_year" value="{{ $additionalService->publish_year }}" autocomplete="publish_year">
@@ -154,7 +154,7 @@ Edit Additional Services
                 </div>
 
                 <div class="form-group row">
-                    <label for="number_of_pages" class="col-md-4 col-form-label text-md-right">عدد الصفحات</label>
+                    <label for="number_of_pages" class="col-md-4 col-form-label">عدد الصفحات</label>
 
                     <div class="col-md-6">
                         <input id="number_of_pages" type="number" class="form-control @error('number_of_pages') is-invalid @enderror" name="number_of_pages" value="{{ $additionalService->number_of_pages }}" autocomplete="number_of_pages">
@@ -168,7 +168,7 @@ Edit Additional Services
                 </div>
 
                 <div class="form-group row">
-                    <label for="number_of_copies" class="col-md-4 col-form-label text-md-right">عدد النسخ</label>
+                    <label for="number_of_copies" class="col-md-4 col-form-label">عدد النسخ</label>
 
                     <div class="col-md-6">
                         <input id="number_of_copies" type="number" class="form-control @error('number_of_copies') is-invalid @enderror" name="number_of_copies" value="{{ $additionalService->number_of_copies }}" autocomplete="number_of_copies">
@@ -182,7 +182,7 @@ Edit Additional Services
                 </div>
 
                 <div class="form-group row">
-                    <label for="price" class="col-md-4 col-form-label text-md-right">السعر</label>
+                    <label for="price" class="col-md-4 col-form-label">السعر</label>
 
                     <div class="col-md-6">
                         <input id="price" type="number" class="form-control @error('price') is-invalid @enderror" name="price" value="{{ $additionalService->price }}" autocomplete="price">

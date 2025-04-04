@@ -7,7 +7,7 @@ Add Transportation Reservation
 @section('content')
 <div class="row justify-content-center">
     <div class="card mb-4 col-md-8">
-        <div class="card-header text-">
+        <div class="card-header">
             Add Transportation Reservation
         </div>
         <div class="card-body">
@@ -18,17 +18,15 @@ Add Transportation Reservation
                     <label for="transportation_id" class="col-md-4 col-form-label">Transportation</label>
 
                     <div class="col-md-6">
-                        <select id="transportation_id" class="form-control" name="transportation_id">
-                            <option value="" disabled>
-                                -- Please select a Transportation --
-                            </option>
+                        <select id="transportation_id" class="form-control @error('transportation_id') is-invalid @enderror" name="transportation_id">
+                            <option value="" disabled>-- Please select a Transportation --</option>
                             @foreach($transportations as $transportation)
-                                <option value="{{ $transportation->id }}">
+                                <option value="{{ $transportation->id }}" {{ old('transportation_id') == $transportation->id ? 'selected' : '' }}>
                                     {{ $transportation->from }} -> {{ $transportation->to }}
                                 </option>
                             @endforeach
                         </select>
-                        @error('transportation_id')  <!-- Fixed incorrect error key -->
+                        @error('transportation_id')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -40,17 +38,15 @@ Add Transportation Reservation
                     <label for="user_id" class="col-md-4 col-form-label">User</label>
 
                     <div class="col-md-6">
-                        <select id="user_id" class="form-control" name="user_id">
-                            <option value="" disabled>
-                                -- Please select a user --
-                            </option>
+                        <select id="user_id" class="form-control @error('user_id') is-invalid @enderror" name="user_id">
+                            <option value="" disabled>-- Please select a user --</option>
                             @foreach($users as $user)
-                                <option value="{{ $user->id }}">
+                                <option value="{{ $user->id }}" {{ old('user_id') == $user->id ? 'selected' : '' }}>
                                     {{ $user->name }}
                                 </option>
                             @endforeach
                         </select>
-                        @error('user_id')  <!-- Fixed incorrect error key -->
+                        @error('user_id')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -62,17 +58,15 @@ Add Transportation Reservation
                     <label for="currency_id" class="col-md-4 col-form-label">Currency</label>
 
                     <div class="col-md-6">
-                        <select id="currency_id" class="form-control" name="currency_id">
-                            <option value="" disabled>
-                                -- Please select a currency --
-                            </option>
+                        <select id="currency_id" class="form-control @error('currency_id') is-invalid @enderror" name="currency_id">
+                            <option value="" disabled>-- Please select a currency --</option>
                             @foreach($currencies as $currency)
-                                <option value="{{ $currency->id }}">
+                                <option value="{{ $currency->id }}" {{ old('currency_id') == $currency->id ? 'selected' : '' }}>
                                     {{ $currency->code }}
                                 </option>
                             @endforeach
                         </select>
-                        @error('currency_id')  <!-- Fixed incorrect error key -->
+                        @error('currency_id')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -80,96 +74,25 @@ Add Transportation Reservation
                     </div>
                 </div>
 
-                <div class="form-group row">
-                    <label for="first_name" class="col-md-4 col-form-label ">First Name</label>
+                @foreach(['first_name', 'last_name', 'address', 'hotel', 'flight_number', 'guest', 'price', 'phone', 'whatsapp', 'note'] as $field)
+                    <div class="form-group row">
+                        <label for="{{ $field }}" class="col-md-4 col-form-label">{{ ucwords(str_replace('_', ' ', $field)) }}</label>
+                        <div class="col-md-6">
+                            <input id="{{ $field }}" type="text" class="form-control @error($field) is-invalid @enderror" name="{{ $field }}" value="{{ old($field) }}" autocomplete="{{ $field }}">
 
-                    <div class="col-md-6">
-                        <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" autocomplete="first_name">
-
-                        @error('first_name')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
+                            @error($field)
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
                     </div>
-                </div>
+                @endforeach
 
                 <div class="form-group row">
-                    <label for="last_name" class="col-md-4 col-form-label ">Last Name</label>
-
+                    <label for="reservation_dateTime" class="col-md-4 col-form-label">Reservation DateTime</label>
                     <div class="col-md-6">
-                        <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" autocomplete="last_name">
-
-                        @error('last_name')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="address" class="col-md-4 col-form-label ">Address</label>
-
-                    <div class="col-md-6">
-                        <input id="address" type="text" class="form-control @error('address') is-invalid @enderror" name="address" autocomplete="address">
-
-                        @error('address')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="hotel" class="col-md-4 col-form-label ">Hotel</label>
-
-                    <div class="col-md-6">
-                        <input id="hotel" type="text" class="form-control @error('hotel') is-invalid @enderror" name="hotel" autocomplete="hotel">
-
-                        @error('hotel')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="flight_number" class="col-md-4 col-form-label ">Flight Number</label>
-
-                    <div class="col-md-6">
-                        <input id="flight_number" type="text" class="form-control @error('flight_number') is-invalid @enderror" name="flight_number" autocomplete="flight_number">
-
-                        @error('flight_number')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="guest" class="col-md-4 col-form-label ">Guest</label>
-
-                    <div class="col-md-6">
-                        <input id="guest" type="number" class="form-control @error('guest') is-invalid @enderror" name="guest" autocomplete="guest">
-
-                        @error('guest')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="reservation_dateTime" class="col-md-4 col-form-label ">Reservation DateTime</label>
-
-                    <div class="col-md-6">
-                        {{-- <input id="reservation_dateTime" type="datetime-local" class="form-control @error('reservation_dateTime') is-invalid @enderror" name="reservation_dateTime" value="{{ $transportation_reservation->reservation_dateTime }}" autocomplete="reservation_dateTime"> --}}
-                        <input id="reservation_dateTime" type="datetime-local" class="form-control @error('reservation_dateTime') is-invalid @enderror" name="reservation_dateTime">
+                        <input id="reservation_dateTime" type="datetime-local" class="form-control @error('reservation_dateTime') is-invalid @enderror" name="reservation_dateTime" value="{{ old('reservation_dateTime') }}">
 
                         @error('reservation_dateTime')
                             <span class="invalid-feedback" role="alert">
@@ -180,70 +103,13 @@ Add Transportation Reservation
                 </div>
 
                 <div class="form-group row">
-                    <label for="price" class="col-md-4 col-form-label ">Price</label>
-
-                    <div class="col-md-6">
-                        <input id="price" type="text" class="form-control @error('price') is-invalid @enderror" name="price" autocomplete="price">
-
-                        @error('price')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="phone" class="col-md-4 col-form-label ">Phone</label>
-
-                    <div class="col-md-6">
-                        <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" autocomplete="phone">
-
-                        @error('phone')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="whatsapp" class="col-md-4 col-form-label ">What's App</label>
-
-                    <div class="col-md-6">
-                        <input id="whatsapp" type="text" class="form-control @error('whatsapp') is-invalid @enderror" name="whatsapp" autocomplete="whatsapp">
-
-                        @error('whatsapp')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="note" class="col-md-4 col-form-label ">Note</label>
-
-                    <div class="col-md-6">
-                        <input id="note" type="text" class="form-control @error('note') is-invalid @enderror" name="note" autocomplete="note">
-
-                        @error('note')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="form-group row">
                     <label for="payment_status" class="col-md-4 col-form-label">Duration type</label>
-
                     <div class="col-md-6">
-                        <select id="payment_status" class="form-control" name="payment_status">
+                        <select id="payment_status" class="form-control @error('payment_status') is-invalid @enderror" name="payment_status">
                             <option value="" disabled>Choose duration type</option>
-                            <option value="paid">Paid</op+tion>
-                            <option value="unpaid">Unpaid</option>
-                            <option value="deposit">Deposit</option>
+                            <option value="paid" {{ old('payment_status') == 'paid' ? 'selected' : '' }}>Paid</option>
+                            <option value="unpaid" {{ old('payment_status') == 'unpaid' ? 'selected' : '' }}>Unpaid</option>
+                            <option value="deposit" {{ old('payment_status') == 'deposit' ? 'selected' : '' }}>Deposit</option>
                         </select>
                         @error('payment_status')
                             <span class="invalid-feedback" role="alert">

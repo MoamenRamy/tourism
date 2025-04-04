@@ -7,7 +7,7 @@ Edit Destination
 @section('content')
 <div class="row justify-content-center">
     <div class="card mb-4 col-md-8">
-        <div class="card-header text-">
+        <div class="card-header">
             Edit Destination
         </div>
         <div class="card-body">
@@ -16,7 +16,7 @@ Edit Destination
                 @csrf
 
                 <div class="form-group row">
-                    <label for="name" class="col-md-4 col-form-label text-md-right">Name</label>
+                    <label for="name" class="col-md-4 col-form-label">Name</label>
 
                     <div class="col-md-6">
                         <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $destination->name }}" autocomplete="name">
@@ -31,7 +31,7 @@ Edit Destination
 
                 @foreach(config('app.available_locales') as $locale)
                     <div class="form-group row">
-                        <label for="description_{{ $locale }}" class="col-md-4 col-form-label text-md-right">Description ({{ strtoupper($locale) }})</label>
+                        <label for="description_{{ $locale }}" class="col-md-4 col-form-label">Description ({{ strtoupper($locale) }})</label>
                         <div class="col-md-6">
                             <textarea id="description_{{ $locale }}"
                                 class="form-control @error('translations.{{ $locale }}.description') is-invalid @enderror"
@@ -48,7 +48,7 @@ Edit Destination
 
 
                 <div class="form-group row">
-                    <label for="photo" class="col-md-4 col-form-label text-md-right">Destination image</label>
+                    <label for="photo" class="col-md-4 col-form-label">Destination image</label>
 
                     <div class="col-md-6">
                         <input id="photo" accept="image/*" type="file" onchange="readCoverImage(this);" class="form-control @error('photo') is-invalid @enderror" name="photo" value="{{ old('photo') }}" autocomplete="photo">

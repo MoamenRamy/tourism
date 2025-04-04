@@ -75,6 +75,9 @@ class TourController extends Controller
         $tour->pin = $validated['pin'];
         $tour->save();
 
+        // photos
+
+
         if (isset($validated['translations'])) {
             foreach ($validated['translations'] as $locale => $translation) {
                 $tour->translateOrNew($locale)->name = $translation['name'];
@@ -155,6 +158,8 @@ class TourController extends Controller
         $tour->pin = $validated['pin'];
         $tour->save();
 
+        // photos
+
 
         if (isset($validated['translations'])) {
             foreach ($validated['translations'] as $locale => $translation) {
@@ -173,6 +178,8 @@ class TourController extends Controller
      */
     public function destroy(Tour $tour)
     {
+        // photos
+        
         $tour->delete();
         return back()->with('flash_message', 'tour deleted successfuly!');
     }

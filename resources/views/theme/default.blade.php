@@ -118,6 +118,8 @@
         </div>
     </div>
 
+    <script src="https://kit.fontawesome.com/160daa7df6.js" crossorigin="anonymous"></script>
+
     <!-- Bootstrap core JavaScript-->
     <script src="{!! asset('theme/vendor/jquery/jquery.min.js') !!}"></script>
     <script src="{!! asset('theme/vendor/bootstrap/js/bootstrap.bundle.min.js') !!}"></script>

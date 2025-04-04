@@ -7,7 +7,7 @@ Add Transportation Additional Service
 @section('content')
 <div class="row justify-content-center">
     <div class="card mb-4 col-md-8">
-        <div class="card-header text-">
+        <div class="card-header">
             Add Transportation Additional Service
         </div>
         <div class="card-body">
@@ -21,7 +21,7 @@ Add Transportation Additional Service
                             <input id="name_{{ $locale }}" type="text"
                                 class="form-control @error('translations.{{ $locale }}.name') is-invalid @enderror"
                                 name="translations[{{ $locale }}][name]"
-                                autocomplete="name">
+                                value="{{ old("translations.{$locale}.name") }}" autocomplete="name">
 
                             @error("translations.{{ $locale }}.name")
                                 <span class="invalid-feedback" role="alert">
@@ -36,7 +36,7 @@ Add Transportation Additional Service
                         <div class="col-md-6">
                             <textarea id="description_{{ $locale }}"
                                 class="form-control @error('translations.{{ $locale }}.description') is-invalid @enderror"
-                                name="translations[{{ $locale }}][description]"></textarea>
+                                name="translations[{{ $locale }}][description]">{{ old("translations.{$locale}.description") }}</textarea>
 
                             @error("translations.{{ $locale }}.description")
                                 <span class="invalid-feedback" role="alert">
@@ -47,12 +47,11 @@ Add Transportation Additional Service
                     </div>
                 @endforeach
 
-
                 <div class="form-group row">
-                    <label for="year" class="col-md-4 col-form-label ">Price</label>
+                    <label for="price" class="col-md-4 col-form-label ">Price</label>
 
                     <div class="col-md-6">
-                        <input id="price" type="text" class="form-control @error('price') is-invalid @enderror" name="price" autocomplete="price">
+                        <input id="price" type="text" class="form-control @error('price') is-invalid @enderror" name="price" value="{{ old('price') }}" autocomplete="price">
 
                         @error('price')
                             <span class="invalid-feedback" role="alert">

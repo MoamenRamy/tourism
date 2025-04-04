@@ -7,7 +7,7 @@ Add Transportation
 @section('content')
 <div class="row justify-content-center">
     <div class="card mb-4 col-md-8">
-        <div class="card-header text-">
+        <div class="card-header">
             Add Transportation
         </div>
         <div class="card-body">
@@ -23,12 +23,13 @@ Add Transportation
                                 -- Please select a destination --
                             </option>
                             @foreach($destinations as $destination)
-                                <option value="{{ $destination->id }}">
+                                <option value="{{ $destination->id }}"
+                                    {{ old('destination_id') == $destination->id ? 'selected' : '' }}>
                                     {{ $destination->name }}
                                 </option>
                             @endforeach
                         </select>
-                        @error('destination_id')  <!-- Fixed incorrect error key -->
+                        @error('destination_id')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -43,7 +44,7 @@ Add Transportation
                             <input id="from_{{ $locale }}" type="text"
                                 class="form-control @error('translations.{{ $locale }}.from') is-invalid @enderror"
                                 name="translations[{{ $locale }}][from]"
-                                autocomplete="from">
+                                value="{{ old('translations.' . $locale . '.from') }}" autocomplete="from">
 
                             @error("translations.{{ $locale }}.from")
                                 <span class="invalid-feedback" role="alert">
@@ -59,7 +60,7 @@ Add Transportation
                             <input id="to_{{ $locale }}" type="text"
                                 class="form-control @error('translations.{{ $locale }}.to') is-invalid @enderror"
                                 name="translations[{{ $locale }}][to]"
-                                autocomplete="to">
+                                value="{{ old('translations.' . $locale . '.to') }}" autocomplete="to">
 
                             @error("translations.{{ $locale }}.to")
                                 <span class="invalid-feedback" role="alert">
@@ -74,7 +75,7 @@ Add Transportation
                     <label for="price" class="col-md-4 col-form-label ">Price</label>
 
                     <div class="col-md-6">
-                        <input id="price" type="text" class="form-control @error('price') is-invalid @enderror" name="price" autocomplete="price">
+                        <input id="price" type="text" class="form-control @error('price') is-invalid @enderror" name="price" value="{{ old('price') }}" autocomplete="price">
 
                         @error('price')
                             <span class="invalid-feedback" role="alert">
@@ -93,12 +94,13 @@ Add Transportation
                                 -- Please select a vehicle --
                             </option>
                             @foreach($vehicles as $vehicle)
-                                <option value="{{ $vehicle->id }}">
+                                <option value="{{ $vehicle->id }}"
+                                    {{ old('vehicle_id') == $vehicle->id ? 'selected' : '' }}>
                                     {{ $vehicle->model }}
                                 </option>
                             @endforeach
                         </select>
-                        @error('vehicle_id')  <!-- Fixed incorrect error key -->
+                        @error('vehicle_id')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -111,7 +113,7 @@ Add Transportation
 
                     <div class="col-md-6">
                         <input type="hidden" name="available" value="0">
-                        <input id="available" type="checkbox" class="@error('available') is-invalid @enderror" name="available" value="1">
+                        <input id="available" type="checkbox" class="@error('available') is-invalid @enderror" name="available" value="1" {{ old('available') ? 'checked' : '' }}>
                         @error('available')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>

@@ -7,7 +7,7 @@ Add Tour
 @section('content')
 <div class="row justify-content-center">
     <div class="card mb-4 col-md-8">
-        <div class="card-header text-">
+        <div class="card-header">
             Add Tour
         </div>
         <div class="card-body">
@@ -18,7 +18,7 @@ Add Tour
                     <label for="title" class="col-md-4 col-form-label ">Title</label>
 
                     <div class="col-md-6">
-                        <input id="title" type="text" class="form-control @error('title') is-invalid @enderror" name="title" autocomplete="title">
+                        <input id="title" type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title') }}" autocomplete="title">
 
                         @error('title')
                             <span class="invalid-feedback" role="alert">
@@ -35,7 +35,7 @@ Add Tour
                             <input id="name_{{ $locale }}" type="text"
                                 class="form-control @error('translations.{{ $locale }}.name') is-invalid @enderror"
                                 name="translations[{{ $locale }}][name]"
-                                autocomplete="name">
+                                value="{{ old("translations.{$locale}.name") }}" autocomplete="name">
 
                             @error("translations.{{ $locale }}.name")
                                 <span class="invalid-feedback" role="alert">
@@ -50,7 +50,7 @@ Add Tour
                         <div class="col-md-6">
                             <textarea id="defination_{{ $locale }}"
                                 class="form-control @error('translations.{{ $locale }}.defination') is-invalid @enderror"
-                                name="translations[{{ $locale }}][defination]"></textarea>
+                                name="translations[{{ $locale }}][defination]">{{ old("translations.{$locale}.defination") }}</textarea>
 
                             @error("translations.{{ $locale }}.defination")
                                 <span class="invalid-feedback" role="alert">
@@ -65,7 +65,7 @@ Add Tour
                         <div class="col-md-6">
                             <textarea id="description_{{ $locale }}"
                                 class="form-control @error('translations.{{ $locale }}.description') is-invalid @enderror"
-                                name="translations[{{ $locale }}][description]"></textarea>
+                                name="translations[{{ $locale }}][description]">{{ old("translations.{$locale}.description") }}</textarea>
 
                             @error("translations.{{ $locale }}.description")
                                 <span class="invalid-feedback" role="alert">
@@ -85,12 +85,12 @@ Add Tour
                                 -- Please select a destination --
                             </option>
                             @foreach($destinations as $destination)
-                                <option value="{{ $destination->id }}">
+                                <option value="{{ $destination->id }}" {{ old('destination_id') == $destination->id ? 'selected' : '' }}>
                                     {{ $destination->name }}
                                 </option>
                             @endforeach
                         </select>
-                        @error('destination_id')  <!-- Fixed incorrect error key -->
+                        @error('destination_id')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -107,12 +107,12 @@ Add Tour
                                 -- Please select a category --
                             </option>
                             @foreach($categories as $category)
-                                <option value="{{ $category->id }}">
+                                <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
                                     {{ $category->name }}
                                 </option>
                             @endforeach
                         </select>
-                        @error('category_id')  <!-- Fixed incorrect error key -->
+                        @error('category_id')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -124,7 +124,7 @@ Add Tour
                     <label for="price" class="col-md-4 col-form-label">Price</label>
 
                     <div class="col-md-6">
-                        <input id="price" type="text" class="form-control @error('price') is-invalid @enderror" name="price" autocomplete="price">
+                        <input id="price" type="text" class="form-control @error('price') is-invalid @enderror" name="price" value="{{ old('price') }}" autocomplete="price">
 
                         @error('price')
                             <span class="invalid-feedback" role="alert">
@@ -138,7 +138,7 @@ Add Tour
                     <label for="duration" class="col-md-4 col-form-label">Duration</label>
 
                     <div class="col-md-6">
-                        <input id="duration" type="number" class="form-control @error('duration') is-invalid @enderror" name="duration" autocomplete="duration">
+                        <input id="duration" type="number" class="form-control @error('duration') is-invalid @enderror" name="duration" value="{{ old('duration') }}" autocomplete="duration">
 
                         @error('duration')
                             <span class="invalid-feedback" role="alert">
@@ -154,8 +154,8 @@ Add Tour
                     <div class="col-md-6">
                         <select id="duration_type" class="form-control" name="duration_type">
                             <option value="" disabled>Choose duration type</option>
-                            <option value="hours">Hours</op+tion>
-                            <option value="days">Days</option>
+                            <option value="hours" {{ old('duration_type') == 'hours' ? 'selected' : '' }}>Hours</option>
+                            <option value="days" {{ old('duration_type') == 'days' ? 'selected' : '' }}>Days</option>
                         </select>
                         @error('duration_type')
                             <span class="invalid-feedback" role="alert">
@@ -169,7 +169,7 @@ Add Tour
                     <label for="rating" class="col-md-4 col-form-label">Rating</label>
 
                     <div class="col-md-6">
-                        <input id="rating" type="text" class="form-control @error('rating') is-invalid @enderror" name="rating" autocomplete="rating">
+                        <input id="rating" type="text" class="form-control @error('rating') is-invalid @enderror" name="rating" value="{{ old('rating') }}" autocomplete="rating">
 
                         @error('rating')
                             <span class="invalid-feedback" role="alert">
@@ -184,7 +184,7 @@ Add Tour
 
                     <div class="col-md-6">
                         <input type="hidden" name="available" value="0">
-                        <input id="available" type="checkbox" class="@error('available') is-invalid @enderror" name="available" value="1">
+                        <input id="available" type="checkbox" class="@error('available') is-invalid @enderror" name="available" value="1" {{ old('available') ? 'checked' : '' }}>
                         @error('available')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -198,7 +198,7 @@ Add Tour
                     <div class="col-md-6">
                         <textarea id="additional_info"
                             class="form-control @error('additional_info') is-invalid @enderror"
-                            name="additional_info"></textarea>
+                            name="additional_info">{{ old('additional_info') }}</textarea>
 
                         @error("additional_info")
                             <span class="invalid-feedback" role="alert">
@@ -212,7 +212,7 @@ Add Tour
                     <label for="max_tickets_per_day" class="col-md-4 col-form-label">Max tickets per day</label>
 
                     <div class="col-md-6">
-                        <input id="max_tickets_per_day" type="number" class="form-control @error('max_tickets_per_day') is-invalid @enderror" name="max_tickets_per_day" autocomplete="max_tickets_per_day">
+                        <input id="max_tickets_per_day" type="number" class="form-control @error('max_tickets_per_day') is-invalid @enderror" name="max_tickets_per_day" value="{{ old('max_tickets_per_day') }}" autocomplete="max_tickets_per_day">
 
                         @error('max_tickets_per_day')
                             <span class="invalid-feedback" role="alert">
@@ -223,54 +223,13 @@ Add Tour
                 </div>
 
                 <div class="form-group row">
-                    <label for="longitude" class="col-md-4 col-form-label">Longitude</label>
+                    <label for="featured" class="col-md-4 col-form-label">Featured</label>
 
                     <div class="col-md-6">
-                        <input id="longitude" type="text" class="form-control @error('longitude') is-invalid @enderror" name="longitude" autocomplete="longitude">
+                        <input type="hidden" name="featured" value="0">
+                        <input id="featured" type="checkbox" class="@error('featured') is-invalid @enderror" name="featured" value="1" {{ old('featured') ? 'checked' : '' }}>
 
-                        @error('longitude')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="latitude" class="col-md-4 col-form-label">Latitude</label>
-
-                    <div class="col-md-6">
-                        <input id="latitude" type="text" class="form-control @error('latitude') is-invalid @enderror" name="latitude" autocomplete="latitude">
-
-                        @error('latitude')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="count" class="col-md-4 col-form-label">Count</label>
-
-                    <div class="col-md-6">
-                        <input id="count" type="number" class="form-control @error('count') is-invalid @enderror" name="count" autocomplete="count">
-
-                        @error('count')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="pin" class="col-md-4 col-form-label">Pin</label>
-
-                    <div class="col-md-6">
-                        <input type="hidden" name="pin" value="0">
-                        <input id="pin" type="checkbox" class="@error('pin') is-invalid @enderror" name="pin" value="1">
-                        @error('pin')
+                        @error('featured')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -279,27 +238,14 @@ Add Tour
                 </div>
 
                 <div class="form-group row mb-0">
-                    <div class="col-md-1">
-                        <button type="submit" class="btn btn-primary">Add</button>
+                    <div class="col-md-6 offset-md-4">
+                        <button type="submit" class="btn btn-primary">
+                            Save
+                        </button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
 </div>
-@endsection
-
-@section('script')
-<script>
-    function readCoverImage(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-            $('#photo-thumb')
-                .attr('src', e.target.result);
-            };
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-</script>
 @endsection

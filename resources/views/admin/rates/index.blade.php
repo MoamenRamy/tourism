@@ -74,7 +74,7 @@ Rates
                 "order": [[0, "asc"]],
                 "columnDefs": [
                     { "type": "num", "targets": 0 },
-                    { "orderable": false, "targets": 2 } // Corrected index
+                    // { "orderable": false, "targets": 2 } // Corrected index
                 ],
                 "paging": true,
                 "searching": true,

@@ -129,6 +129,17 @@ class DestinationController extends Controller
      */
     public function destroy(Destination $destination)
     {
+        if (!empty($destination->photo)) {
+            $photoPath = storage_path('app/public/' . str_replace('storage/', '', $destination->photo));
+
+            if (Storage::exists(str_replace('storage/', 'public/', $destination->photo))) {
+                Storage::delete(str_replace('storage/', 'public/', $destination->photo));
+            }
+            elseif (file_exists($photoPath)) {
+                unlink($photoPath);
+            }
+        }
+
         $destination->delete();
         return back()->with('flash_message', 'Destination deleted successfully');
     }

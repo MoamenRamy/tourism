@@ -7,7 +7,7 @@ Edit Transportation Reservation
 @section('content')
 <div class="row justify-content-center">
     <div class="card mb-4 col-md-8">
-        <div class="card-header text-">
+        <div class="card-header">
             Edit Transportation Reservation
         </div>
         <div class="card-body">
@@ -245,7 +245,7 @@ Edit Transportation Reservation
                     <div class="col-md-6">
                         <select id="payment_status" class="form-control" name="payment_status">
                             <option value="" disabled>Choose duration type</option>
-                            <option value="paid" {{ old('payment_status', $tour_reservation->payment_status ?? '') == 'paid' ? 'selected' : '' }}>Paid</op+tion>
+                            <option value="paid" {{ old('payment_status', $tour_reservation->payment_status ?? '') == 'paid' ? 'selected' : '' }}>Paid</option>
                             <option value="unpaid" {{ old('payment_status', $tour_reservation->payment_status ?? '') == 'unpaid' ? 'selected' : '' }}>Unpaid</option>
                             <option value="deposit" {{ old('payment_status', $tour_reservation->payment_status ?? '') == 'deposit' ? 'selected' : '' }}>Deposit</option>
                         </select>

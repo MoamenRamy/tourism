@@ -7,7 +7,7 @@ Add Vehicle
 @section('content')
 <div class="row justify-content-center">
     <div class="card mb-4 col-md-8">
-        <div class="card-header text-">
+        <div class="card-header">
             Add Vehicle
         </div>
         <div class="card-body">
@@ -21,7 +21,7 @@ Add Vehicle
                             <input id="name_{{ $locale }}" type="text"
                                 class="form-control @error('translations.{{ $locale }}.name') is-invalid @enderror"
                                 name="translations[{{ $locale }}][name]"
-                                autocomplete="name">
+                                value="{{ old('translations.' . $locale . '.name') }}" autocomplete="name">
 
                             @error("translations.{{ $locale }}.name")
                                 <span class="invalid-feedback" role="alert">
@@ -37,7 +37,7 @@ Add Vehicle
                             <input id="model_{{ $locale }}" type="text"
                                 class="form-control @error('translations.{{ $locale }}.model') is-invalid @enderror"
                                 name="translations[{{ $locale }}][model]"
-                                autocomplete="model">
+                                value="{{ old('translations.' . $locale . '.model') }}" autocomplete="model">
 
                             @error("translations.{{ $locale }}.model")
                                 <span class="invalid-feedback" role="alert">
@@ -48,12 +48,10 @@ Add Vehicle
                     </div>
                 @endforeach
 
-
                 <div class="form-group row">
                     <label for="year" class="col-md-4 col-form-label ">Year</label>
-
                     <div class="col-md-6">
-                        <input id="year" type="text" class="form-control @error('year') is-invalid @enderror" name="year" autocomplete="year">
+                        <input id="year" type="text" class="form-control @error('year') is-invalid @enderror" name="year" value="{{ old('year') }}" autocomplete="year">
 
                         @error('year')
                             <span class="invalid-feedback" role="alert">
@@ -65,9 +63,8 @@ Add Vehicle
 
                 <div class="form-group row">
                     <label for="car_load" class="col-md-4 col-form-label ">Car Load</label>
-
                     <div class="col-md-6">
-                        <input id="car_load" type="text" class="form-control @error('car_load') is-invalid @enderror" name="car_load" autocomplete="car_load">
+                        <input id="car_load" type="text" class="form-control @error('car_load') is-invalid @enderror" name="car_load" value="{{ old('car_load') }}" autocomplete="car_load">
 
                         @error('car_load')
                             <span class="invalid-feedback" role="alert">
@@ -77,10 +74,8 @@ Add Vehicle
                     </div>
                 </div>
 
-
                 <div class="form-group row">
                     <label for="photo" class="col-md-4 col-form-label ">Vehicle Image</label>
-
                     <div class="col-md-6">
                         <input id="photo" accept="image/*" type="file" onchange="readCoverImage(this);" class="form-control @error('photo') is-invalid @enderror" name="photo" value="{{ old('photo') }}" autocomplete="photo">
 
@@ -90,7 +85,7 @@ Add Vehicle
                             </span>
                         @enderror
 
-                        <img id="photo-thumb" class="img-fluid img-thumbnail" src="">
+                        <img id="photo-thumb" class="img-fluid img-thumbnail" src="{{ old('photo') ? asset('storage/' . old('photo')) : '' }}">
                     </div>
                 </div>
 

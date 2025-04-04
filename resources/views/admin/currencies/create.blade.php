@@ -7,7 +7,7 @@ Add Currency
 @section('content')
 <div class="row justify-content-center">
     <div class="card mb-4 col-md-8">
-        <div class="card-header text-">
+        <div class="card-header">
             Add Currency
         </div>
         <div class="card-body">
@@ -21,6 +21,7 @@ Add Currency
                             <input id="name_{{ $locale }}" type="text"
                                 class="form-control @error('translations.{{ $locale }}.name') is-invalid @enderror"
                                 name="translations[{{ $locale }}][name]"
+                                value="{{ old("translations.$locale.name") }}"
                                 autocomplete="name">
 
                             @error("translations.{{ $locale }}.name")
@@ -36,7 +37,8 @@ Add Currency
                     <label for="code" class="col-md-4 col-form-label ">Code</label>
 
                     <div class="col-md-6">
-                        <input id="code" type="text" class="form-control @error('code') is-invalid @enderror" name="code" autocomplete="code">
+                        <input id="code" type="text" class="form-control @error('code') is-invalid @enderror"
+                            name="code" value="{{ old('code') }}" autocomplete="code">
 
                         @error('code')
                             <span class="invalid-feedback" role="alert">
@@ -50,7 +52,8 @@ Add Currency
                     <label for="symbol" class="col-md-4 col-form-label ">Symbol</label>
 
                     <div class="col-md-6">
-                        <input id="symbol" type="text" class="form-control @error('symbol') is-invalid @enderror" name="symbol" autocomplete="symbol">
+                        <input id="symbol" type="text" class="form-control @error('symbol') is-invalid @enderror"
+                            name="symbol" value="{{ old('symbol') }}" autocomplete="symbol">
 
                         @error('symbol')
                             <span class="invalid-feedback" role="alert">
@@ -64,7 +67,8 @@ Add Currency
                     <label for="exchange_rate" class="col-md-4 col-form-label ">Exchange Rate</label>
 
                     <div class="col-md-6">
-                        <input id="exchange_rate" type="text" class="form-control @error('exchange_rate') is-invalid @enderror" name="exchange_rate" autocomplete="exchange_rate">
+                        <input id="exchange_rate" type="text" class="form-control @error('exchange_rate') is-invalid @enderror"
+                            name="exchange_rate" value="{{ old('exchange_rate') }}" autocomplete="exchange_rate">
 
                         @error('exchange_rate')
                             <span class="invalid-feedback" role="alert">

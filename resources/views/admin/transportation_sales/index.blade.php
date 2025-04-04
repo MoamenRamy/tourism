@@ -74,7 +74,7 @@ Transportation Sales
                 // "language": {
                 //     "url": "//cdn.datatables.net/plug-ins/1.13.4/i18n/ar.json"
                 // },
-                "order": [[0, "asc"]],
+                "order": [[0, "desc"]],
                 "columnDefs": [
                     { "type": "num", "targets": 0 },
                     // { "orderable": false, "targets": 0 } // Corrected index

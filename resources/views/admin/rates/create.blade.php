@@ -1,4 +1,4 @@
-@extends('theme.default')
+{{-- @extends('theme.default')
 
 @section('heading')
 Add Rates
@@ -7,7 +7,7 @@ Add Rates
 @section('content')
 <div class="row justify-content-center">
     <div class="card mb-4 col-md-8">
-        <div class="card-header text-">
+        <div class="card-header">
             Add Rates
         </div>
         <div class="card-body">
@@ -15,7 +15,7 @@ Add Rates
                 @csrf
 
                 <div class="form-group row">
-                    <label for="user_id" class="col-md-4 col-form-label text-md-right">User Name</label>
+                    <label for="user_id" class="col-md-4 col-form-label">User Name</label>
 
                     <div class="col-md-6">
                         <input id="user_id" type="text" class="form-control @error('name') is-invalid @enderror" name="user_id" value="{{ $rate->user->name }}" autocomplete="user_id" disabled>
@@ -29,7 +29,7 @@ Add Rates
                 </div>
 
                 <div class="form-group row">
-                    <label for="tour_id" class="col-md-4 col-form-label text-md-right">Tour</label>
+                    <label for="tour_id" class="col-md-4 col-form-label">Tour</label>
 
                     <div class="col-md-6">
                         <input id="tour_id" type="text" class="form-control @error('name') is-invalid @enderror" name="tour_id" autocomplete="tour_id" disabled>
@@ -43,7 +43,7 @@ Add Rates
                 </div>
 
                 <div class="form-group row">
-                    <label for="rating" class="col-md-4 col-form-label text-md-right">Rating</label>
+                    <label for="rating" class="col-md-4 col-form-label">Rating</label>
 
                     <div class="col-md-6">
                         <input id="rating" type="text" class="form-control @error('name') is-invalid @enderror" name="rating" autocomplete="rating">
@@ -57,7 +57,7 @@ Add Rates
                 </div>
 
                 <div class="form-group row">
-                    <label for="comment" class="col-md-4 col-form-label text-md-right">Comment</label>
+                    <label for="comment" class="col-md-4 col-form-label">Comment</label>
 
                     <div class="col-md-6">
                         <input id="comment" type="text" class="form-control @error('name') is-invalid @enderror" name="comment" autocomplete="comment">
@@ -79,4 +79,4 @@ Add Rates
         </div>
     </div>
 </div>
-@endsection
+@endsection --}}

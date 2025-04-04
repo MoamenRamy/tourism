@@ -70,6 +70,8 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
+        // photos
+        
         User::findOrFail($id)->delete();
         return redirect()->route('admin.users.index')->with('flash_message', 'deleted successfuly!');
     }

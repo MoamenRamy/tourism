@@ -7,7 +7,7 @@ Add Transportation Sale
 @section('content')
 <div class="row justify-content-center">
     <div class="card mb-4 col-md-8">
-        <div class="card-header text-">
+        <div class="card-header">
             Add Transportation Sale
         </div>
         <div class="card-body">
@@ -23,12 +23,13 @@ Add Transportation Sale
                                 -- Please select a tour --
                             </option>
                             @foreach($destinations as $destination)
-                                <option value="{{ $destination->id }}">
+                                <option value="{{ $destination->id }}"
+                                    {{ old('destination_id') == $destination->id ? 'selected' : '' }}>
                                     {{ $destination->name }}
                                 </option>
                             @endforeach
                         </select>
-                        @error('destination_id')  <!-- Fixed incorrect error key -->
+                        @error('destination_id')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -37,10 +38,10 @@ Add Transportation Sale
                 </div>
 
                 <div class="form-group row">
-                    <label for="discount_percentage" class="col-md-4 col-form-label ">Discount Percentage</label>
+                    <label for="discount_percentage" class="col-md-4 col-form-label">Discount Percentage</label>
 
                     <div class="col-md-6">
-                        <input id="discount_percentage" type="text" class="form-control @error('discount_percentage') is-invalid @enderror" name="discount_percentage" autocomplete="discount_percentage">
+                        <input id="discount_percentage" type="text" class="form-control @error('discount_percentage') is-invalid @enderror" name="discount_percentage" value="{{ old('discount_percentage') }}" autocomplete="discount_percentage">
 
                         @error('discount_percentage')
                             <span class="invalid-feedback" role="alert">
@@ -51,10 +52,10 @@ Add Transportation Sale
                 </div>
 
                 <div class="form-group row">
-                    <label for="discount_amount" class="col-md-4 col-form-label ">Discount Amount</label>
+                    <label for="discount_amount" class="col-md-4 col-form-label">Discount Amount</label>
 
                     <div class="col-md-6">
-                        <input id="discount_amount" type="text" class="form-control @error('discount_amount') is-invalid @enderror" name="discount_amount" autocomplete="discount_amount">
+                        <input id="discount_amount" type="text" class="form-control @error('discount_amount') is-invalid @enderror" name="discount_amount" value="{{ old('discount_amount') }}" autocomplete="discount_amount">
 
                         @error('discount_amount')
                             <span class="invalid-feedback" role="alert">
@@ -65,10 +66,10 @@ Add Transportation Sale
                 </div>
 
                 <div class="form-group row">
-                    <label for="discount_start_date" class="col-md-4 col-form-label ">Discount Start Date</label>
+                    <label for="discount_start_date" class="col-md-4 col-form-label">Discount Start Date</label>
 
                     <div class="col-md-6">
-                        <input id="discount_start_date" type="date" class="form-control @error('discount_start_date') is-invalid @enderror" name="discount_start_date" autocomplete="discount_start_date">
+                        <input id="discount_start_date" type="date" class="form-control @error('discount_start_date') is-invalid @enderror" name="discount_start_date" value="{{ old('discount_start_date') }}" autocomplete="discount_start_date">
 
                         @error('discount_start_date')
                             <span class="invalid-feedback" role="alert">
@@ -79,10 +80,10 @@ Add Transportation Sale
                 </div>
 
                 <div class="form-group row">
-                    <label for="discount_end_date" class="col-md-4 col-form-label ">Discount End Date</label>
+                    <label for="discount_end_date" class="col-md-4 col-form-label">Discount End Date</label>
 
                     <div class="col-md-6">
-                        <input id="discount_end_date" type="date" class="form-control @error('discount_end_date') is-invalid @enderror" name="discount_end_date" autocomplete="discount_end_date">
+                        <input id="discount_end_date" type="date" class="form-control @error('discount_end_date') is-invalid @enderror" name="discount_end_date" value="{{ old('discount_end_date') }}" autocomplete="discount_end_date">
 
                         @error('discount_end_date')
                             <span class="invalid-feedback" role="alert">
@@ -97,7 +98,7 @@ Add Transportation Sale
 
                     <div class="col-md-6">
                         <input type="hidden" name="active" value="0">
-                        <input id="active" type="checkbox" class="@error('active') is-invalid @enderror" name="active" value="1">
+                        <input id="active" type="checkbox" class="@error('active') is-invalid @enderror" name="active" value="1" {{ old('active') ? 'checked' : '' }}>
                         @error('active')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -105,7 +106,6 @@ Add Transportation Sale
                         @enderror
                     </div>
                 </div>
-
 
                 <div class="form-group row mb-0">
                     <div class="col-md-1">

@@ -7,7 +7,7 @@ Edit Transportation Common Question
 @section('content')
 <div class="row justify-content-center">
     <div class="card mb-4 col-md-8">
-        <div class="card-header text-">
+        <div class="card-header">
             Edit Transportation Common Question
         </div>
         <div class="card-body">
@@ -17,7 +17,7 @@ Edit Transportation Common Question
 
                 @foreach(config('app.available_locales') as $locale)
                     <div class="form-group row">
-                        <label for="question_{{ $locale }}" class="col-md-4 col-form-label text-md-right">Question ({{ strtoupper($locale) }})</label>
+                        <label for="question_{{ $locale }}" class="col-md-4 col-form-label">Question ({{ strtoupper($locale) }})</label>
                         <div class="col-md-6">
                             <textarea id="question_{{ $locale }}"
                                 class="form-control @error('translations.{{ $locale }}.question') is-invalid @enderror"
@@ -32,7 +32,7 @@ Edit Transportation Common Question
                     </div>
 
                     <div class="form-group row">
-                        <label for="answer_{{ $locale }}" class="col-md-4 col-form-label text-md-right">Answer ({{ strtoupper($locale) }})</label>
+                        <label for="answer_{{ $locale }}" class="col-md-4 col-form-label">Answer ({{ strtoupper($locale) }})</label>
                         <div class="col-md-6">
                             <textarea id="answer_{{ $locale }}"
                                 class="form-control @error('translations.{{ $locale }}.answer') is-invalid @enderror"

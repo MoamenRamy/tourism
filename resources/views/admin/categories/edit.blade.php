@@ -7,7 +7,7 @@ Edit Category
 @section('content')
 <div class="row justify-content-center">
     <div class="card mb-4 col-md-8">
-        <div class="card-header text-">
+        <div class="card-header">
             Edit Category
         </div>
         <div class="card-body">

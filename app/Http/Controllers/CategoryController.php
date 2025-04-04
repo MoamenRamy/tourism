@@ -152,6 +152,18 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        // Storage::disk('public')->delete($vehicle->photo);
+        if (!empty($category->photo)) {
+            $photoPath = storage_path('app/public/' . str_replace('storage/', '', $category->photo));
+
+            if (Storage::exists(str_replace('storage/', 'public/', $category->photo))) {
+                Storage::delete(str_replace('storage/', 'public/', $category->photo));
+            }
+            elseif (file_exists($photoPath)) {
+                unlink($photoPath);
+            }
+        }
+
         $category->delete();
         return back()->with('flash_message', 'Category deleted successfully');
     }

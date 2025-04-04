@@ -7,7 +7,7 @@ Edit Safety
 @section('content')
 <div class="row justify-content-center">
     <div class="card mb-4 col-md-8">
-        <div class="card-header text-">
+        <div class="card-header">
             Edit Safety
         </div>
         <div class="card-body">
@@ -17,7 +17,7 @@ Edit Safety
 
                 @foreach(config('app.available_locales') as $locale)
                     <div class="form-group row">
-                        <label for="name_{{ $locale }}" class="col-md-4 col-form-label text-md-right">name ({{ strtoupper($locale) }})</label>
+                        <label for="name_{{ $locale }}" class="col-md-4 col-form-label">name ({{ strtoupper($locale) }})</label>
                         <div class="col-md-6">
                             <textarea id="name_{{ $locale }}"
                                 class="form-control @error('translations.{{ $locale }}.name') is-invalid @enderror"

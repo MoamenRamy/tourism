@@ -34,63 +34,63 @@
 
             <li class="nav-item {{ request()->is('admin/destination*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{route('admin.destination.index')}}">
-                    <i class="fas fa-book-open"></i>
+                    <i class="fa-solid fa-location-dot"></i>
                     <span>Destination</span>
                 </a>
             </li>
 
             <li class="nav-item {{ request()->is('admin/categories*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{route('admin.categories.index')}}">
-                    <i class="fas fa-book-open"></i>
+                    <i class="fa-solid fa-list"></i>
                     <span>Category</span>
                 </a>
             </li>
 
             <li class="nav-item {{ request()->is('admin/tours*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{route('admin.tours.index')}}">
-                    <i class="fas fa-book-open"></i>
+                    <i class="fa-solid fa-plane"></i>
                     <span>Tour</span>
                 </a>
             </li>
 
             <li class="nav-item {{ request()->is('admin/common-questions*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{route('admin.common-questions.index')}}">
-                    <i class="fas fa-book-open"></i>
+                    <i class="fa-solid fa-question"></i>
                     <span>Common Question</span>
                 </a>
             </li>
 
             <li class="nav-item {{ request()->is('admin/additional-services*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{route('admin.additional-services.index')}}">
-                    <i class="fas fa-book-open"></i>
+                    <i class="fa-solid fa-plus"></i>
                     <span>Additional Services</span>
                 </a>
             </li>
 
             <li class="nav-item {{ request()->is('admin/safeties*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{route('admin.safeties.index')}}">
-                    <i class="fas fa-book-open"></i>
+                    <i class="fa-solid fa-shield"></i>
                     <span>Safety</span>
                 </a>
             </li>
 
             <li class="nav-item {{ request()->is('admin/rates*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{route('admin.rates.index')}}">
-                    <i class="fas fa-book-open"></i>
+                    <i class="fa-solid fa-star"></i>
                     <span>Rates</span>
                 </a>
             </li>
 
             <li class="nav-item {{ request()->is('admin/tour-reservations*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{route('admin.tour-reservations.index')}}">
-                    <i class="fas fa-book-open"></i>
+                    <i class="fa-solid fa-check"></i>
                     <span>Tours Reservations</span>
                 </a>
             </li>
 
             <li class="nav-item {{ request()->is('admin/sales*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{route('admin.sales.index')}}">
-                    <i class="fas fa-book-open"></i>
+                    <i class="fa-solid fa-percent"></i>
                     <span>Sales</span>
                 </a>
             </li>
@@ -100,42 +100,42 @@
 
             <li class="nav-item {{ request()->is('admin/transportations*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{route('admin.transportations.index')}}">
-                    <i class="fas fa-book-open"></i>
+                    <i class="fa-solid fa-car-side"></i>
                     <span>Transportation</span>
                 </a>
             </li>
 
             <li class="nav-item {{ request()->is('admin/transportation_additional*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{route('admin.transportation_additional.index')}}">
-                    <i class="fas fa-book-open"></i>
+                    <i class="fa-solid fa-plus"></i>
                     <span>Additional Services</span>
                 </a>
             </li>
 
             <li class="nav-item {{ request()->is('admin/vehicles*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{route('admin.vehicles.index')}}">
-                    <i class="fas fa-book-open"></i>
+                    <i class="fa-solid fa-van-shuttle"></i>
                     <span>Vehicle</span>
                 </a>
             </li>
 
             <li class="nav-item {{ request()->is('admin/transportation_sales*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{route('admin.transportation_sales.index')}}">
-                    <i class="fas fa-book-open"></i>
+                    <i class="fa-solid fa-percent"></i>
                     <span>Sales</span>
                 </a>
             </li>
 
             <li class="nav-item {{ request()->is('admin/transportation_questions*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{route('admin.transportation_questions.index')}}">
-                    <i class="fas fa-book-open"></i>
+                    <i class="fa-solid fa-question"></i>
                     <span>Common Question</span>
                 </a>
             </li>
 
             <li class="nav-item {{ request()->is('admin/transportation_reservations*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{route('admin.transportation_reservations.index')}}">
-                    <i class="fas fa-book-open"></i>
+                    <i class="fa-solid fa-check"></i>
                     <span>Reservations</span>
                 </a>
             </li>
@@ -147,14 +147,14 @@
 
             <li class="nav-item {{ request()->is('admin/currencies*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{route('admin.currencies.index')}}">
-                    <i class="fas fa-book-open"></i>
+                    <i class="fa-solid fa-coins"></i>
                     <span>Currency</span>
                 </a>
             </li>
 
             <li class="nav-item {{ request()->is('admin/users*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{route('admin.users.index')}}">
-                    <i class="fas fa-book-open"></i>
+                    <i class="fa-solid fa-users"></i>
                     <span>Users</span>
                 </a>
             </li>
