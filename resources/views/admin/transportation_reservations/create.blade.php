@@ -14,7 +14,7 @@ Add Transportation Reservation
             <form action="{{ route('transportation_reservations.store') }}" method="POST">
                 @csrf
 
-                <div class="form-group row">
+                {{-- <div class="form-group row">
                     <label for="transportation_id" class="col-md-4 col-form-label">Transportation</label>
 
                     <div class="col-md-6">
@@ -25,6 +25,33 @@ Add Transportation Reservation
                                     {{ $transportation->from }} -> {{ $transportation->to }}
                                 </option>
                             @endforeach
+                        </select>
+                        @error('transportation_id')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div> --}}
+
+                <div class="form-group row">
+                    <label for="from" class="col-md-4 col-form-label">From</label>
+                    <div class="col-md-6">
+                        <select id="from" class="form-control" name="from">
+                            <option value="" disabled selected>-- Select departure --</option>
+                            @foreach($transportations as $transportation)
+                                <option value="{{ $transportation->from }}">{{ $transportation->from }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="transportation_id" class="col-md-4 col-form-label">To</label>
+                    <div class="col-md-6">
+                        <select id="transportation_id" class="form-control @error('transportation_id') is-invalid @enderror" name="transportation_id">
+                            <option value="">-- Please select a destination --</option>
+                            {{-- Options will be filled by AJAX --}}
                         </select>
                         @error('transportation_id')
                             <span class="invalid-feedback" role="alert">
@@ -128,4 +155,35 @@ Add Transportation Reservation
         </div>
     </div>
 </div>
+@endsection
+
+@section('script')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#from').on('change', function () {
+            var from = $(this).val();
+
+            if (from) {
+                $.ajax({
+                    url: '{{ route("transportation.getDestinations") }}',
+                    type: 'GET',
+                    data: { from: from },
+                    success: function (data) {
+                        // console.log(data); // <-- Add this line
+
+                        $('#transportation_id').empty();
+                        $('#transportation_id').append('<option value="">-- Select destination --</option>');
+                        $.each(data, function (key, value) {
+                        $('#transportation_id').append('<option value="' + value.id + '">' + value.to + '</option>');
+                    });
+                    }
+                });
+            } else {
+                $('#transportation_id').empty();
+                $('#transportation_id').append('<option value="">-- Select destination --</option>');
+            }
+        });
+    });
+</script>
 @endsection

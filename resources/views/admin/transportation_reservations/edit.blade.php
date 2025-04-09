@@ -15,7 +15,7 @@ Edit Transportation Reservation
                 @method('patch')
                 @csrf
 
-                <div class="form-group row">
+                {{-- <div class="form-group row">
                     <label for="transportation_id" class="col-md-4 col-form-label">Transportation</label>
 
                     <div class="col-md-6">
@@ -31,6 +31,40 @@ Edit Transportation Reservation
                             @endforeach
                         </select>
                         @error('transportation_id')  <!-- Fixed incorrect error key -->
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div> --}}
+
+                <div class="form-group row">
+                    <label for="from" class="col-md-4 col-form-label">From</label>
+                    <div class="col-md-6">
+                        <select id="from" class="form-control" name="from">
+                            <option value="" disabled>-- Select departure --</option>
+                            @foreach($transportations as $transportation)
+                                <option value="{{ $transportation->from }}"
+                                    {{ $transportation_reservation->transportation && $transportation_reservation->transportation->translation->from == $transportation->from ? 'selected' : '' }}>
+                                    {{ $transportation->from }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="transportation_id" class="col-md-4 col-form-label">To</label>
+                    <div class="col-md-6">
+                        <select id="transportation_id" class="form-control @error('transportation_id') is-invalid @enderror" name="transportation_id">
+                            <option value="">-- Please select a destination --</option>
+                            @if($transportation_reservation->transportation)
+                                <option value="{{ $transportation_reservation->transportation_id }}" selected>
+                                    {{ $transportation_reservation->transportation->translation->to }}
+                                </option>
+                            @endif
+                        </select>
+                        @error('transportation_id')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -266,4 +300,35 @@ Edit Transportation Reservation
         </div>
     </div>
 </div>
+@endsection
+
+@section('script')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#from').on('change', function () {
+            var from = $(this).val();
+
+            if (from) {
+                $.ajax({
+                    url: '{{ route("transportation.getDestinations") }}',
+                    type: 'GET',
+                    data: { from: from },
+                    success: function (data) {
+                        // console.log(data); // <-- Add this line
+
+                        $('#transportation_id').empty();
+                        $('#transportation_id').append('<option value="">-- Select destination --</option>');
+                        $.each(data, function (key, value) {
+                        $('#transportation_id').append('<option value="' + value.id + '">' + value.to + '</option>');
+                    });
+                    }
+                });
+            } else {
+                $('#transportation_id').empty();
+                $('#transportation_id').append('<option value="">-- Select destination --</option>');
+            }
+        });
+    });
+</script>
 @endsection

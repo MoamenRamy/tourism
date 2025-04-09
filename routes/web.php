@@ -4,6 +4,7 @@ use App\Http\Controllers\AdditionalServiceController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommonQuestionController;
 use App\Http\Controllers\CurrencyController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DestinationController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\IncludeServiceController;
@@ -32,9 +33,7 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::get('/dashboard', function(){
-    return view('admin.index');
-})->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::get('about', [HomeController::class, 'about'])->name('about');
 Route::get('services', [HomeController::class, 'services'])->name('services');
@@ -120,6 +119,8 @@ Route::get('admin/vehicles', [VehicleController::class, 'adminIndex'])->name('ad
 
 Route::resource('transportation_reservations', TransportationReservationController::class);
 Route::get('admin/transportation_reservations', [TransportationReservationController::class, 'adminIndex'])->name('admin.transportation_reservations.index');
+Route::get('/get-destinations', [TransportationController::class, 'getDestinations'])->name('transportation.getDestinations');
+
 
 Route::resource('users', UserController::class);
 Route::get('admin/users', [UserController::class, 'adminIndex'])->name('admin.users.index');

@@ -2,7 +2,7 @@
         <ul class="pr-0 navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{route('dashboard')}}">
             <div class="sidebar-brand-icon">
                 {{-- <img style="width:70%" src="{{ asset('logo.png') }}"> --}}
                 Tourism
@@ -13,8 +13,8 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item {{ request()->is('admin') ? 'active' : '' }}">
-            <a class="nav-link" href="">
+            <li class="nav-item {{ request()->is('dashboard') ? 'active' : '' }}">
+            <a class="nav-link" href="{{route('dashboard')}}">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Dashboard</span>
             </a>
@@ -53,17 +53,17 @@
                 </a>
             </li>
 
-            <li class="nav-item {{ request()->is('admin/common-questions*') ? 'active' : '' }}">
-                <a class="nav-link" href="{{route('admin.common-questions.index')}}">
-                    <i class="fa-solid fa-question"></i>
-                    <span>Common Question</span>
-                </a>
-            </li>
-
             <li class="nav-item {{ request()->is('admin/additional-services*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{route('admin.additional-services.index')}}">
                     <i class="fa-solid fa-plus"></i>
                     <span>Additional Services</span>
+                </a>
+            </li>
+
+            <li class="nav-item {{ request()->is('admin/common-questions*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{route('admin.common-questions.index')}}">
+                    <i class="fa-solid fa-question"></i>
+                    <span>Common Question</span>
                 </a>
             </li>
 
@@ -98,6 +98,13 @@
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
+            <li class="nav-item {{ request()->is('admin/vehicles*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{route('admin.vehicles.index')}}">
+                    <i class="fa-solid fa-van-shuttle"></i>
+                    <span>Vehicle</span>
+                </a>
+            </li>
+
             <li class="nav-item {{ request()->is('admin/transportations*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{route('admin.transportations.index')}}">
                     <i class="fa-solid fa-car-side"></i>
@@ -112,20 +119,6 @@
                 </a>
             </li>
 
-            <li class="nav-item {{ request()->is('admin/vehicles*') ? 'active' : '' }}">
-                <a class="nav-link" href="{{route('admin.vehicles.index')}}">
-                    <i class="fa-solid fa-van-shuttle"></i>
-                    <span>Vehicle</span>
-                </a>
-            </li>
-
-            <li class="nav-item {{ request()->is('admin/transportation_sales*') ? 'active' : '' }}">
-                <a class="nav-link" href="{{route('admin.transportation_sales.index')}}">
-                    <i class="fa-solid fa-percent"></i>
-                    <span>Sales</span>
-                </a>
-            </li>
-
             <li class="nav-item {{ request()->is('admin/transportation_questions*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{route('admin.transportation_questions.index')}}">
                     <i class="fa-solid fa-question"></i>
@@ -137,6 +130,13 @@
                 <a class="nav-link" href="{{route('admin.transportation_reservations.index')}}">
                     <i class="fa-solid fa-check"></i>
                     <span>Reservations</span>
+                </a>
+            </li>
+
+            <li class="nav-item {{ request()->is('admin/transportation_sales*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{route('admin.transportation_sales.index')}}">
+                    <i class="fa-solid fa-percent"></i>
+                    <span>Sales</span>
                 </a>
             </li>
 

@@ -7,6 +7,7 @@ use App\Models\TransportationTranslation;
 use App\Models\Destination;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TransportationController extends Controller
 {
@@ -123,4 +124,18 @@ class TransportationController extends Controller
         $transportations = Transportation::all();
         return view('admin.transportations.index', compact('transportations'));
     }
+
+    public function getDestinations(Request $request)
+{
+    $from = $request->input('from');
+
+    $destinations = DB::table('transportations')
+    ->join('transportation_translations as t', 't.transportation_id', '=', 'transportations.id')
+    ->where('t.locale', app()->getLocale())
+    ->where('t.from', $from)
+    ->select('transportations.id', 't.to')
+    ->get();
+
+    return response()->json($destinations);
+}
 }
