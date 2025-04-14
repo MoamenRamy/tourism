@@ -36,7 +36,7 @@ class Tour extends Model implements TranslatableContract
     // relation with tour additional service tours
     public function additionalServiceTours()
     {
-        return $this->hasMany(Additional_service_tour::class);
+        return $this->belongsToMany(Additional_service::class, 'additional_service_tours', 'tour_id', 'additional_id');
     }
 
     // relation with tour details

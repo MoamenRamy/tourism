@@ -11,7 +11,7 @@ Add Tour
             Add Tour
         </div>
         <div class="card-body">
-            <form action="{{ route('tours.store') }}" method="POST">
+            <form action="{{ route('tours.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <div class="form-group row">
@@ -223,19 +223,100 @@ Add Tour
                 </div>
 
                 <div class="form-group row">
-                    <label for="featured" class="col-md-4 col-form-label">Featured</label>
+                    <label for="longitude" class="col-md-4 col-form-label">Longitude</label>
 
                     <div class="col-md-6">
-                        <input type="hidden" name="featured" value="0">
-                        <input id="featured" type="checkbox" class="@error('featured') is-invalid @enderror" name="featured" value="1" {{ old('featured') ? 'checked' : '' }}>
+                        <input id="longitude" type="text" class="form-control @error('longitude') is-invalid @enderror" name="longitude" value="{{ old('longitude') }}" autocomplete="longitude">
 
-                        @error('featured')
+                        @error('longitude')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
                     </div>
                 </div>
+
+                <div class="form-group row">
+                    <label for="latitude" class="col-md-4 col-form-label">Latitude</label>
+
+                    <div class="col-md-6">
+                        <input id="latitude" type="text" class="form-control @error('latitude') is-invalid @enderror" name="latitude" value="{{ old('latitude') }}" autocomplete="latitude">
+
+                        @error('latitude')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="count" class="col-md-4 col-form-label">Count</label>
+
+                    <div class="col-md-6">
+                        <input id="count" type="number" class="form-control @error('count') is-invalid @enderror" name="count" value="{{ old('count') }}" autocomplete="count">
+
+                        @error('count')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="pin" class="col-md-4 col-form-label">pin</label>
+
+                    <div class="col-md-6">
+                        <input type="hidden" name="pin" value="0">
+                        <input id="pin" type="checkbox" class="@error('pin') is-invalid @enderror" name="pin" value="1" {{ old('pin') ? 'checked' : '' }}>
+
+                        @error('pin')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
+
+
+                <div class="form-group row">
+                    <label for="photos" class="col-form-label">Tour Photo</label>
+                    <input type="file" name="photos[]" id="photos" class="form-control" multiple>
+                </div>
+
+
+                <div class="form-group row">
+                    <label class="col-md-12 col-form-label mb-2">Addition Services</label>
+
+                    <div class="col-md-6">
+                        @foreach($additionals->slice(0, ceil($additionals->count() / 2)) as $additional)
+                            <div class="form-check mb-2">
+                                <label class="form-check-label">
+                                    <input type="checkbox" name="additionals[]" value="{{ $additional->id }}"
+                                        class="form-check-input"
+                                        {{ (is_array(old('additionals')) && in_array($additional->id, old('additionals'))) || (isset($tour) && $tour->additionals->contains($additional->id)) ? 'checked' : '' }}>
+                                    {{ $additional->name }} <span class="ms-2">{{ $additional->price }} $</span>
+                                </label>
+                            </div>
+                        @endforeach
+                    </div>
+
+                    <div class="col-md-6">
+                        @foreach($additionals->slice(ceil($additionals->count() / 2)) as $additional)
+                            <div class="form-check mb-2">
+                                <label class="form-check-label">
+                                    <input type="checkbox" name="additionals[]" value="{{ $additional->id }}"
+                                        class="form-check-input"
+                                        {{ (is_array(old('additionals')) && in_array($additional->id, old('additionals'))) || (isset($tour) && $tour->additionals->contains($additional->id)) ? 'checked' : '' }}>
+                                    {{ $additional->name }} <span class="ms-2">{{ $additional->price }} $</span>
+                                </label>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+
+
 
                 <div class="form-group row mb-0">
                     <div class="col-md-6 offset-md-4">

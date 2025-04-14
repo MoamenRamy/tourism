@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Additional_service;
 use App\Models\Category;
 use App\Models\Destination;
 use Illuminate\Support\Str;
 use App\Models\Tour;
+use App\Models\Tour_photo;
 use App\Models\TourTranslation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class TourController extends Controller
 {
@@ -27,7 +30,8 @@ class TourController extends Controller
     {
         $categories = Category::all();
         $destinations = Destination::all();
-        return view('admin.tours.create', compact('categories', 'destinations'));
+        $additionals = Additional_service::all();
+        return view('admin.tours.create', compact('categories', 'destinations', 'additionals'));
     }
 
     /**
@@ -55,6 +59,9 @@ class TourController extends Controller
             'translations.*.name' => 'required|string',
             'translations.*.defination' => 'nullable|string',
             'translations.*.description' => 'required|string',
+            'additionals' => 'nullable|array',
+            'additionals.*' => 'exists:additional_services,id',
+            'photos.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validate multiple photos
         ]);
 
         $tour = new Tour();
@@ -75,7 +82,20 @@ class TourController extends Controller
         $tour->pin = $validated['pin'];
         $tour->save();
 
-        // photos
+        // details
+
+
+        // Handle new uploaded photos
+        if ($request->hasFile('photos')) {
+            foreach ($request->file('photos') as $photo) {
+                $fileName = time() . '_' . uniqid() . '.' . $photo->extension();
+                $path = $photo->storeAs('tour_photos', $fileName, 'public');
+
+                $tour->photos()->create([
+                    'photo' => $path,
+                ]);
+            }
+        }
 
 
         if (isset($validated['translations'])) {
@@ -86,6 +106,14 @@ class TourController extends Controller
             }
             $tour->save();
         }
+
+        // addition service
+        // Attach selected additionals to pivot table
+        if (isset($validated['additionals'])) {
+            $tour->additionalServiceTours()->sync($validated['additionals']);
+        }
+
+        // details
 
         return redirect()->route('admin.tours.index')->with('flash_message', 'tour added successfuly!');
     }
@@ -105,7 +133,10 @@ class TourController extends Controller
     {
         $categories = Category::all();
         $destinations = Destination::all();
-        return view('admin.tours.edit', compact('tour', 'categories', 'destinations'));
+
+        $tour->load('additionalServiceTours'); // This ensures $tour->additionals is not null
+        $additionals = Additional_service::all();
+        return view('admin.tours.edit', compact('tour', 'categories', 'destinations', 'additionals'));
     }
 
     /**
@@ -134,6 +165,9 @@ class TourController extends Controller
             'translations.*.name' => 'required|string',
             'translations.*.defination' => 'nullable|string',
             'translations.*.description' => 'required|string',
+            'additionals' => 'nullable|array',
+            'additionals.*' => 'exists:additional_services,id',
+            'photos.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validate multiple photos
         ]);
         // $tour->update($request->only([
         //     'slug', 'title', 'destination_id', 'category_id', 'price',
@@ -158,7 +192,30 @@ class TourController extends Controller
         $tour->pin = $validated['pin'];
         $tour->save();
 
-        // photos
+        // details
+
+
+        // First, delete old photos
+        if ($tour->photos->isNotEmpty()) {
+            foreach ($tour->photos as $oldPhoto) {
+                // Delete the file from storage
+                Storage::disk('public')->delete($oldPhoto->photo);
+
+                // Delete the record from the database
+                $oldPhoto->delete();
+            }
+        }
+        // Handle new uploaded photos
+        if ($request->hasFile('photos')) {
+            foreach ($request->file('photos') as $photo) {
+                $fileName = time() . '_' . uniqid() . '.' . $photo->extension();
+                $path = $photo->storeAs('tour_photos', $fileName, 'public');
+
+                $tour->photos()->create([
+                    'photo' => $path,
+                ]);
+            }
+        }
 
 
         if (isset($validated['translations'])) {
@@ -170,16 +227,35 @@ class TourController extends Controller
             $tour->save();
         }
 
+        // addition service
+        // Sync additionals (this will remove old ones and attach new ones)
+        $tour->additionalServiceTours()->sync($validated['additionals'] ?? []);
+
+
         return redirect()->route('admin.tours.index')->with('flash_message', 'tour updated successfuly!');
     }
 
     /**
-     * حذف الرحلة.
+     * delete tour
      */
     public function destroy(Tour $tour)
     {
-        // photos
-        
+
+        // details
+
+        // First, delete old photos
+        if ($tour->photos->isNotEmpty()) {
+            foreach ($tour->photos as $oldPhoto) {
+                // Delete the file from storage
+                Storage::disk('public')->delete($oldPhoto->photo);
+
+                // Delete the record from the database
+                $oldPhoto->delete();
+            }
+        }
+
+        $tour->additionalServiceTours()->detach(); // removes all related records from tour_additions
+
         $tour->delete();
         return back()->with('flash_message', 'tour deleted successfuly!');
     }

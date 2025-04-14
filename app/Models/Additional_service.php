@@ -21,4 +21,9 @@ class Additional_service extends Model implements TranslatableContract
     // {
     //     return $this->hasMany(Additional_serviceTranslation::class);
     // }
+
+    public function tours()
+    {
+        return $this->belongsToMany(Tour::class, 'additional_service_tours', 'additional_id', 'tour_id');
+    }
 }

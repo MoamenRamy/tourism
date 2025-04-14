@@ -11,7 +11,7 @@ Edit Tour
             Edit Tour
         </div>
         <div class="card-body">
-            <form action="{{ route('tours.update' , $tour->slug) }}" method="POST">
+            <form action="{{ route('tours.update' , $tour->slug) }}" method="POST" enctype="multipart/form-data">
                 @method('patch')
                 @csrf
 
@@ -317,6 +317,54 @@ Edit Tour
                         @enderror
                     </div>
                 </div>
+
+                <div class="form-group row">
+                    <label for="photos" class="col-form-label">Tour Photo</label>
+                    <input type="file" name="photos[]" id="photos" class="form-control" multiple>
+                    @if($tour->photos->isNotEmpty())
+                        <div class="gallery row">
+                            @foreach($tour->photos as $photo)
+                                <div class="col-md-3 mb-3">
+                                    <img src="{{ Storage::url($photo->photo) }}" alt="Tour Photo" class="img-fluid rounded">
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-md-12 col-form-label mb-2">Addition Services</label>
+
+                    <div class="col-md-6">
+                        @foreach($additionals->slice(0, ceil($additionals->count() / 2)) as $additional)
+                            <div class="form-check mb-2">
+                                <label class="form-check-label">
+                                    <input type="checkbox" name="additionals[]" value="{{ $additional->id }}"
+                                        class="form-check-input"
+                                        {{ (is_array(old('additionals')) && in_array($additional->id, old('additionals')))
+                                            || (!old('additionals') && $tour->additionalServiceTours->pluck('id')->contains($additional->id)) ? 'checked' : '' }}>
+                                    {{ $additional->name }} <span class="ms-2">{{ $additional->price }} $</span>
+                                </label>
+                            </div>
+                        @endforeach
+                    </div>
+
+                    <div class="col-md-6">
+                        @foreach($additionals->slice(ceil($additionals->count() / 2)) as $additional)
+                            <div class="form-check mb-2">
+                                <label class="form-check-label">
+                                    <input type="checkbox" name="additionals[]" value="{{ $additional->id }}"
+                                        class="form-check-input"
+                                        {{ (is_array(old('additionals')) && in_array($additional->id, old('additionals')))
+                                            || (!old('additionals') && $tour->additionalServiceTours->pluck('id')->contains($additional->id)) ? 'checked' : '' }}>
+                                    {{ $additional->name }} <span class="ms-2">{{ $additional->price }} $</span>
+                                </label>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+
+
 
                 <div class="form-group row mb-0">
                     <div class="col-md-1">
