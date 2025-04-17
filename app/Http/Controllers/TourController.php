@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Destination;
 use Illuminate\Support\Str;
 use App\Models\Tour;
+use App\Models\Tour_detail;
 use App\Models\Tour_photo;
 use App\Models\TourTranslation;
 use Illuminate\Http\Request;
@@ -62,6 +63,10 @@ class TourController extends Controller
             'additionals' => 'nullable|array',
             'additionals.*' => 'exists:additional_services,id',
             'photos.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validate multiple photos
+            'details.*.duration' => 'required|string',
+            'details.*.duration_type' => 'required|string',
+            'details.*.translations.*.description' => 'required|string',
+            'details.*.translations.*.address' => 'required|string',
         ]);
 
         $tour = new Tour();
@@ -82,8 +87,25 @@ class TourController extends Controller
         $tour->pin = $validated['pin'];
         $tour->save();
 
-        // details
+        // tour (details)
+        if (isset($validated['details'])) {
+            foreach ($validated['details'] as $index => $detail) {
+                $tourDetail = new Tour_detail();
+                $tourDetail->tour_id = $tour->id;
+                $tourDetail->duration = $detail['duration'];
+                $tourDetail->duration_type = $detail['duration_type'];
 
+                // (address, description)
+                if (isset($detail['translations'])) {
+                    foreach ($validated['translations'] as $locale => $translation) {
+                        $tourDetail->translateOrNew($locale)->description = $detail['translations'][$locale]['description'] ?? null;
+                        $tourDetail->translateOrNew($locale)->address = $detail['translations'][$locale]['address'] ?? null;
+                    }
+                }
+
+                $tourDetail->save();
+            }
+        }
 
         // Handle new uploaded photos
         if ($request->hasFile('photos')) {
@@ -168,6 +190,10 @@ class TourController extends Controller
             'additionals' => 'nullable|array',
             'additionals.*' => 'exists:additional_services,id',
             'photos.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validate multiple photos
+            'details.*.duration' => 'required|string',
+            'details.*.duration_type' => 'required|string',
+            'details.*.translations.*.description' => 'required|string',
+            'details.*.translations.*.address' => 'required|string',
         ]);
         // $tour->update($request->only([
         //     'slug', 'title', 'destination_id', 'category_id', 'price',
@@ -192,8 +218,25 @@ class TourController extends Controller
         $tour->pin = $validated['pin'];
         $tour->save();
 
-        // details
+        // tour (details)
+        if (isset($validated['details'])) {
+            foreach ($validated['details'] as $index => $detail) {
+                $tourDetail = new Tour_detail();
+                $tourDetail->tour_id = $tour->id;
+                $tourDetail->duration = $detail['duration'];
+                $tourDetail->duration_type = $detail['duration_type'];
 
+                // (address, description)
+                if (isset($detail['translations'])) {
+                    foreach ($validated['translations'] as $locale => $translation) {
+                        $tourDetail->translateOrNew($locale)->description = $detail['translations'][$locale]['description'] ?? null;
+                        $tourDetail->translateOrNew($locale)->address = $detail['translations'][$locale]['address'] ?? null;
+                    }
+                }
+
+                $tourDetail->save();
+            }
+        }
 
         // First, delete old photos
         if ($tour->photos->isNotEmpty()) {
@@ -232,7 +275,8 @@ class TourController extends Controller
         $tour->additionalServiceTours()->sync($validated['additionals'] ?? []);
 
 
-        return redirect()->route('admin.tours.index')->with('flash_message', 'tour updated successfuly!');
+        // return redirect()->route('admin.tours.index')->with('flash_message', 'tour updated successfuly!');
+        return back()->with('flash_message', 'tour updated successfuly!');
     }
 
     /**
@@ -276,5 +320,11 @@ class TourController extends Controller
         // error when get obj without name
 
         return view('admin.tours.index', compact('tours'));
+    }
+
+    public function getTourDetailInput(Request $request)
+    {
+        $index = $request->input('index');
+        return view('admin.tours._tour_detail_input', compact('index'));
     }
 }

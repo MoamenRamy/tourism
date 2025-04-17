@@ -86,6 +86,9 @@ Route::get('admin/safeties', [SafetyController::class, 'adminIndex'])->name('adm
 Route::resource('sales', SaleController::class);
 Route::get('admin/sales', [SaleController::class, 'adminIndex'])->name('admin.sales.index');
 
+// Route::get('/tours/detail-input', [TourController::class, 'getTourDetailInput'])->name('tour-details.create');
+Route::get('/tour-detail-input', [TourController::class, 'getTourDetailInput'])->name('tour-details.create');
+
 Route::resource('tours', TourController::class)->parameters([
     'tours' => 'tour:slug'
 ]);
@@ -93,6 +96,9 @@ Route::get('admin/tours', [TourController::class, 'adminIndex'])->name('admin.to
 
 // Route::resource('tour-details', TourDetailsController::class);
 Route::get('/tour-details', [TourDetailsController::class, 'index']);
+Route::delete('/tour-details/{id}', [TourDetailsController::class, 'destroy'])->name('tour-details.destroy');
+
+
 // Route::get('/test', [TestController::class, 'test']);
 
 Route::resource('tour-photos', TourPhotoController::class);

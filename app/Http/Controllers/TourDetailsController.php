@@ -102,11 +102,16 @@ class TourDetailsController extends Controller
     }
 
     /**
-     * حذف تفاصيل الرحلة.
-     */
-    public function destroy(Tour_detail $tourDetail)
+    *   destroy detail
+    */
+    public function destroy($id)
     {
-        $tourDetail->delete();
-        return redirect()->route('tour_details.index')->with('success', 'تم حذف تفاصيل الرحلة بنجاح');
+        $detail = Tour_detail::findOrFail($id);
+        $detail->delete();
+
+        // Return a JSON response with a success message
+        return response()->json([
+            'message' => 'Detail deleted successfully.'
+        ]);
     }
 }

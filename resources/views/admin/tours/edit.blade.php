@@ -318,6 +318,8 @@ Edit Tour
                     </div>
                 </div>
 
+                <hr>
+
                 <div class="form-group row">
                     <label for="photos" class="col-form-label">Tour Photo</label>
                     <input type="file" name="photos[]" id="photos" class="form-control" multiple>
@@ -331,6 +333,8 @@ Edit Tour
                         </div>
                     @endif
                 </div>
+
+                <hr>
 
                 <div class="form-group row">
                     <label class="col-md-12 col-form-label mb-2">Addition Services</label>
@@ -364,7 +368,45 @@ Edit Tour
                     </div>
                 </div>
 
+                @if($tour->details->isNotEmpty())
+                    <h5 class="mt-4">Old Tour Details</h5>
+                    <ul class="list-group mb-4">
+                        @foreach($tour->details as $detail)
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <div class="">
+                                    <p>
+                                        duration : {{ $detail->duration }} {{$detail->duration_type}}
+                                    </p>
+                                    @foreach(config('app.available_locales') as $locale)
+                                        <div class="">
+                                            <p for="address_{{ $locale }}" class="">
+                                                Address ({{ strtoupper($locale) }}) : {{$detail->translate($locale)->address}}
+                                            </p>
+                                        </div>
 
+                                        <div class="">
+                                            <p for="description_{{ $locale }}" class="">
+                                                Description ({{ strtoupper($locale) }}) : {{$detail->translate($locale)->description}}
+                                            </p>
+                                        </div>
+                                    @endforeach
+
+                                </div>
+                                <button class="btn btn-sm btn-danger" onclick="deleteDetail({{ $detail->id }})">Delete</button>
+                            </li>
+                        @endforeach
+                    </ul>
+                @endif
+
+                <!-- Tour Details Section -->
+                <h4>Tour Details</h4>
+                <div id="tour-details-container">
+                    <!-- Details will be added here dynamically -->
+                </div>
+
+                <button class="btn btn-success" type="button" id="add-detail-btn"><i class="fas fa-plus"></i> Add Tour Detail</button>
+
+                <br><br>
 
                 <div class="form-group row mb-0">
                     <div class="col-md-1">
@@ -390,4 +432,54 @@ Edit Tour
         }
     }
 </script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        let detailIndex = 0;
+
+        $('#add-detail-btn').click(function () {
+        $.ajax({
+            url: '{{ route("tour-details.create") }}',
+            method: 'GET',
+            data: { index: detailIndex },
+            success: function (html) {
+                $('#tour-details-container').append(html);
+                detailIndex++;
+            }
+        });
+    });
+
+    $(document).on('click', '.remove-detail-btn', function() {
+        var index = $(this).data('index'); // Get the index from data-index attribute
+        $('#detail-' + index).remove(); // Remove the form group with the corresponding index
+        $(this).closest('#detail-block').remove(); // Optionally remove the "Remove" button itself (if desired)
+    });
+    });
+</script>
+
+<script>
+    function deleteDetail(id) {
+        if (confirm('Are you sure you want to delete this detail?')) {
+            $.ajax({
+                url: "{{ route('tour-details.destroy', ':id') }}".replace(':id', id),  // Replace :id with actual ID
+                type: 'DELETE',
+                data: {
+                    _token: '{{ csrf_token() }}',  // Include CSRF token
+                },
+                success: function (response) {
+                    // On success, remove the corresponding list item from the DOM
+                    $('#detail-' + id).remove();
+                    alert(response.message);  // Optionally show a success message
+                },
+                error: function (xhr, status, error) {
+                    // If something goes wrong, alert the user
+                    alert('There was an error while deleting the detail.');
+                }
+            });
+        }
+    }
+</script>
 @endsection
+
