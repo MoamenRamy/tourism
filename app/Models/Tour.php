@@ -39,6 +39,11 @@ class Tour extends Model implements TranslatableContract
         return $this->belongsToMany(Additional_service::class, 'additional_service_tours', 'tour_id', 'additional_id');
     }
 
+    public function includeServiceTours()
+    {
+        return $this->belongsToMany(Include_service::class, 'include_service_tours', 'tour_id', 'include_id');
+    }
+
     // relation with tour details
     public function details()
     {
@@ -89,11 +94,12 @@ class Tour extends Model implements TranslatableContract
 
     public function include_services()
     {
-        return $this->hasMany(Include_service::class)->where('include', 1);
+        return $this->belongsToMany(Include_service::class, 'include_service_tours', 'tour_id', 'include_id')->where('include', 1);
     }
 
     public function not_include_services()
     {
-        return $this->hasMany(Include_service::class)->where('include', 0);
+        return $this->belongsToMany(Include_service::class, 'include_service_tours', 'tour_id', 'include_id')->where('include', 0);
     }
+
 }

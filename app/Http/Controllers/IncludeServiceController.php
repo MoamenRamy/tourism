@@ -22,7 +22,7 @@ class IncludeServiceController extends Controller
      */
     public function create()
     {
-        return view('include_services.create');
+        return view('admin.include_services.create');
     }
 
     /**
@@ -33,7 +33,6 @@ class IncludeServiceController extends Controller
         $validated = $request->validate([
             'include' => 'required|boolean',
             'translations' => 'required|array',
-            'translations.*.locale' => 'required|string',
             'translations.*.name' => 'required|string',
         ]);
 
@@ -41,12 +40,14 @@ class IncludeServiceController extends Controller
             'include' => $validated['include'],
         ]);
 
-        foreach ($validated['translations'] as $translation) {
-            $includeService->translateOrNew($translation['locale'])->name = $translation['name'];
+        if (isset($validated['translations'])) {
+            foreach ($validated['translations'] as $locale => $translation) {
+                $includeService->translateOrNew($locale)->name = $translation['name'];
+            }
+            $includeService->save();
         }
-        $includeService->save();
 
-        return redirect()->route('include_services.index')->with('success', 'Include Service created successfully');
+        return redirect()->route('admin.include-services.index')->with('flash_message', 'Include Service created successfully');
     }
 
     /**
@@ -62,7 +63,7 @@ class IncludeServiceController extends Controller
      */
     public function edit(Include_service $includeService)
     {
-        return view('include_services.edit', compact('includeService'));
+        return view('admin.include_services.edit', compact('includeService'));
     }
 
     /**
@@ -73,7 +74,6 @@ class IncludeServiceController extends Controller
         $validated = $request->validate([
             'include' => 'sometimes|boolean',
             'translations' => 'sometimes|array',
-            'translations.*.locale' => 'required_with:translations|string',
             'translations.*.name' => 'required_with:translations|string',
         ]);
 
@@ -83,13 +83,13 @@ class IncludeServiceController extends Controller
         $includeService->save();
 
         if (isset($validated['translations'])) {
-            foreach ($validated['translations'] as $translation) {
-                $includeService->translateOrNew($translation['locale'])->name = $translation['name'];
+            foreach ($validated['translations'] as $locale => $translation) {
+                $includeService->translateOrNew($locale)->name = $translation['name'];
             }
             $includeService->save();
         }
 
-        return redirect()->route('include_services.index')->with('success', 'Include Service updated successfully');
+        return redirect()->route('admin.include-services.index')->with('flash_message', 'Include Service updated successfully');
     }
 
     /**
@@ -98,6 +98,14 @@ class IncludeServiceController extends Controller
     public function destroy(Include_service $includeService)
     {
         $includeService->delete();
-        return redirect()->route('include_services.index')->with('success', 'Include Service deleted successfully');
+        return back()->with('flash_message', 'Include Service deleted successfully');
+    }
+
+    // admin
+
+    public function adminIndex()
+    {
+        $includeServices = Include_service::with('translations')->get();
+        return view('admin.include_services.index', compact('includeServices'));
     }
 }

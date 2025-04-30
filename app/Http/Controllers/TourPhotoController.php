@@ -98,11 +98,13 @@ class TourPhotoController extends Controller
      */
     public function destroy(Tour_photo $tourPhoto)
     {
-        // Delete the photo from storage
-        Storage::disk('public')->delete($tourPhoto->photo);
+        // delete from storage
+        if (Storage::disk('public')->exists($tourPhoto->photo)) {
+            Storage::disk('public')->delete($tourPhoto->photo);
+        }
 
         $tourPhoto->delete();
 
-        return redirect()->route('tour_photos.index')->with('success', 'Tour photo deleted successfully.');
+        return response()->json(['success' => true]);
     }
 }

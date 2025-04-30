@@ -109,9 +109,6 @@ class TourDetailsController extends Controller
         $detail = Tour_detail::findOrFail($id);
         $detail->delete();
 
-        // Return a JSON response with a success message
-        return response()->json([
-            'message' => 'Detail deleted successfully.'
-        ]);
+        return response()->json(['message' => 'Detail deleted successfully.']);
     }
 }

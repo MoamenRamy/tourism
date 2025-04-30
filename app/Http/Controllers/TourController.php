@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Additional_service;
 use App\Models\Category;
 use App\Models\Destination;
+use App\Models\Include_service;
+use App\Models\Include_service_tour;
 use Illuminate\Support\Str;
 use App\Models\Tour;
 use App\Models\Tour_detail;
@@ -32,7 +34,10 @@ class TourController extends Controller
         $categories = Category::all();
         $destinations = Destination::all();
         $additionals = Additional_service::all();
-        return view('admin.tours.create', compact('categories', 'destinations', 'additionals'));
+        $includes = Include_service::where('include', 1)->get();
+        $notIncludes = Include_service::where('include', 0)->get();
+
+        return view('admin.tours.create', compact('categories', 'destinations', 'additionals', 'includes', 'notIncludes'));
     }
 
     /**
@@ -67,6 +72,8 @@ class TourController extends Controller
             'details.*.duration_type' => 'required|string',
             'details.*.translations.*.description' => 'required|string',
             'details.*.translations.*.address' => 'required|string',
+            'includes' => 'nullable|array',
+            'includes.*' => 'exists:include_services,id',
         ]);
 
         $tour = new Tour();
@@ -135,7 +142,10 @@ class TourController extends Controller
             $tour->additionalServiceTours()->sync($validated['additionals']);
         }
 
-        // details
+        // include services
+        if (isset($validated['includes'])) {
+            $tour->includeServiceTours()->sync($validated['includes'] ?? []);
+        }
 
         return redirect()->route('admin.tours.index')->with('flash_message', 'tour added successfuly!');
     }
@@ -158,7 +168,12 @@ class TourController extends Controller
 
         $tour->load('additionalServiceTours'); // This ensures $tour->additionals is not null
         $additionals = Additional_service::all();
-        return view('admin.tours.edit', compact('tour', 'categories', 'destinations', 'additionals'));
+
+        $tour->load('includeServiceTours');
+        $includes = Include_service::where('include', 1)->get();
+        $notIncludes = Include_service::where('include', 0)->get();
+
+        return view('admin.tours.edit', compact('tour', 'categories', 'destinations', 'additionals', 'includes', 'notIncludes'));
     }
 
     /**
@@ -169,7 +184,7 @@ class TourController extends Controller
 
         $validated = $request->validate([
             // 'slug' => 'required|string|unique:tours,slug,' . $tour->id,
-            'title' => 'required|string|unique:tours,title,' . $tour->id,
+            // 'title' => 'required|string|unique:tours,title,' . $tour->id,
             'destination_id' => 'nullable|exists:destinations,id',
             'category_id' => 'nullable|exists:categories,id',
             'price' => 'required|numeric',
@@ -194,6 +209,8 @@ class TourController extends Controller
             'details.*.duration_type' => 'required|string',
             'details.*.translations.*.description' => 'required|string',
             'details.*.translations.*.address' => 'required|string',
+            'includes' => 'nullable|array',
+            'includes.*' => 'exists:include_services,id',
         ]);
         // $tour->update($request->only([
         //     'slug', 'title', 'destination_id', 'category_id', 'price',
@@ -201,8 +218,8 @@ class TourController extends Controller
         //     'additional_info', 'max_tickets_per_day', 'longitude',
         //     'latitude', 'count', 'pin'
         // ]));
-        $tour->title = $validated['title'];
-        $tour->slug = Str::slug($validated['title']);
+        // $tour->title = $validated['title'];
+        // $tour->slug = Str::slug($validated['title']);
         $tour->destination_id = $validated['destination_id'];
         $tour->category_id = $validated['category_id'];
         $tour->price = $validated['price'];
@@ -239,15 +256,15 @@ class TourController extends Controller
         }
 
         // First, delete old photos
-        if ($tour->photos->isNotEmpty()) {
-            foreach ($tour->photos as $oldPhoto) {
-                // Delete the file from storage
-                Storage::disk('public')->delete($oldPhoto->photo);
+        // if ($tour->photos->isNotEmpty()) {
+        //     foreach ($tour->photos as $oldPhoto) {
+        //         // Delete the file from storage
+        //         Storage::disk('public')->delete($oldPhoto->photo);
 
-                // Delete the record from the database
-                $oldPhoto->delete();
-            }
-        }
+        //         // Delete the record from the database
+        //         $oldPhoto->delete();
+        //     }
+        // }
         // Handle new uploaded photos
         if ($request->hasFile('photos')) {
             foreach ($request->file('photos') as $photo) {
@@ -274,6 +291,8 @@ class TourController extends Controller
         // Sync additionals (this will remove old ones and attach new ones)
         $tour->additionalServiceTours()->sync($validated['additionals'] ?? []);
 
+        // include services
+        $tour->includeServiceTours()->sync($validated['includes'] ?? []);
 
         // return redirect()->route('admin.tours.index')->with('flash_message', 'tour updated successfuly!');
         return back()->with('flash_message', 'tour updated successfuly!');
@@ -286,6 +305,7 @@ class TourController extends Controller
     {
 
         // details
+        $tour->details()->delete();
 
         // First, delete old photos
         if ($tour->photos->isNotEmpty()) {
@@ -299,6 +319,7 @@ class TourController extends Controller
         }
 
         $tour->additionalServiceTours()->detach(); // removes all related records from tour_additions
+        $tour->includeServiceTours()->detach(); // removes all related records from include_tours
 
         $tour->delete();
         return back()->with('flash_message', 'tour deleted successfuly!');

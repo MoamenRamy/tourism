@@ -92,7 +92,7 @@
                                     <small class="m-0"><i class="fa fa-calendar-alt text-primary mr-2"></i>{{$tour->duration}} {{$tour->duration_type}}</small>
                                     {{-- <small class="m-0"><i class="fa fa-user text-primary mr-2"></i>2 Person</small> --}}
                                 </div>
-                                <a class="h5 text-decoration-none" href="">{{ Str::limit($tour->defination, 50) }}</a>
+                                <a class="h5 text-decoration-none" href="{{route('tours.show', $tour->slug)}}">{{ Str::limit($tour->name, 50) }}</a>
                                 <div class="border-top mt-4 pt-4">
                                     <div class="d-flex justify-content-between">
                                         {{-- add dynamic reviews --}}

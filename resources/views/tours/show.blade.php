@@ -2,6 +2,8 @@
 
 @section('title', $tour->name)
 
+
+
 @section('content')
 <div class="container mt-5">
     <div class="row">
@@ -24,19 +26,22 @@
         </div>
     </div>
 
-    <div id="tourCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
+
+    <div id="carouselExampleFade" class="carousel slide carousel-fade mb-4" data-bs-ride="carousel">
         <div class="carousel-inner">
             @foreach($tour->photos as $key => $image)
                 <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                    <img src="{{ asset('tours/' . $image) }}" class="d-block w-100 rounded" alt="Tour Image">
+                    <img src="{{ asset('storage/' . $image->photo) }}" class="d-block w-100 rounded-1" alt="Tour Image">
                 </div>
             @endforeach
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#tourCarousel" data-bs-slide="prev">
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#tourCarousel" data-bs-slide="next">
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
         </button>
     </div>
 
@@ -51,8 +56,14 @@
 
     <div class="row">
         <div class="col-md-6">
-            <h5><i class="fa-solid fa-user-group"></i> Ages: {{ $tour->age_range }}</h5>
-            <h5><i class="fa-solid fa-clock"></i> Duration: {{ $tour->duration }} hours</h5>
+            {{-- <h5><i class="fa-solid fa-user-group"></i> Ages: {{ $tour->age_range }}</h5> --}}
+            <p><i class="fa-solid fa-clock"></i> <span class="text-uppercase">Duration:</span> {{ $tour->duration }} {{ $tour->duration_type }}</p>
+            <p><i class="fa-solid fa-users"></i> <span class="text-uppercase">Max Tickets Per Group:</span> {{ $tour->max_tickets_per_day }}</p>
+            {{--
+                Start time: Check availability
+                Mobile ticket
+                Live guide: Arabic, English
+            --}}
         </div>
     </div>
 
@@ -62,16 +73,16 @@
         <div class="col-md-6">
             <h4>What's Included</h4>
             <ul class="list-group">
-                @foreach ($tour->include_services() as $item)
-                    <li class="list-group-item">✅ {{ $item }}</li>
+                @foreach ($tour->include_services as $item)
+                    <li class="list-group-item"><i class="fa-solid fa-check"></i> {{ $item->name }}</li>
                 @endforeach
             </ul>
         </div>
         <div class="col-md-6">
             <h4>What's Not Included</h4>
             <ul class="list-group">
-                @foreach ($tour->not_include_services() as $item)
-                    <li class="list-group-item">❌ {{ $item }}</li>
+                @foreach ($tour->not_include_services as $item)
+                    <li class="list-group-item"><i class="fa-solid fa-xmark"></i> {{ $item->name }}</li>
                 @endforeach
             </ul>
         </div>
@@ -95,4 +106,9 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('script')
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 @endsection

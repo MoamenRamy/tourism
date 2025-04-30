@@ -72,7 +72,7 @@ Tours
                                 <form method="POST" action="{{route('tours.destroy', $tour)}}" style="display: inline-block">
                                     @method('delete')
                                     @csrf
-                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i>Delete</button>
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i> Delete</button>
                                 </form>
                             </td>
                         </tr>

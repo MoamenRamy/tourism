@@ -60,6 +60,13 @@
                 </a>
             </li>
 
+            <li class="nav-item {{ request()->is('admin/include-services*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{route('admin.include-services.index')}}">
+                    <i class="fa-solid fa-check"></i>
+                    <span>Include Services</span>
+                </a>
+            </li>
+
             <li class="nav-item {{ request()->is('admin/common-questions*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{route('admin.common-questions.index')}}">
                     <i class="fa-solid fa-question"></i>
@@ -83,7 +90,7 @@
 
             <li class="nav-item {{ request()->is('admin/tour-reservations*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{route('admin.tour-reservations.index')}}">
-                    <i class="fa-solid fa-check"></i>
+                    <i class="fa-solid fa-list-check"></i>
                     <span>Tours Reservations</span>
                 </a>
             </li>
@@ -128,7 +135,7 @@
 
             <li class="nav-item {{ request()->is('admin/transportation_reservations*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{route('admin.transportation_reservations.index')}}">
-                    <i class="fa-solid fa-check"></i>
+                    <i class="fa-solid fa-list-check"></i>
                     <span>Reservations</span>
                 </a>
             </li>

@@ -74,6 +74,8 @@ Route::get('destination/{slug}/tours', [TourController::class, 'get_tours_by_des
 Route::get('admin/destination', [DestinationController::class, 'adminIndex'])->name('admin.destination.index');
 
 Route::resource('include-services', IncludeServiceController::class);
+Route::get('admin/include-services', [IncludeServiceController::class, 'adminIndex'])->name('admin.include-services.index');
+
 
 Route::get('nationalities', [NationalityController::class, 'index']);
 

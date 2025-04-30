@@ -17,6 +17,6 @@ class Include_service extends Model implements TranslatableContract
 
     public function tours()
     {
-        return $this->hasMany(Tour::class);
+        return $this->belongsToMany(Tour::class, 'additional_service_tours', 'include_id', 'tour_id');
     }
 }

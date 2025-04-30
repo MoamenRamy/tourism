@@ -4,6 +4,46 @@
 Edit Tour
 @endsection
 
+@section('head')
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
+<style>
+    .photo-wrapper {
+        position: relative;
+    }
+
+    .photo-wrapper img {
+        width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 8px;
+    }
+
+    .delete-photo-btn {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        background-color: rgba(255, 0, 0, 0.8);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        font-size: 18px;
+        line-height: 30px;
+        text-align: center;
+        cursor: pointer;
+        display: none;
+        z-index: 10;
+    }
+
+    .photo-wrapper:hover .delete-photo-btn {
+        display: block;
+    }
+</style>
+
+@endsection
+
 @section('content')
 <div class="row justify-content-center">
     <div class="card mb-4 col-md-8">
@@ -19,7 +59,7 @@ Edit Tour
                     <label for="title" class="col-md-4 col-form-label ">Title</label>
 
                     <div class="col-md-6">
-                        <input id="title" type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ $tour->title }}" autocomplete="title">
+                        <input id="title" type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ $tour->title }}" autocomplete="title" disabled>
 
                         @error('title')
                             <span class="invalid-feedback" role="alert">
@@ -324,14 +364,53 @@ Edit Tour
                     <label for="photos" class="col-form-label">Tour Photo</label>
                     <input type="file" name="photos[]" id="photos" class="form-control" multiple>
                     @if($tour->photos->isNotEmpty())
-                        <div class="gallery row">
-                            @foreach($tour->photos as $photo)
-                                <div class="col-md-3 mb-3">
-                                    <img src="{{ Storage::url($photo->photo) }}" alt="Tour Photo" class="img-fluid rounded">
+                    <div class="gallery row">
+                        @foreach($tour->photos as $photo)
+                            <div class="col-md-3 mb-3">
+                                <div class="photo-wrapper" data-id="{{ $photo->id }}">
+                                    <button type="button" class="delete-photo-btn" data-id="{{ $photo->id }}"><i class="fa fa-trash"></i></button>
+                                    <img src="{{ Storage::url($photo->photo) }}" alt="Tour Photo" class="img-fluid">
                                 </div>
-                            @endforeach
-                        </div>
+                            </div>
+                        @endforeach
+                    </div>
                     @endif
+                </div>
+
+                <hr>
+
+                <div class="form-group row">
+                    <label class="col-md-12 col-form-label mb-2">Include And Not Include Services</label>
+
+                    <div class="col-md-6">
+                    <label class="col-md-12 col-form-label mb-2">Include Services</label>
+                        @foreach($includes as $include)
+                            <div class="form-check mb-2">
+                                <label class="form-check-label">
+                                    <input type="checkbox" name="includes[]" value="{{ $include->id }}"
+                                        class="form-check-input"
+                                        {{ (is_array(old('includes')) && in_array($include->id, old('includes')))
+                                            || (!old('includes') && $tour->includeServiceTours->pluck('id')->contains($include->id)) ? 'checked' : '' }}>
+                                    {{ $include->name }} <span class="ms-2">{{ $include->price }}</span>
+                                </label>
+                            </div>
+                        @endforeach
+                    </div>
+
+                    <div class="col-md-6">
+                    <label class="col-md-12 col-form-label mb-2">Not Include Services</label>
+                        @foreach($notIncludes as $include)
+                            <div class="form-check mb-2">
+                                <label class="form-check-label">
+                                    <input type="checkbox" name="includes[]" value="{{ $include->id }}"
+                                        class="form-check-input"
+                                        {{ (is_array(old('includes')) && in_array($include->id, old('includes')))
+                                            || (!old('includes') && $tour->includeServiceTours->pluck('id')->contains($include->id)) ? 'checked' : '' }}>
+                                    {{ $include->name }} <span class="ms-2">{{ $include->price }}</span>
+                                </label>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
 
                 <hr>
@@ -368,6 +447,8 @@ Edit Tour
                     </div>
                 </div>
 
+                <hr>
+
                 @if($tour->details->isNotEmpty())
                     <h5 class="mt-4">Old Tour Details</h5>
                     <ul class="list-group mb-4">
@@ -392,7 +473,7 @@ Edit Tour
                                     @endforeach
 
                                 </div>
-                                <button class="btn btn-sm btn-danger" onclick="deleteDetail({{ $detail->id }})">Delete</button>
+                                <button type="button" class="btn btn-sm btn-danger delete-detail-btn" data-id="{{ $detail->id }}">Delete</button>
                             </li>
                         @endforeach
                     </ul>
@@ -404,7 +485,7 @@ Edit Tour
                     <!-- Details will be added here dynamically -->
                 </div>
 
-                <button class="btn btn-success" type="button" id="add-detail-btn"><i class="fas fa-plus"></i> Add Tour Detail</button>
+                <button type="button" class="btn btn-success" id="add-detail-btn"><i class="fas fa-plus"></i> Add Tour Detail</button>
 
                 <br><br>
 
@@ -460,26 +541,58 @@ Edit Tour
 </script>
 
 <script>
-    function deleteDetail(id) {
-        if (confirm('Are you sure you want to delete this detail?')) {
-            $.ajax({
-                url: "{{ route('tour-details.destroy', ':id') }}".replace(':id', id),  // Replace :id with actual ID
-                type: 'DELETE',
-                data: {
-                    _token: '{{ csrf_token() }}',  // Include CSRF token
-                },
-                success: function (response) {
-                    // On success, remove the corresponding list item from the DOM
-                    $('#detail-' + id).remove();
-                    alert(response.message);  // Optionally show a success message
-                },
-                error: function (xhr, status, error) {
-                    // If something goes wrong, alert the user
-                    alert('There was an error while deleting the detail.');
-                }
-            });
-        }
-    }
+    $(document).ready(function () {
+        $('.delete-detail-btn').click(function () {
+            let id = $(this).data('id'); // Get detail ID from button
+            if (confirm('Are you sure you want to delete this detail?')) {
+                $.ajax({
+                    url: "{{ route('tour-details.destroy', ':id') }}".replace(':id', id),
+                    type: 'POST',
+                    data: {
+                        _method: 'DELETE', // Laravel needs this to spoof DELETE
+                        _token: '{{ csrf_token() }}',
+                    },
+                    success: function (response) {
+                        $('#detail-' + id).remove(); // Remove the detail from DOM
+                        alert(response.message);
+                    },
+                    error: function () {
+                        alert('There was an error while deleting the detail.');
+                    }
+                });
+            }
+        });
+    });
 </script>
+
+<script>
+    $(document).ready(function () {
+        $('.delete-photo-btn').click(function () {
+            let photoId = $(this).data('id'); // Get photo ID from button
+            let wrapper = $(this).closest('.photo-wrapper'); // Get the photo wrapper
+
+            if (confirm('Are you sure you want to delete this photo?')) {
+                $.ajax({
+                    url: "{{ route('tour-photos.destroy', ':id') }}".replace(':id', photoId),
+                    type: 'POST',
+                    data: {
+                        _method: 'DELETE', // Spoof DELETE method
+                        _token: '{{ csrf_token() }}',
+                    },
+                    success: function (response) {
+                        wrapper.remove(); // Remove the image from DOM
+                        alert(response.message || 'Photo deleted successfully.');
+                    },
+                    error: function () {
+                        alert('There was an error while deleting the photo.');
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+
+
 @endsection
 

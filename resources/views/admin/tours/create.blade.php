@@ -289,6 +289,40 @@ Add Tour
                 <hr>
 
                 <div class="form-group row">
+                    <label class="col-md-12 col-form-label mb-2">Include And Not Include Services</label>
+
+                    <div class="col-md-6">
+                        <label class="col-md-12 col-form-label mb-2">Include Services</label>
+                        @foreach($includes as $include)
+                            <div class="form-check mb-2">
+                                <label class="form-check-label">
+                                    <input type="checkbox" name="includes[]" value="{{ $include->id }}"
+                                        class="form-check-input"
+                                        {{ (is_array(old('includes')) && in_array($include->id, old('includes'))) || (isset($tour) && $tour->includes->contains($include->id)) ? 'checked' : '' }}>
+                                    {{ $include->name }} <span class="ms-2">{{ $include->price }}</span>
+                                </label>
+                            </div>
+                        @endforeach
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="col-md-12 col-form-label mb-2">Not Include Services</label>
+                        @foreach($notIncludes as $include)
+                            <div class="form-check mb-2">
+                                <label class="form-check-label">
+                                    <input type="checkbox" name="includes[]" value="{{ $include->id }}"
+                                        class="form-check-input"
+                                        {{ (is_array(old('includes')) && in_array($include->id, old('includes'))) || (isset($tour) && $tour->includes->contains($include->id)) ? 'checked' : '' }}>
+                                    {{ $include->name }} <span class="ms-2">{{ $include->price }}</span>
+                                </label>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="form-group row">
                     <label class="col-md-12 col-form-label mb-2">Addition Services</label>
 
                     <div class="col-md-6">
@@ -317,6 +351,8 @@ Add Tour
                         @endforeach
                     </div>
                 </div>
+
+                <hr>
 
                 <!-- Tour Details Section -->
                 <h4>Tour Details</h4>
