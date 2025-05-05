@@ -107,6 +107,8 @@ Route::resource('tour-photos', TourPhotoController::class);
 
 Route::resource('tour-reservations', TourReservationController::class);
 Route::get('admin/tour-reservations', [TourReservationController::class, 'adminIndex'])->name('admin.tour-reservations.index');
+Route::get('tour-reservations/booking/{slug}', [TourReservationController::class, 'createBooking'])->name('tour-reservations.createBooking');
+Route::post('tour-reservations/booking/{slug}', [TourReservationController::class, 'booking'])->name('tour-reservations.booking');
 
 Route::resource('transportation_additional', TransportationAdditionalController::class);
 Route::get('admin/transportation_additional', [TransportationAdditionalController::class, 'adminIndex'])->name('admin.transportation_additional.index');

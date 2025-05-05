@@ -30,6 +30,7 @@ class TourReservationController extends Controller
         return view('admin.tour_reservations.create', compact('tours', 'users', 'currencies'));
     }
 
+
     /**
      * Store a newly created resource in storage.
      */
@@ -154,5 +155,61 @@ class TourReservationController extends Controller
     {
         $tourReservations = Tour_reservation::all();
         return view('admin.tour_reservations.index', compact('tourReservations'));
+    }
+
+    // booking
+    public function createBooking($slug)
+    {
+        // $users = User::all();  // update
+        $tour = Tour::where('slug', $slug)->firstOrFail();
+        $currencies = Currency::all();
+        return view('tour-reservations.create', compact('currencies', 'tour'));
+    }
+
+    public function booking(Request $request, $slug)
+    {
+        $validated = $request->validate([
+            // 'tour_id' => 'nullable|exists:tours,id',
+            // 'user_id' => 'nullable|exists:users,id',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'nullable|string|max:255',
+            'address' => 'required|string|max:500',
+            'guest' => 'required|integer|min:1',
+            'reservation_date' => 'required|date',
+            'phone' => 'required|string|max:20',
+            'whatsapp' => 'required|string|max:20',
+            'currency_id' => 'required|exists:currencies,id',
+            'note' => 'nullable|string',
+            // 'payment_status' => 'required|in:unpaid,deposit,paid',
+        ]);
+
+        $tour = Tour::where('slug', $slug)->firstOrFail();
+        $tour_reservation = new Tour_reservation();
+
+        $tour_reservation->tour_id = $tour->id;
+
+        $tour_reservation->user_id = 5; // update
+
+        // $tour_reservation->user_id = $validated['user_id']; // update & make it nullable
+
+        // total price
+
+        $tour_reservation->first_name = $validated['first_name'];
+        $tour_reservation->last_name = $validated['last_name'];
+        $tour_reservation->address = $validated['address'];
+        $tour_reservation->guest = $validated['guest'];
+        $tour_reservation->reservation_date = $validated['reservation_date'];
+        $tour_reservation->phone = $validated['phone'];
+        $tour_reservation->whatsapp = $validated['whatsapp'];
+        $tour_reservation->currency_id = $validated['currency_id'];
+        $tour_reservation->note = $validated['note'];
+        // $tour_reservation->payment_status = $validated['payment_status'];
+        $tour_reservation->payment_status = 'unpaid';
+
+        $tour_reservation->price = $tour->price;
+
+        $tour_reservation->save();
+
+        return redirect()->route('tours.show', $tour->slug)->with('success', 'Booking complete successfuly!');
     }
 }

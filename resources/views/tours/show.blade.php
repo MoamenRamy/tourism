@@ -2,6 +2,28 @@
 
 @section('title', $tour->name)
 
+@section('head')
+<style>
+    .fixed-booking-button {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: transparent;
+        /* padding: 10px 20px; */
+        /* box-shadow: 0 -2px 8px rgba(0,0,0,0.1); */
+        z-index: 999;
+    }
+
+    /* footer {
+        margin-bottom: 80px;
+    } */
+    #backToTop {
+        margin-bottom: 30px;
+    }
+</style>
+
+@endsection
 
 
 @section('content')
@@ -59,6 +81,7 @@
             {{-- <h5><i class="fa-solid fa-user-group"></i> Ages: {{ $tour->age_range }}</h5> --}}
             <p><i class="fa-solid fa-clock"></i> <span class="text-uppercase">Duration:</span> {{ $tour->duration }} {{ $tour->duration_type }}</p>
             <p><i class="fa-solid fa-users"></i> <span class="text-uppercase">Max Tickets Per Group:</span> {{ $tour->max_tickets_per_day }}</p>
+            <p><i class="fa-regular fa-clock"></i> <span class="text-uppercase">Start time: Check availability</span></p>
             {{--
                 Start time: Check availability
                 Mobile ticket
@@ -70,21 +93,30 @@
     <hr>
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md mb-3">
             <h4>What's Included</h4>
             <ul class="list-group">
                 @foreach ($tour->include_services as $item)
-                    <li class="list-group-item"><i class="fa-solid fa-check"></i> {{ $item->name }}</li>
+                    <li class="list-group-item"><i class="fa-solid fa-check text-success"></i> {{ $item->name }}</li>
                 @endforeach
             </ul>
         </div>
-        <div class="col-md-6">
+        <div class="col mb-3">
             <h4>What's Not Included</h4>
             <ul class="list-group">
                 @foreach ($tour->not_include_services as $item)
-                    <li class="list-group-item"><i class="fa-solid fa-xmark"></i> {{ $item->name }}</li>
+                    <li class="list-group-item"><i class="fa-solid fa-xmark text-danger"></i> {{ $item->name }}</li>
                 @endforeach
             </ul>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Addition Information</h4>
+            <p>{{ $tour->additional_info }}</p>
         </div>
     </div>
 
@@ -95,16 +127,64 @@
             <h4>What to Expect</h4>
             <p>Itinerary details will be available upon booking.</p>
         </div>
+        <div class="col-12">
+            @if($tour->details->isNotEmpty())
+                    <ul class="list-group mb-4">
+                        @foreach($tour->details as $detail)
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <div class="">
+                                    <p class="">
+                                        <span class="fw-bold">Address : </span>{{$detail->address}}
+                                    </p>
+
+                                    <p>
+                                        <span class="fw-bold">duration : </span>{{ $detail->duration }} {{$detail->duration_type}}
+                                    </p>
+
+                                    <p class="">
+                                        <span class="fw-bold">Description : </span>{{$detail->description}}
+                                    </p>
+
+                                </div>
+                            </li>
+                        @endforeach
+                    </ul>
+                @endif
+        </div>
     </div>
 
     <hr>
 
     <div class="row">
         <div class="col-12">
-            <h4>Cancellation Policy</h4>
-            <p>Details available upon request.</p>
+            <h4 class="mb-3">Cancellation Policy</h4>
+            {{-- <p>Details available upon request.</p> --}}
+            <p>
+                You can cancel up to 24 hours in advance of the experience for a full refund.
+            </p>
+            <ul>
+                <li class="m-3">
+                    For a full refund, you must cancel at least 24 hours before the experience’s start time.
+                </li>
+                <li class="m-3">
+                    If you cancel less than 24 hours before the experience’s start time, the amount you paid will not be refunded.
+                </li>
+                <li class="m-3">
+                    Any changes made less than 24 hours before the experience’s start time will not be accepted.
+                </li>
+                <li class="m-3">
+                    Cut-off times are based on the experience’s local time.
+                </li>
+            </ul>
         </div>
     </div>
+
+    <div class="fixed-booking-button">
+        <a href="{{ route('tour-reservations.createBooking', $tour->slug) }}" class="btn btn-warning w-100 py-3 fw-bold">
+            Book Now
+        </a>
+    </div>
+
 </div>
 @endsection
 

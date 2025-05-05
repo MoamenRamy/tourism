@@ -1,17 +1,17 @@
-@extends('theme.default')
+@extends('layouts.main')
 
 @section('heading')
-Add Tour Reservation
+    Tour Reservation
 @endsection
 
 @section('content')
 <div class="row justify-content-center">
-    <div class="card mb-4 col-md-8">
+    <div class="card mb-4 col-md-8 col-sm-6">
         <div class="card-header">
-            Add Tour Reservation
+            Reservation
         </div>
         <div class="card-body">
-            <form action="{{ route('tour-reservations.store') }}" method="POST">
+            <form action="{{ route('tour-reservations.booking', $tour->slug) }}" method="POST">
                 @csrf
 
                 <div class="form-group row">
@@ -19,14 +19,10 @@ Add Tour Reservation
 
                     <div class="col-md-6">
                         <select id="tour_id" class="form-control" name="tour_id">
-                            <option value="" disabled>
-                                -- Please select a tour --
-                            </option>
-                            @foreach($tours as $tour)
-                                <option value="{{ $tour->id }}" {{ old('tour_id') == $tour->id ? 'selected' : '' }}>
+
+                                <option value="{{ $tour->id }}" disabled selected>
                                     {{ $tour->name }}
                                 </option>
-                            @endforeach
                         </select>
                         @error('tour_id')
                             <span class="invalid-feedback" role="alert">
@@ -36,7 +32,7 @@ Add Tour Reservation
                     </div>
                 </div>
 
-                <div class="form-group row">
+                {{-- <div class="form-group row">
                     <label for="user_id" class="col-md-4 col-form-label">User</label>
 
                     <div class="col-md-6">
@@ -56,7 +52,7 @@ Add Tour Reservation
                             </span>
                         @enderror
                     </div>
-                </div>
+                </div> --}}
 
                 <div class="form-group row">
                     <label for="first_name" class="col-md-4 col-form-label ">First Name</label>
@@ -192,7 +188,7 @@ Add Tour Reservation
                     </div>
                 </div>
 
-                <div class="form-group row">
+                {{-- <div class="form-group row">
                     <label for="payment_status" class="col-md-4 col-form-label">Payment Method</label>
 
                     <div class="col-md-6">
@@ -208,11 +204,11 @@ Add Tour Reservation
                             </span>
                         @enderror
                     </div>
-                </div>
+                </div> --}}
 
                 <div class="form-group row mb-0">
-                    <div class="col-md-1">
-                        <button type="submit" class="btn btn-primary">Add</button>
+                    <div class="col">
+                        <button type="submit" class="btn btn-warning w-100 py-3 fw-bold">Book</button>
                     </div>
                 </div>
             </form>
@@ -221,17 +217,3 @@ Add Tour Reservation
 </div>
 @endsection
 
-@section('script')
-<script>
-    function readCoverImage(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-            $('#photo-thumb')
-                .attr('src', e.target.result);
-            };
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-</script>
-@endsection
