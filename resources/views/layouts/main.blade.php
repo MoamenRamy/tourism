@@ -22,8 +22,11 @@
 
     <title>{{ config('app.name', 'tourism') }} - @yield('title', '')</title>
 
-    <link href="https://fastly.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    {{-- <link href="https://fastly.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"> --}}
     {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css" integrity="sha512-GQGU0fMMi238uA+a/bdWJfpUGKUkBdgfFdgBm72SUQ6BeyWjoY/ton0tEjH+OSH9iP4Dfh+7HM0I9f5eR0L/4w==" crossorigin="anonymous" referrerpolicy="no-referrer" /> --}}
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="{{asset('css/nomaliz.css')}}">
 
@@ -124,21 +127,21 @@
                                     </li>
                                     @if (Route::has('register'))
                                         <li class="nav-item">
-                                            <a class="nav-link text-primary" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                            <a class="nav-link text-primary" href="{{ route('register.create') }}">{{ __('Register') }}</a>
                                         </li>
                                     @endif
                                 @else
                                     <li class="nav-item dropdown justify-content-left">
                                         <a id="navbarDropdown" class="nav-link" href="#" data-bs-toggle="dropdown">
                                             <button type="button" class="inline-flex items-center px-3 py-2 text-sm leading-4 font-medium rounded-md     hover:text-white-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
-                                                <i class="fa-solid fa-caret-down px-2 mt-1" style="color: #74C0FC;"></i>
                                                 {{ Auth::user()->name }}
+                                                <i class="fa-solid fa-caret-down px-2 mt-1"></i>
 
                                             </button>
                                         </a>
 
-                                        <div class="dropdown-menu dropdown-menu-left px-2 text-right mt-2">
-                                            <div class="pt-1    ">
+                                        <div class="dropdown-menu dropdown-menu-left px-2 mt-2">
+                                            <div class="pt-1">
                                                 {{-- <div class="flex items-center px-4">
                                                     <div>
                                                         <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
@@ -147,7 +150,7 @@
 
                                                 <div class="mt-3 space-y-1">
                                                     <!-- Account Management -->
-                                                    <x-responsive-nav-link style="text-align: right !important" href="{{route('profile.show')}}" :active="request()->routeIs('profile.show')">
+                                                    <x-responsive-nav-link style="text-align: left !important" href="{{route('profile.show')}}" :active="request()->routeIs('profile.show')">
                                                         {{ __('profile') }}
                                                     </x-responsive-nav-link>
 
@@ -161,10 +164,10 @@
                                                     <form method="POST" action="{{ route('logout') }}" x-data>
                                                         @csrf
 
-                                                        <x-responsive-nav-link style="text-align: right !important" href="{{ route('logout') }}"
+                                                        <x-responsive-nav-link style="text-align: left !important" href="{{ route('logout') }}"
                                                             onclick="event.preventDefault();
                                                             this.closest('form').submit();">
-                                                            {{ __('تسجيل خروج') }}
+                                                            {{ __('Logout') }}
                                                         </x-responsive-nav-link>
                                                     </form>
 
@@ -312,8 +315,12 @@
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://fastly.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
-    <script src="https://fastly.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    {{-- <script src="https://fastly.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script> --}}
+    {{-- <script src="https://fastly.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script> --}}
+
+    <!-- Bootstrap 5 JS (with Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
     <script src="{{asset('lib/easing/easing.min.js')}}"></script>
     <script src="{{asset('lib/owlcarousel/owl.carousel.min.js')}}"></script>
     <script src="{{asset('lib/tempusdominus/js/moment.min.js')}}"></script>

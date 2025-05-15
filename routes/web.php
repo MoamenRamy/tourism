@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdditionalServiceController;
+use App\Http\Controllers\auth\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommonQuestionController;
 use App\Http\Controllers\CurrencyController;
@@ -33,7 +34,9 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::redirect('dashboard', '/');
+
+Route::get('/admin', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::get('about', [HomeController::class, 'about'])->name('about');
 Route::get('services', [HomeController::class, 'services'])->name('services');
@@ -134,3 +137,8 @@ Route::get('/get-destinations', [TransportationController::class, 'getDestinatio
 
 Route::resource('users', UserController::class);
 Route::get('admin/users', [UserController::class, 'adminIndex'])->name('admin.users.index');
+
+// Auth
+Route::get('/register', [AuthController::class, 'create'])->name('register.create');
+Route::post('/register', [AuthController::class, 'store'])->name('register.store');
+

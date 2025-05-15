@@ -102,14 +102,24 @@ class User extends Authenticatable
     }
 
     // roles
-    public function manager()
-    {
-        return $this->role == 'manager';
-    }
-
-    public function admin()
+    public function IsAdmin()
     {
         return $this->role == 'admin';
+    }
+
+    public function IsManager()
+    {
+        return $this->role == 'manager' || 'admin';
+    }
+
+    public function IsEmployee()
+    {
+        return $this->role == 'employee' || 'manager' || 'admin';
+    }
+
+    public function IsUser()
+    {
+        return $this->role == 'user' || 'employee' || 'manager' || 'admin';
     }
 
     // relation with alerts
