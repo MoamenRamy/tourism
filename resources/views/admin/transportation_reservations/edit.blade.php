@@ -274,11 +274,11 @@ Edit Transportation Reservation
                 </div>
 
                 <div class="form-group row">
-                    <label for="payment_status" class="col-md-4 col-form-label">Duration type</label>
+                    <label for="payment_status" class="col-md-4 col-form-label">Payment type</label>
 
                     <div class="col-md-6">
                         <select id="payment_status" class="form-control" name="payment_status">
-                            <option value="" disabled>Choose duration type</option>
+                            <option value="" disabled>Choose Payment type</option>
                             <option value="paid" {{ old('payment_status', $tour_reservation->payment_status ?? '') == 'paid' ? 'selected' : '' }}>Paid</option>
                             <option value="unpaid" {{ old('payment_status', $tour_reservation->payment_status ?? '') == 'unpaid' ? 'selected' : '' }}>Unpaid</option>
                             <option value="deposit" {{ old('payment_status', $tour_reservation->payment_status ?? '') == 'deposit' ? 'selected' : '' }}>Deposit</option>

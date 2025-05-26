@@ -14,4 +14,9 @@ class Vehicle extends Model implements TranslatableContract
 
     public $translatedAttributes = ['name', 'model'];
     protected $guarded = ['id'];
+
+    public function transportations()
+    {
+        return $this->belongsToMany(Transportation::class, 'transportation_vehicle', 'vehicle_id', 'transportation_id');
+    }
 }

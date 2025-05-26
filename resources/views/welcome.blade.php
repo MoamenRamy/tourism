@@ -70,55 +70,69 @@
         <!-- Carousel End -->
 
         <!-- Booking Start -->
-        <div class="container-fluid booking mt-5 pb-5">
-            <div class="container pb-5">
-                <div class="bg-light shadow" style="padding: 30px;">
-                    <div class="row align-items-center" style="min-height: 60px;">
-                        <div class="col-md-10">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="mb-3 mb-md-0">
-                                        <select class="custom-select px-4" style="height: 47px;">
-                                            <option selected>Destination</option>
-                                            <option value="1">Destination 1</option>
-                                            <option value="2">Destination 1</option>
-                                            <option value="3">Destination 1</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="mb-3 mb-md-0">
-                                        <div class="date" id="date1" data-target-input="nearest">
-                                            <input type="text" class="form-control p-4 datetimepicker-input" placeholder="Depart Date" data-target="#date1" data-toggle="datetimepicker"/>
+        <form action="{{ route('transportation_reservations.pricing') }}" method="POST">
+            @csrf
+            <div class="container-fluid booking mt-5 pb-5">
+                <div class="container pb-5">
+                    <div class="bg-light shadow" style="padding: 30px;">
+                        <div class="row align-items-center" style="min-height: 60px;">
+                            <div class="col-md-10">
+                                <div class="row">
+
+                                    <div class="col-md-4">
+                                        <div class="mb-3 mb-md-0">
+                                            <div class="mb-3 mb-md-0">
+                                                <select id="from" class="custom-select px-4" name="from" style="height: 47px;">
+                                                    <option value="" disabled selected>From</option>
+                                                    @foreach($transportations as $transportation)
+                                                        <option value="{{ $transportation->from }}">{{ $transportation->from }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="mb-3 mb-md-0">
-                                        <div class="date" id="date2" data-target-input="nearest">
-                                            <input type="text" class="form-control p-4 datetimepicker-input" placeholder="Return Date" data-target="#date2" data-toggle="datetimepicker"/>
+
+                                    <div class="col-md-4">
+                                        <div class="mb-3 mb-md-0">
+                                            <div class="mb-3 mb-md-0">
+                                                <select id="to" class="custom-select px-4 @error('to') is-invalid @enderror" name="to" style="height: 47px;">
+                                                    <option value="">To</option>
+
+                                                </select>
+                                                @error('to')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="mb-3 mb-md-0">
-                                        <select class="custom-select px-4" style="height: 47px;">
-                                            <option selected>Duration</option>
-                                            <option value="1">Duration 1</option>
-                                            <option value="2">Duration 1</option>
-                                            <option value="3">Duration 1</option>
-                                        </select>
+
+                                    <div class="col-md-4">
+                                        <div class="mb-3 mb-md-0">
+                                            <div class="date" id="date2" data-target-input="nearest">
+                                                {{-- <input type="text" class="form-control p-4 datetimepicker-input" placeholder="Date" data-target="#date2" data-toggle="datetimepicker" id="reservation_dateTime"/> --}}
+                                                <input id="reservation_dateTime" type="datetime-local" class="form-control p-4 datetimepicker-input @error('reservation_dateTime') is-invalid @enderror" name="reservation_dateTime" value="{{ old('reservation_dateTime') }}">
+
+                                                @error('reservation_dateTime')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
                                     </div>
+
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-2">
-                            <button class="btn btn-primary btn-block" type="submit" style="height: 47px; margin-top: -2px;">Submit</button>
+                            <div class="col-md-2">
+                                <button class="btn btn-primary btn-block" type="submit" style="height: 47px; margin-top: -2px;">Show Prices</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
         <!-- Booking End -->
 
         <!-- About Start -->
@@ -672,6 +686,39 @@
             </div>
         </div>
         <!-- Blog End -->
+
+@endsection
+
+@section('script')
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#from').on('change', function () {
+            var from = $(this).val();
+
+            if (from) {
+                $.ajax({
+                    url: '{{ route("transportation.getDestinations") }}',
+                    type: 'GET',
+                    data: { from: from },
+                    success: function (data) {
+                        // console.log(data); // <-- Add this line
+
+                        $('#to').empty();
+                        $('#to').append('<option value="">To</option>');
+                        $.each(data, function (key, value) {
+                        $('#to').append('<option value="' + value.to + '">' + value.to + '</option>');
+                    });
+                    }
+                });
+            } else {
+                $('#to').empty();
+                $('#to').append('<option value="">To</option>');
+            }
+        });
+    });
+</script>
 
 @endsection
 

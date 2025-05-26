@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('transportation_reservations', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('transportation_id')->nullable();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('vehicle_id')->nullable();
             $table->unsignedBigInteger('currency_id')->nullable();
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
@@ -32,7 +33,8 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('transportation_id')->references('id')->on('transportations')->onDelete('set null');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('vehicle_id')->references('id')->on('vehicles')->onDelete('set null');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
             $table->foreign('currency_id')->references('id')->on('currencies')->onDelete('set null');
         });
     }

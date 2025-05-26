@@ -59,7 +59,7 @@ class VehicleTranslationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Vehicle_translation $vehicle_translation)
+    public function destroy($vehicle_translation)
     {
         //
     }

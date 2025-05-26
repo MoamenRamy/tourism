@@ -15,13 +15,12 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('destination_id')->nullable();
 
-            $table->decimal('price', 8, 2);
-            $table->unsignedBigInteger('vehicle_id');
-            $table->boolean('available')->default(0);
+            // $table->unsignedBigInteger('vehicle_id');
+            $table->boolean('available')->default(1);
             $table->timestamps();
 
             $table->foreign('destination_id')->references('id')->on('destinations')->onDelete('set null');
-            $table->foreign('vehicle_id')->references('id')->on('vehicles')->onDelete('cascade');
+            // $table->foreign('vehicle_id')->references('id')->on('vehicles')->onDelete('cascade');
         });
     }
 

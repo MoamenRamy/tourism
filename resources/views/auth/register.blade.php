@@ -66,7 +66,7 @@
             <!-- Phone -->
             <div class="mt-4">
                 <x-label for="phone" value="Phone" />
-                <x-input id="phone" class="block mt-1 w-full" type="text" name="phone" :value="old('phone')" required />
+                <x-input id="phone" class="block mt-1 w-full" type="text" name="phone" :value="old('phone')" />
             </div>
 
 

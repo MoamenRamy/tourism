@@ -218,14 +218,14 @@
         <main class="py-4">
             @if(session('success'))
                 <div class="container">
-                    <div class="alert alert-success" role="alert">
+                    <div class="alert alert-success onFirst" role="alert">
                         {{ session('success') }}
                     </div>
                 </div>
             @endif
             @if(session('fail'))
                 <div class="container">
-                    <div class="alert alert-danger" role="alert">
+                    <div class="alert alert-danger onFirst" role="alert">
                         {{ session('fail') }}
                     </div>
                 </div>

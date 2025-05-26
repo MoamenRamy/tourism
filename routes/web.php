@@ -27,11 +27,15 @@ use App\Http\Controllers\TransportationSaleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleController;
 use App\Models\Rate;
+use App\Models\Transportation;
+use App\Models\Transportation_reservation;
 use Illuminate\Support\Facades\Route;
 use PHPUnit\Framework\MockObject\Rule\Parameters;
 
 Route::get('/', function () {
-    return view('welcome');
+    $transportations = Transportation::all();
+
+    return view('welcome', compact('transportations'));
 })->name('home');
 
 Route::redirect('dashboard', '/');
@@ -118,6 +122,9 @@ Route::get('admin/transportation_additional', [TransportationAdditionalControlle
 
 Route::resource('transportations', TransportationController::class);
 Route::get('admin/transportations', [TransportationController::class, 'adminIndex'])->name('admin.transportations.index');
+Route::get('/vehicle-input', [TransportationController::class, 'getVehicleInput'])->name('vehicleInputs.create');
+
+Route::delete('/transportation_vehcile/{id}', [TransportationController::class, 'deleteTransportationVehicle'])->name('transportation_vehicle.destroy');
 
 Route::resource('transportation_questions', TransportationCommonController::class);
 Route::get('admin/transportation_questions', [TransportationCommonController::class, 'adminIndex'])->name('admin.transportation_questions.index');
@@ -131,7 +138,15 @@ Route::resource('vehicles', VehicleController::class);
 Route::get('admin/vehicles', [VehicleController::class, 'adminIndex'])->name('admin.vehicles.index');
 
 Route::resource('transportation_reservations', TransportationReservationController::class);
+Route::post('transportation/pricing', [TransportationReservationController::class, 'pricing'])->name('transportation_reservations.pricing');
+// Route::get('transportation/pricing', [TransportationReservationController::class, 'showPricing'])->name('transportation.pricing');
+
+// Route::post('transportation/pricing', [TransportationReservationController::class, 'handlePricing'])->name('transportation.pricing.submit');
+
+Route::post('transportation/booking', [TransportationReservationController::class, 'booking'])->name('transportation_reservations.booking');
+Route::post('transportation/confirm', [TransportationReservationController::class, 'confirm'])->name('transportation_reservations.confirm');
 Route::get('admin/transportation_reservations', [TransportationReservationController::class, 'adminIndex'])->name('admin.transportation_reservations.index');
+
 Route::get('/get-destinations', [TransportationController::class, 'getDestinations'])->name('transportation.getDestinations');
 
 

@@ -22,9 +22,10 @@ class Transportation extends Model implements TranslatableContract
     }
 
     // belong to vehicle
-    public function vehicle()
+    public function vehicles()
     {
-        return $this->belongsTo(Vehicle::class);
+        return $this->belongsToMany(vehicle::class, 'transportation_vehicle', 'transportation_id', 'vehicle_id')
+        ->withPivot('price');
     }
 
     // has many reservations

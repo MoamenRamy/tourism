@@ -21,8 +21,8 @@ Transportation
                         <th>destination</th>
                         <th>from</th>
                         <th>to</th>
-                        <th>price</th>
-                        <th>vehicle</th>
+                        {{-- <th>price</th> --}}
+                        {{-- <th>vehicle</th> --}}
                         <th>available</th>
                         <th>created at</th>
                         <th>options</th>
@@ -35,9 +35,9 @@ Transportation
                             <td>{{$transportation->destination->name}}</td>
                             <td>{{$transportation->from}}</td>
                             <td>{{$transportation->to}}</td>
-                            <td>{{$transportation->price}}</td>
+                            {{-- <td>{{$transportation->price}}</td> --}}
                             {{-- <td>{{$transportation->vehicle->translate(app()->getLocale())->name ?? 'N/A'}}</td> --}}
-                            <td>{{$transportation->vehicle->name ?? 'N/A'}}</td>
+                            {{-- <td>{{$transportation->vehicle->name ?? 'N/A'}}</td> --}}
                             {{-- {{ dd($transportation->vehicle) }} --}}
                             <td>{{$transportation->available}}</td>
                             <td>{{$transportation->created_at}}</td>
@@ -75,7 +75,7 @@ Transportation
                 // "language": {
                 //     "url": "//cdn.datatables.net/plug-ins/1.13.4/i18n/ar.json"
                 // },
-                "order": [[0, "asc"]],
+                "order": [[0, "desc"]],
                 "columnDefs": [
                     { "type": "num", "targets": 0 },
                     // { "orderable": false, "targets": 0 } // Corrected index
