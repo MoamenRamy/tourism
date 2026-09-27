@@ -1,537 +1,367 @@
-### Tourism Management & Booking Platform
+# Tourism Management & Booking Platform
 
-"Laravel" (https://img.shields.io/badge/Laravel-11.x-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
-"PHP" (https://img.shields.io/badge/PHP-8.2%2B-777BB4?style=for-the-badge&logo=php&logoColor=white)
-"MySQL" (https://img.shields.io/badge/MySQL-Database-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
-"Blade" (https://img.shields.io/badge/Blade-Templates-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
-"Bootstrap" (https://img.shields.io/badge/Bootstrap-5.2.3-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)
-"JavaScript" (https://img.shields.io/badge/JavaScript-AJAX-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-"Sanctum" (https://img.shields.io/badge/Laravel-Sanctum-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
-"Redis" (https://img.shields.io/badge/Redis-Cache-DC382D?style=for-the-badge&logo=redis&logoColor=white)
+A comprehensive tourism management and booking platform built with Laravel 11, designed to manage tours, destinations, transportation, vehicles, services, reservations, currencies, pricing, multilingual content, and related tourism data through a structured web interface.
 
-A full-featured tourism management and booking platform built with Laravel and MySQL.
-
-The system is designed to manage tourism trips, destinations, transportation, vehicles, additional services, reservations, pricing, currencies, and multilingual tourism content.
+The system focuses on tourism data management, reservation workflows, multilingual content, role-based administration, dynamic pricing, Google Maps integration, and centralized management of tourism services.
 
 ---
 
-📋 Table of Contents
+## 🚀 Features
 
-- "Overview" (#-overview)
-- "Features" (#-features)
-- "Tour Management" (#-tour-management)
-- "Destinations & Categories" (#-destinations--categories)
-- "Transportation & Vehicles" (#-transportation--vehicles)
-- "Additional Services" (#-additional-services)
-- "Multilingual Support" (#-multilingual-support)
-- "Currency & Pricing" (#-currency--pricing)
-- "Reservations" (#-reservations)
-- "Authentication & Authorization" (#-authentication--authorization)
-- "API" (#-api)
-- "Admin Dashboard" (#-admin-dashboard)
-- "Search, Filtering & Sorting" (#-search-filtering--sorting)
-- "Maps & Distance" (#-maps--distance)
-- "Email & Reporting" (#-email--reporting)
-- "Technology Stack" (#-technology-stack)
-- "Project Structure" (#-project-structure)
-- "Installation" (#-installation)
-- "Environment Configuration" (#-environment-configuration)
-- "Database Setup" (#-database-setup)
-- "Storage" (#-storage)
-- "Running the Project" (#-running-the-project)
-- "Laravel Concepts" (#-laravel-concepts)
-- "Future Improvements" (#-future-improvements)
-- "Author" (#-author)
+### 🧳 Tour Management
 
----
+* Create and manage tourism tours
+* Manage tour categories
+* Manage tour destinations
+* Upload and manage tour photos
+* Add detailed tour information
+* Manage included services
+* Manage excluded services
+* Manage additional services
+* Manage tour transportation
+* Manage tour pricing
+* Manage tour reservations
+* Use slug-based URLs for tourism pages
 
-🌍 Overview
+### 📍 Destination Management
 
-This project is a tourism management and booking platform developed with Laravel.
+* Create and manage destinations
+* Connect destinations with tours
+* Manage destination information
+* Support multilingual destination content
+* Organize tours according to destinations
 
-The platform provides a centralized system for managing tourism services and reservations.
+🚐 Transportation Management
 
-The main tourism entities include:
+* Create and manage transportation services
+* Manage transportation vehicles
+* Connect transportation with tours
+* Manage transportation details
+* Organize available transportation options
 
-- Tours
-- Destinations
-- Categories
-- Tour Photos
-- Tour Details
-- Transportation
-- Vehicles
-- Additional Services
-- Reservations
-- Currencies
-- Pricing
+### 🚗 Vehicle Management
 
-The application also supports multilingual tourism content and structured relationships between different tourism services.
+* Create and manage vehicles
+* Associate vehicles with transportation services
+* Manage vehicle-related information
+* Use vehicles as part of tourism transportation workflows
 
----
+### 🏨 Tourism Services
 
-✨ Features
+The platform supports different tourism-related services and resources, including:
 
-- Tourism trip management
-- Destination management
-- Category management
-- Tour photo management
-- Dynamic tour details
-- Included services
-- Excluded services
-- Additional services
-- Transportation management
-- Vehicle management
-- Reservation management
-- Currency management
-- Trip price management
-- Multilingual content
-- Authentication
-- API endpoints
-- Admin dashboard
-- Search
-- Filtering
-- Sorting
-- Pagination
-- AJAX operations
-- Email functionality
-- Redis support
-- Google Maps integration
-- Distance calculation
+* Hotels
+* Cruises
+* Flights
+* Car rentals
+* Transportation
+* Additional tourism services
 
----
+These resources can be organized and managed according to the application's tourism workflow.
 
-🧳 Tour Management
+### 🛎️ Included & Additional Services
 
-The platform provides a complete management system for tourism trips.
+Tours can contain different types of services.
 
-Administrators can manage:
+### Included Services
 
-- Tour name
-- Tour description
-- Tour category
-- Destination
-- Tour details
-- Tour photos
-- Transportation
-- Additional services
-- Included services
-- Excluded services
-- Pricing
-- Slugs
+* Define services included in the tour
+* Display included services with tour information
+* Associate included services with tourism packages
 
-Tours can be accessed through SEO-friendly slug-based URLs.
+### Not Included Services
 
-Example:
+* Define services that are not included
+* Display excluded services to customers
+* Clarify additional customer expenses
 
-/tours/desert-safari
+### Additional Services
 
----
+* Create additional services
+* Connect additional services with tours
+* Manage optional services related to reservations
 
-📍 Destinations & Categories
+### 📅 Reservation Management
 
-Destinations
+The system provides reservation management for tourism services.
 
-Destinations are used to organize tourism locations and connect them with available tours.
+* Create reservations
+* Store customer information
+* Connect reservations with tours
+* Manage reservation records
+* Track reservation information
+* Manage bookings from the administration dashboard
 
-Destination management includes:
+### 💰 Pricing & Currency Management
 
-- Destination creation
-- Destination editing
-- Destination deletion
-- Destination descriptions
-- Multilingual destination content
-- Tour relationships
+The application provides dynamic tourism pricing and currency management.
 
-Categories
+* Create and manage currencies
+* Manage currency exchange rates
+* Manage tour prices
+* Change tour prices
+* Store pricing information
+* Support multiple currencies
 
-Tours can be organized into different categories.
+### 🔎 Search, Sorting & Filtering
 
-Categories support multilingual content where applicable.
+The application provides tools for finding and organizing tourism data.
 
----
+* Search tours
+* Filter tourism content
+* Sort available results
+* Search by destination
+* Search by category
+* Use slug-based URLs
 
-🚌 Transportation & Vehicles
+### 🌍 Multilingual Support
 
-The system provides transportation management for tourism operations.
+The application supports multilingual tourism content using Astrotomic Laravel Translatable.
 
-Transportation can contain:
+Supported languages include:
 
-- Transportation type
-- From location
-- To location
-- Price
-- Vehicle
-- Related tourism service
+* Arabic
+* English
+* German
+* Polish
 
-Vehicles can be managed separately and connected to transportation records.
+Translated content can be managed for the supported tourism entities.
 
-This allows the platform to handle different transportation options depending on the selected tour or service.
+### 🗺️ Google Maps & Distance Calculation
+
+The system integrates map-related functionality for tourism services.
+
+* Google Maps integration
+* Location-based tourism information
+* Distance calculation
+* Kilometer-based calculations
+* Use location information in tourism workflows
+
+### 📊 Reports & Email
+
+The application includes administrative reporting functionality.
+
+* Generate administrative reports
+* Send reports through email
+* Use Laravel Mail
+* Schedule periodic reports
+* Support automated reporting workflows
+
+## 🔐 Authentication & Authorization
+
+The application uses Laravel authentication and protected routes for administrative functionality.
+
+Administrative operations can be protected through middleware and authorization rules.
 
 ---
 
-🛎️ Additional Services
+## 🛠️ Tech Stack
 
-Tours can have additional services that customers can select depending on the available configuration.
-
-Services can be organized into:
-
-Included Services
-
-Services included in the tour price.
-
-Excluded Services
-
-Services that are not included in the base tour price.
-
-Additional Services
-
-Optional services that can be selected by the customer.
-
-This structure makes it possible to build flexible tourism packages without hard-coding every service into a tour.
-
----
-
-🌐 Multilingual Support
-
-The project supports multilingual tourism content.
-
-Supported languages:
-
-- Arabic
-- English
-- German
-- Polish
-
-The project uses Astrotomic Laravel Translatable for managing translated model attributes.
-
-Example:
-
-$tour->translate('en');
-$tour->translate('ar');
-$tour->translate('de');
-$tour->translate('pl');
+Technology| Purpose
+PHP 8.2+| Backend language
+Laravel 11| Web application framework
+MySQL| Database
+Blade| Server-side templating
+Bootstrap 5.2.3| UI framework
+JavaScript| Frontend interactions
+AJAX| Asynchronous requests
+DataTables| Interactive data tables
+Font Awesome| Icons
+Laravel Sanctum| API authentication
+Laravel Eloquent| ORM & database relationships
+Astrotomic Translatable| Multilingual content
+Redis| Caching & performance
+Laravel Mail| Email functionality
+Laravel Scheduler| Scheduled tasks
+Google Maps| Maps & distance calculation
 
 ---
 
-💰 Currency & Pricing
+## 🏗️ Architecture
 
-The platform includes currency and pricing management.
-
-Currency functionality is used to support tourism prices in different currencies.
-
-The system can manage:
-
-- Currency name
-- Currency code
-- Currency rate
-- Tour prices
-- Price changes
-- Currency-based pricing
-
----
-
-📅 Reservations
-
-The platform includes a reservation system for tourism services.
-
-A reservation can be associated with:
-
-- Customer
-- Tour
-- Number of travelers
-- Booking information
-- Selected services
-- Transportation
-- Price
-- Reservation status
-
-Reservation Flow
-
-Customer
-    |
-    v
-Select Destination
-    |
-    v
-Select Tour
-    |
-    v
-View Tour Details
-    |
-    v
-Select Services
-    |
-    v
-Select Transportation
-    |
-    v
-Calculate Price
-    |
-    v
-Create Reservation
-
----
-
-🔐 Authentication & Authorization
-
-The application includes authentication and authorization functionality.
-
-Protected resources can be secured using Laravel authentication and middleware.
-
-The system separates protected administrative functionality from regular user functionality.
-
-API authentication can be handled using Laravel Sanctum.
-
----
-
-🔌 API
-
-The backend provides API endpoints for application functionality.
-
-The API can be used for:
-
-- Authentication
-- Tours
-- Destinations
-- Categories
-- Transportation
-- Vehicles
-- Reservations
-- Services
-- Currencies
-- Trip pricing
-
-Example endpoints:
-
-POST /api/login
-POST /api/register
-GET /api/tours
-GET /api/destinations
-POST /api/reservations
-
----
-
-🖥️ Admin Dashboard
-
-The project includes an administration interface for managing tourism data.
-
-Administrators can manage:
-
-- Tours
-- Destinations
-- Categories
-- Tour details
-- Tour photos
-- Transportation
-- Vehicles
-- Additional services
-- Reservations
-- Currencies
-- Prices
-
-The admin interface uses:
-
-- Laravel Blade
-- Bootstrap 5.2.3
-- DataTables
-- Font Awesome
-- JavaScript
-- AJAX
-
-DataTables provides useful functionality such as:
-
-- Searching
-- Sorting
-- Pagination
-- Data management
-
----
-
-🔎 Search, Filtering & Sorting
-
-Tourism data can be searched and filtered using different attributes.
-
-Examples include:
-
-- Tour name
-- Destination
-- Category
-- Price
-- Currency
-- Duration
-- Available services
-
-Listings can also be sorted based on different criteria.
-
----
-
-🗺️ Maps & Distance
-
-The platform is designed to support map-based tourism functionality.
-
-Google Maps can be used for:
-
-- Destination locations
-- Transportation locations
-- Route information
-- Distance calculation
-- Location-based tourism services
-
-Distance information can be useful when working with transportation and tourism services.
-
----
-
-📧 Email & Reporting
-
-The application uses Laravel's mail functionality for email-related operations.
-
-Email functionality can be used for:
-
-- Reservation confirmation
-- Reservation updates
-- Customer notifications
-- Administrative notifications
-- Booking reports
-
-SMTP configuration can be added through the ".env" file.
-
-The project can also use scheduled tasks for periodic administrative reporting.
-
----
-
-⚡ Redis
-
-Redis is included as part of the project's infrastructure for caching and performance-related functionality.
-
-Redis can be used for:
-
-- Application caching
-- Temporary data
-- Queue-related operations
-- Performance optimization
-
----
-
-🛠️ Technology Stack
-
-Backend
-
-- PHP
-- Laravel
-- MySQL
-- Eloquent ORM
-- Laravel Sanctum
-- REST API
-
-Frontend
-
-- Blade
-- HTML5
-- CSS3
-- JavaScript
-- Bootstrap 5.2.3
-- AJAX
-- DataTables
-- Font Awesome
-
-Packages & Services
-
-- Astrotomic Laravel Translatable
-- Redis
-- Laravel Mail
-- SMTP
-- Google Maps
-
-Development Tools
-
-- Git
-- GitHub
-- Composer
-- Visual Studio Code
-
----
-
-📁 Project Structure
+The project follows Laravel's MVC architecture and separates the application into controllers, models, views, routes, database migrations, and supporting services.
 
 tourism/
-│
 ├── app/
 │   ├── Http/
+│   │   ├── Controllers/
+│   │   ├── Middleware/
+│   │   └── Requests/
+│   │
 │   ├── Models/
-│   └── Providers/
-│
-├── bootstrap/
-│
-├── config/
+│   ├── Mail/
+│   └── ...
 │
 ├── database/
-│   ├── factories/
 │   ├── migrations/
-│   └── seeders/
-│
-├── public/
+│   ├── seeders/
+│   └── factories/
 │
 ├── resources/
+│   ├── views/
 │   ├── css/
-│   ├── js/
-│   └── views/
+│   └── js/
 │
 ├── routes/
+│   ├── web.php
 │   ├── api.php
-│   └── web.php
+│   └── console.php
 │
+├── public/
 ├── storage/
-│
 ├── tests/
-│
-├── .env.example
-├── artisan
 ├── composer.json
 └── package.json
 
 ---
 
-⚙️ Installation
+## 🗄️ Main Data Relationships
 
-1. Clone the Repository
+The application uses Laravel Eloquent relationships to connect the main tourism entities.
 
-git clone https://github.com/MoamenRamy/tourism.git
+Tour
+ │
+ ├── Category
+ │
+ ├── Destination
+ │
+ ├── Photos
+ │
+ ├── Tour Details
+ │
+ ├── Included Services
+ │
+ ├── Not Included Services
+ │
+ ├── Additional Services
+ │
+ ├── Transportation
+ │      │
+ │      └── Vehicles
+ │
+ └── Reservations
 
-2. Enter the Project Directory
+Examples of tourism-related relationships include:
 
-cd tourism
-
-3. Install PHP Dependencies
-
-composer install
-
-4. Install Frontend Dependencies
-
-npm install
-
-5. Create the Environment File
-
-cp .env.example .env
-
-On Windows, you can also copy ".env.example" manually and rename it to ".env".
-
-6. Generate the Application Key
-
-php artisan key:generate
+* "Tour → Category"
+* "Tour → Destination"
+* "Tour → Photos"
+* "Tour → Tour Details"
+* "Tour → Included Services"
+* "Tour → Not Included Services"
+* "Tour → Additional Services"
+* "Tour → Transportation"
+* "Transportation → Vehicles"
+* "Tour → Reservations"
+* "Currency → Currency Rates"
 
 ---
 
-🔧 Environment Configuration
+## 🔑 Authentication & API
 
-Configure the ".env" file according to your environment.
+The project uses Laravel Sanctum for API authentication.
+
+API functionality is separated from the server-rendered Blade interface where required.
+
+Protected API routes can use Sanctum authentication to control access to authenticated resources.
 
 Example:
 
-APP_NAME=Tourism
-APP_ENV=local
-APP_KEY=
-APP_DEBUG=true
-APP_URL=http://localhost
+Route::middleware('auth:sanctum')->group(function () {
+    // Protected API routes
+});
+
+---
+
+## 🌐 Multilingual Architecture
+
+The project uses Astrotomic Laravel Translatable to manage translated database content.
+
+A translatable entity can contain different translations for supported locales.
+
+Tour
+ │
+ ├── Arabic
+ │
+ ├── English
+ │
+ ├── German
+ │
+ └── Polish
+
+This approach allows tourism content to be displayed according to the selected application language.
+
+---
+
+## 📅 Reservation Workflow
+
+A typical reservation workflow can be represented as:
+
+Customer
+    ↓
+Browse Tours
+    ↓
+Search / Filter
+    ↓
+View Tour
+    ↓
+Select Services
+    ↓
+Create Reservation
+    ↓
+Reservation Stored
+    ↓
+Admin Management
+
+---
+
+## 💵 Dynamic Pricing
+
+The system provides functionality for managing tourism prices and changing them when required.
+
+The pricing workflow can be represented as:
+
+Tour
+  ↓
+Current Price
+  ↓
+Price Management
+  ↓
+Change Trip Price
+  ↓
+Updated Price
+
+Currency management can also be used to organize tourism prices according to supported currencies.
+
+---
+
+## ⚙️ Installation
+
+1. Clone the repository
+
+git clone https://github.com/MoamenRamy/tourism.git
+
+cd tourism
+
+2. Install PHP dependencies
+
+composer install
+
+3. Create environment file
+
+cp .env.example .env
+
+On Windows, you can also create a copy manually:
+
+.env.example → .env
+
+4. Generate application key
+
+php artisan key:generate
+
+5. Configure the database
+
+Update your ".env" file:
 
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
@@ -540,38 +370,11 @@ DB_DATABASE=tourism
 DB_USERNAME=root
 DB_PASSWORD=
 
-Mail Configuration
-
-If email functionality is enabled, configure your SMTP credentials:
-
-MAIL_MAILER=smtp
-MAIL_HOST=
-MAIL_PORT=
-MAIL_USERNAME=
-MAIL_PASSWORD=
-MAIL_ENCRYPTION=
-MAIL_FROM_ADDRESS=
-MAIL_FROM_NAME="${APP_NAME}"
-
-Redis Configuration
-
-If Redis is enabled in your environment:
-
-REDIS_HOST=127.0.0.1
-REDIS_PASSWORD=null
-REDIS_PORT=6379
-
----
-
-🗄️ Database Setup
-
-Create the MySQL database and configure the database credentials in ".env".
-
-Run the migrations:
+6. Run migrations
 
 php artisan migrate
 
-If the project contains seeders:
+7. Run database seeders
 
 php artisan db:seed
 
@@ -579,169 +382,153 @@ Or:
 
 php artisan migrate --seed
 
----
+8. Install frontend dependencies
 
-🖼️ Storage
+npm install
 
-Create the Laravel storage symbolic link:
+9. Build frontend assets
 
-php artisan storage:link
+npm run build
 
-This allows uploaded files and images to be served from the public storage directory.
-
----
-
-🧹 Clear Cache
-
-During development, Laravel caches can be cleared using:
-
-php artisan optimize:clear
-
-Individual caches can also be cleared:
-
-php artisan config:clear
-php artisan cache:clear
-php artisan route:clear
-php artisan view:clear
-
----
-
-▶️ Run the Application
-
-Start the Laravel development server:
-
-php artisan serve
-
-For frontend assets:
+For development:
 
 npm run dev
 
-The application will normally be available at:
+10. Create storage link
+
+php artisan storage:link
+
+11. Start the application
+
+php artisan serve
+
+The application will be available at:
 
 http://127.0.0.1:8000
 
 ---
 
-🧠 Laravel Concepts Used
+## ⚡ Redis & Cache
+
+The project uses Redis for caching and performance-related operations.
+
+Clear Laravel caches:
+
+php artisan optimize:clear
+
+Cache configuration:
+
+php artisan config:cache
+
+Cache routes:
+
+php artisan route:cache
+
+Cache views:
+
+php artisan view:cache
+
+---
+
+## 🧪 Testing
+
+Run the Laravel test suite with:
+
+php artisan test
+
+---
+
+## 🔒 Environment & Security
+
+Do not commit sensitive environment variables to GitHub.
+
+The following values should remain private:
+
+APP_KEY=
+DB_PASSWORD=
+MAIL_PASSWORD=
+GOOGLE_MAPS_API_KEY=
+
+Use ".env.example" as the template for local configuration.
+
+---
+
+## 📌 Project Purpose
+
+This project was developed as a practical tourism management and booking platform demonstrating how a Laravel application can manage a complete tourism workflow around:
+
+* Tourism tours
+* Destinations
+* Categories
+* Transportation
+* Vehicles
+* Tourism services
+* Reservations
+* Dynamic pricing
+* Currency management
+* Multilingual content
+* Google Maps integration
+* Administrative dashboards
+* API authentication
+* Scheduled reports
+* Email notifications
+* Redis caching
+
+---
+
+## 📚 Key Laravel Concepts Demonstrated
 
 This project demonstrates practical experience with:
 
-- MVC Architecture
-- Eloquent ORM
-- Eloquent Relationships
-- Database Migrations
-- Database Seeders
-- Middleware
-- Authentication
-- Authorization
-- Request Validation
-- REST APIs
-- Laravel Sanctum
-- Blade Templates
-- Localization
-- Model Translation
-- File Storage
-- Laravel Mail
-- Redis
-- Database Transactions
-- Route Model Binding
-- Slugs
-- Pagination
-- AJAX
-- CRUD Operations
-- Scheduled Tasks
+* Laravel 11
+* MVC architecture
+* Eloquent ORM
+* Model relationships
+* Middleware
+* Authentication
+* Laravel Sanctum
+* Blade
+* Form validation
+* CRUD operations
+* Database migrations
+* Database seeders
+* Laravel Mail
+* Laravel Scheduler
+* Redis
+* API development
+* Localization
+* Astrotomic Laravel Translatable
+* AJAX
+* DataTables
+* Bootstrap
+* Google Maps integration
+* Dynamic pricing
+* Reservation management
 
 ---
 
-🔄 Booking Workflow
-
-A typical tourism booking process can follow this flow:
-
-Browse Destinations
-        |
-        v
-Browse Categories
-        |
-        v
-Select Tour
-        |
-        v
-View Tour Details
-        |
-        v
-Select Transportation
-        |
-        v
-Select Additional Services
-        |
-        v
-Calculate Price
-        |
-        v
-Create Reservation
-        |
-        v
-Reservation Confirmation
-
----
-
-🎯 Project Goals
-
-The main goal of the project is to provide a centralized tourism management system capable of handling:
-
-- Tourism trips
-- Destinations
-- Tourism categories
-- Transportation
-- Vehicles
-- Additional services
-- Reservations
-- Prices
-- Currencies
-- Multilingual content
-
-The architecture is designed to make it possible to expand the platform with additional tourism services in the future.
-
----
-
-🚀 Future Improvements
-
-Possible future improvements include:
-
-- Advanced booking availability
-- Real-time reservation management
-- Customer accounts
-- Customer booking history
-- Automated booking emails
-- Advanced reporting
-- Revenue analytics
-- Advanced caching
-- Background jobs
-- Automated testing
-- Docker deployment
-- CI/CD pipelines
-- Mobile application integration
-- Online payment integration
-
----
-
-👨‍💻 Author
+## 👨‍💻 Author
 
 Moamen Ramy Rahmo
 
-Backend Developer focused on PHP & Laravel.
+Back-End Engineer specializing in:
 
-- GitHub: "MoamenRamy" (https://github.com/MoamenRamy)
-- LinkedIn: "Moamen Ramy" (https://www.linkedin.com/in/moamen-ramy-492a8b212/)
+* PHP
+* Laravel
+* MySQL
+* Python
+* Django
+* REST APIs
+* Database Design
+* Backend Development
+
+## Connect
+
+* GitHub: "@MoamenRamy" (https://github.com/MoamenRamy)
+* LinkedIn: "Moamen Ramy" (https://www.linkedin.com/in/moamen-ramy-492a8b212/)
 
 ---
 
-📄 License
+## ⭐ Support
 
-This project is developed for educational, portfolio, and professional purposes.
-
----
-
-⭐ Support
-
-If you find this project useful, consider giving the repository a star on GitHub.
+If you find this project useful or interesting, consider giving it a ⭐ on GitHub.
